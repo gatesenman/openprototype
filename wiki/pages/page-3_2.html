@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>3.2 useUi: Transient UI State · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1 active" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="useui-transient-ui-state">useUi: Transient UI State</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/ai/chat.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts)
+- [src/ai/settings.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts)
+- [src/components/AiSettingsModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx)
+- [src/store/history.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts)
+- [src/store/useUi.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts)
+
+</details>
+
+<p>The <code>useUi</code> store manages ephemeral interface state that does not persist within the <code>.gpo</code> document file. This includes active editor tools, canvas visibility toggles (grids, rulers), developer inspection modes, and global notification (toast) states. Additionally, it serves as the bridge for persisting AI configuration to the browser's <code>localStorage</code>.</p>
+<h3 id="store-definition-and-purpose">Store Definition and Purpose</h3>
+<p>Unlike <code>useStore</code>, which handles the document's structural data and selection state, <code>useUi</code> is built using a standard Zustand <code>create</code> call without temporal (undo/redo) middleware <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L26-L48">src/store/useUi.ts:26-48</a>. This ensures that UI actions—like toggling the grid or showing a notification—do not clutter the document's history stack <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts#L1-L6">src/store/history.ts:1-6</a>.</p>
+<p><strong>Transient State Flow</strong></p>
+<p>The following diagram illustrates how the <code>useUi</code> store interacts with UI components and external storage.</p>
+<p>Title: useUi State Interaction Diagram
+<pre class="mermaid">graph TD
+    subgraph &quot;Local Storage Space&quot;
+        [&quot;gpo.ai.settings&quot;]
+    end
+
+    subgraph &quot;useUi Zustand Store&quot;
+        [&quot;UiState&quot;]
+        [&quot;setAi()&quot;]
+        [&quot;showToast()&quot;]
+        [&quot;setTool()&quot;]
+    end
+
+    subgraph &quot;UI Components&quot;
+        [&quot;AiSettingsModal&quot;]
+        [&quot;CanvasStage&quot;]
+        [&quot;AppShell&quot;]
+    end
+
+    [&quot;AiSettingsModal&quot;] -- &quot;Calls setAi()&quot; --&gt; [&quot;setAi()&quot;]
+    [&quot;setAi()&quot;] -- &quot;Saves to&quot; --&gt; [&quot;gpo.ai.settings&quot;]
+    [&quot;gpo.ai.settings&quot;] -- &quot;loadAiSettings()&quot; --&gt; [&quot;UiState&quot;]
+    
+    [&quot;CanvasStage&quot;] -- &quot;Reads tool/showGrid&quot; --&gt; [&quot;UiState&quot;]
+    [&quot;AppShell&quot;] -- &quot;Subscribes to toast&quot; --&gt; [&quot;UiState&quot;]
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L26-L48">src/store/useUi.ts:26-48</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L38-L52">src/ai/settings.ts:38-52</a>.</p>
+<hr />
+<h3 id="ai-settings-persistence">AI Settings Persistence</h3>
+<p>The <code>ai</code> state within <code>useUi</code> stores the current LLM provider, API keys, and model selections <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L5-L6">src/store/useUi.ts:5-6</a>. Because these settings are user-specific and sensitive, they are persisted via <code>localStorage</code> rather than the document JSON <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L38-L52">src/ai/settings.ts:38-52</a>.</p>
+<h4 id="data-structures">Data Structures</h4>
+<p>The <code>AiSettings</code> interface and <code>PROVIDERS</code> registry define the available generation engines:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Provider ID</th>
+<th style="text-align: left;">Label</th>
+<th style="text-align: left;">Default Model</th>
+<th style="text-align: left;">Needs Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>local</code></td>
+<td style="text-align: left;">本地启发式生成器</td>
+<td style="text-align: left;"><code>heuristic-v1</code></td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>openai</code></td>
+<td style="text-align: left;">OpenAI</td>
+<td style="text-align: left;"><code>gpt-4o-mini</code></td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>anthropic</code></td>
+<td style="text-align: left;">Anthropic (Claude)</td>
+<td style="text-align: left;"><code>claude-3-5-sonnet-latest</code></td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deepseek</code></td>
+<td style="text-align: left;">DeepSeek</td>
+<td style="text-align: left;"><code>deepseek-chat</code></td>
+<td style="text-align: left;">Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L1-L36">src/ai/settings.ts:1-36</a>.</p>
+<h4 id="implementation-details">Implementation Details</h4>
+<ol>
+<li><strong>Initialization</strong>: Upon store creation, <code>useUi</code> calls <code>loadAiSettings()</code>, which attempts to parse the <code>gpo.ai.settings</code> key from <code>localStorage</code>. If missing, it defaults to the <code>local</code> heuristic provider <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L40-L48">src/ai/settings.ts:40-48</a>.</li>
+<li><strong>Updating</strong>: The <code>setAi</code> action in <code>useUi</code> performs a dual-write: it updates the in-memory Zustand state and triggers <code>saveAiSettings()</code> to sync with <code>localStorage</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L28-L31">src/store/useUi.ts:28-31</a>.</li>
+<li><strong>Consumption</strong>: The <code>chatComplete</code> utility reads these settings to determine the correct API endpoint and authorization headers (e.g., <code>x-api-key</code> for Anthropic or <code>Authorization: Bearer</code> for OpenAI) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts#L14-L54">src/ai/chat.ts:14-54</a>.</li>
+</ol>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L26-L31">src/store/useUi.ts:26-31</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L40-L52">src/ai/settings.ts:40-52</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts#L9-L54">src/ai/chat.ts:9-54</a>.</p>
+<hr />
+<h3 id="canvas-and-tool-management">Canvas and Tool Management</h3>
+<p>The store manages the active interaction mode and canvas visibility helpers.</p>
+<ul>
+<li><strong>Active Tool</strong>: Managed via <code>tool</code> (string). Common values include <code>select</code>, <code>rect</code>, <code>text</code>, <code>frame</code>, and <code>flow</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L9-L11">src/store/useUi.ts:9-11</a>.</li>
+<li><strong>Visibility Toggles</strong>: Boolean flags for <code>showRulers</code>, <code>showGrid</code>, and <code>snapEnabled</code>. These are toggled via dedicated functions that flip the current boolean state <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L13-L18">src/store/useUi.ts:13-18</a>.</li>
+<li><strong>Dev Mode</strong>: The <code>devMode</code> flag toggles a read-only inspector mode used for developer handoff, measurements, and code generation <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L20-L21">src/store/useUi.ts:20-21</a>.</li>
+</ul>
+<p>Title: UI State Logic Mapping
+<pre class="mermaid">classDiagram
+    class UiState {
+        +ai: AiSettings
+        +toast: string | null
+        +tool: string
+        +showRulers: boolean
+        +showGrid: boolean
+        +snapEnabled: boolean
+        +devMode: boolean
+        +setAi(s: AiSettings)
+        +showToast(msg: string, ms: number)
+        +setTool(t: string)
+        +toggleRulers()
+        +toggleGrid()
+        +toggleSnap()
+        +toggleDevMode()
+    }
+    
+    class AiSettings {
+        +provider: ProviderId
+        +apiKey: string
+        +model: string
+    }
+
+    UiState &quot;1&quot; --* &quot;1&quot; AiSettings : contains
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L4-L22">src/store/useUi.ts:4-22</a>.</p>
+<hr />
+<h3 id="toast-notification-system">Toast Notification System</h3>
+<p>The <code>showToast</code> function provides a global mechanism for non-blocking user feedback.</p>
+<ol>
+<li><strong>Trigger</strong>: When <code>showToast(msg, ms)</code> is called, it sets the <code>toast</code> string <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L33-L34">src/store/useUi.ts:33-34</a>.</li>
+<li><strong>Auto-Dismiss</strong>: It utilizes a module-level variable <code>toastTimer</code> to manage the lifecycle of the notification. If a new toast is triggered before the previous one expires, the existing timer is cleared (<code>clearTimeout</code>) to prevent premature dismissal <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L24-L37">src/store/useUi.ts:24-37</a>.</li>
+<li><strong>Cleanup</strong>: After the specified duration (defaulting to 3200ms), the <code>toast</code> state is set back to <code>null</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L36">src/store/useUi.ts:36</a>.</li>
+</ol>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L24-L37">src/store/useUi.ts:24-37</a>.</p>
+<hr />
+<h3 id="ui-integration-aisettingsmodal">UI Integration: AiSettingsModal</h3>
+<p>The <code>AiSettingsModal</code> component provides the interface for modifying the <code>ai</code> state. It uses local React state to track changes before they are committed to the <code>useUi</code> store.</p>
+<ul>
+<li><strong>Provider Change</strong>: When a user selects a different provider, the <code>onProviderChange</code> handler automatically updates the <code>model</code> field to the provider's <code>defaultModel</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L14-L17">src/components/AiSettingsModal.tsx:14-17</a>.</li>
+<li><strong>Commitment</strong>: Clicking "Save" triggers <code>setAi</code>, which updates both the store and <code>localStorage</code>, followed by a success toast <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L19-L23">src/components/AiSettingsModal.tsx:19-23</a>.</li>
+<li><strong>Security</strong>: API keys are rendered using <code>type="password"</code> and are explicitly documented as being stored only in the local browser <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L48-L55">src/components/AiSettingsModal.tsx:48-55</a>.</li>
+</ul>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L5-L74">src/components/AiSettingsModal.tsx:5-74</a>.</p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

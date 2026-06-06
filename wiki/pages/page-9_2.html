@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>9.2 Plugin System · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1 active" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="plugin-system">Plugin System</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [docs/PLUGIN_SPEC.md](https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md)
+- [src/__tests__/core.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts)
+- [src/interop/importDesign.ts](https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts)
+- [src/market/catalog.ts](https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts)
+- [src/schema/defaults.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/defaults.ts)
+- [src/schema/layout.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts)
+- [src/views/MarketView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx)
+
+</details>
+
+<p>The OpenPrototype Plugin System provides an extensibility layer for performing reusable, undoable, and batch transformations on design documents <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L1-L6">docs/PLUGIN_SPEC.md:1-6</a>. Plugins are designed as pure functions that interact with the document through a restricted context API, ensuring that all modifications remain compatible with the application's state management and undo/redo history <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L41-L44">docs/PLUGIN_SPEC.md:41-44</a>.</p>
+<h3 id="plugin-architecture-overview">Plugin Architecture Overview</h3>
+<p>A plugin in OpenPrototype consists of a <strong>Manifest</strong> (metadata) and a <strong><code>run</code> function</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L6-L7">docs/PLUGIN_SPEC.md:6-7</a>.</p>
+<h4 id="data-flow-plugin-execution">Data Flow: Plugin Execution</h4>
+<p>This diagram illustrates how a plugin interacts with the centralized <code>useStore</code> through the <code>PluginContext</code>.</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;UI Layer (MarketView.tsx)&quot;
+        A[&quot;MarketView Component&quot;] -- &quot;p.run(ctx)&quot; --&gt; B[&quot;Plugin Instance&quot;]
+    end
+
+    subgraph &quot;Plugin Execution Space&quot;
+        B -- &quot;read&quot; --&gt; C[&quot;ctx.doc (Snapshot)&quot;]
+        B -- &quot;mutate&quot; --&gt; D[&quot;ctx.updateNode / ctx.setDoc&quot;]
+    end
+
+    subgraph &quot;State Layer (useStore.ts)&quot;
+        D -- &quot;dispatch&quot; --&gt; E[&quot;Zustand Store&quot;]
+        E -- &quot;middleware&quot; --&gt; F[&quot;zundo (Undo History)&quot;]
+    end
+
+    C -.-&gt; E
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L99-L112">src/views/MarketView.tsx:99-112</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L41-L44">docs/PLUGIN_SPEC.md:41-44</a></p>
+<hr />
+<h3 id="plugin-specification">Plugin Specification</h3>
+<h4 id="1-manifest-structure">1. Manifest Structure</h4>
+<p>Every plugin must implement the <code>Plugin</code> interface, which defines its identity, versioning, and required capabilities <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L10-L22">docs/PLUGIN_SPEC.md:10-22</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Unique identifier (e.g., <code>plg_snap_grid</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L12">docs/PLUGIN_SPEC.md:12</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Display name in the Plugin Market <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L13">docs/PLUGIN_SPEC.md:13</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>permissions</code></td>
+<td style="text-align: left;"><code>PluginPermission[]</code></td>
+<td style="text-align: left;">Declared capabilities (<code>tokens</code>, <code>components</code>, <code>nodes</code>, <code>document</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L30-L40">docs/PLUGIN_SPEC.md:30-40</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apiVersion</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Target API version. Compatible if major version matches <code>PLUGIN_API_VERSION</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L28">docs/PLUGIN_SPEC.md:28</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>run</code></td>
+<td style="text-align: left;"><code>Function</code></td>
+<td style="text-align: left;">The entry point function that receives <code>PluginContext</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L20">docs/PLUGIN_SPEC.md:20</a>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-plugincontext-api">2. PluginContext API</h4>
+<p>The <code>PluginContext</code> provides the bridge between the plugin's logic and the application state <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L33">src/market/catalog.ts:33</a>.</p>
+<ul>
+<li><code>doc: GpoDocument</code>: A read-only snapshot of the current document <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L48">docs/PLUGIN_SPEC.md:48</a>.</li>
+<li><code>updateDesignSystem(patch)</code>: Modifies design tokens (colors, radii, etc.) <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L50">docs/PLUGIN_SPEC.md:50</a>.</li>
+<li><code>updateNode(frameId, nodeId, patch)</code>: Updates specific node properties <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L51">docs/PLUGIN_SPEC.md:51</a>.</li>
+<li><code>addComponent(comp)</code>: Registers a new component definition <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L52">docs/PLUGIN_SPEC.md:52</a>.</li>
+<li><code>setDoc(doc)</code>: Replaces the entire document for batch transformations <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L53">docs/PLUGIN_SPEC.md:53</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L10-L22">docs/PLUGIN_SPEC.md:10-22</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L46-L55">docs/PLUGIN_SPEC.md:46-55</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L30-L36">src/market/catalog.ts:30-36</a></p>
+<hr />
+<h3 id="traversal-utilities">Traversal Utilities</h3>
+<p>To simplify document-wide operations, the system provides utility functions for traversing the <code>GpoDocument</code> hierarchy <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L31-L32">src/market/catalog.ts:31-32</a>.</p>
+<h4 id="mapallnodesdoc-fn"><code>mapAllNodes(doc, fn)</code></h4>
+<p>This utility performs a deep traversal of all pages, frames, and nested child nodes (groups). It applies the provided function <code>fn</code> to every node and returns a new transformed document <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L58-L59">docs/PLUGIN_SPEC.md:58-59</a>.</p>
+<p><strong>Implementation Logic:</strong>
+1.  Iterates through <code>doc.pages</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L79">docs/PLUGIN_SPEC.md:79</a>.
+2.  Iterates through <code>page.frames</code>.
+3.  Recursively visits <code>frame.nodes</code> and any nested <code>node.children</code>.
+4.  Returns a new document with updated node references.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L58-L60">docs/PLUGIN_SPEC.md:58-60</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L79-L85">docs/PLUGIN_SPEC.md:79-85</a></p>
+<hr />
+<h3 id="built-in-plugins">Built-in Plugins</h3>
+<p>OpenPrototype includes several standard plugins located in the <code>PLUGINS</code> registry <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L30">src/market/catalog.ts:30</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Plugin ID</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>plg_snap_grid</code></td>
+<td style="text-align: left;">Snap to Grid</td>
+<td style="text-align: left;">Rounds all node <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> to the nearest 8px increment.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plg_unify_radius</code></td>
+<td style="text-align: left;">Unify Radius</td>
+<td style="text-align: left;">Sets all rectangular nodes to use the design system's standard <code>md</code> radius <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L104-L108">src/<strong>tests</strong>/core.test.ts:104-108</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plg_localize_en</code></td>
+<td style="text-align: left;">Localize to English</td>
+<td style="text-align: left;">Uses a mapping to translate standard UI strings (e.g., "提交" → "Submit").</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L30-L36">src/market/catalog.ts:30-36</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L30-L36">src/<strong>tests</strong>/core.test.ts:30-36</a></p>
+<hr />
+<h3 id="integration-and-market-ui">Integration and Market UI</h3>
+<p>The <code>MarketView</code> component handles the discovery and execution of plugins <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L4">src/views/MarketView.tsx:4</a>.</p>
+<h4 id="plugin-execution-flow">Plugin Execution Flow</h4>
+<p>When a user clicks "Run Plugin" in the UI:
+1.  The <code>MarketView</code> retrieves the current state from <code>useStore.getState().doc</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L101">src/views/MarketView.tsx:101</a>.
+2.  It constructs a <code>PluginContext</code> using store actions (<code>updateNode</code>, <code>setDoc</code>, etc.) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L102-L106">src/views/MarketView.tsx:102-106</a>.
+3.  The plugin's <code>run</code> function is executed <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L100">src/views/MarketView.tsx:100</a>.
+4.  The return string from the plugin is displayed to the user via <code>showToast</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L108">src/views/MarketView.tsx:108</a>.</p>
+<h4 id="code-entity-mapping">Code Entity Mapping</h4>
+<p><pre class="mermaid">classDiagram
+    class GpoDocument {
+        +DesignSystem designSystem
+        +Page[] pages
+    }
+    class PluginContext {
+        +GpoDocument doc
+        +updateNode(frameId, nodeId, patch)
+        +setDoc(doc)
+    }
+    class MarketView {
+        +runPlugin(p)
+    }
+    class useStore {
+        +doc
+        +setDoc(newDoc)
+    }
+
+    MarketView --&gt; PluginContext : creates
+    PluginContext --&gt; useStore : dispatches to
+    PluginContext o-- GpoDocument : snapshots
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L7-L17">src/views/MarketView.tsx:7-17</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/MarketView.tsx#L99-L112">src/views/MarketView.tsx:99-112</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L1-L10">src/schema/types.ts:1-10</a></p>
+<hr />
+<h3 id="compatibility-and-versions">Compatibility and Versions</h3>
+<p>The system enforces version checks to prevent runtime errors from breaking changes in the Plugin API <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L26-L28">docs/PLUGIN_SPEC.md:26-28</a>.</p>
+<ul>
+<li><strong><code>PLUGIN_API_VERSION</code></strong>: Currently <code>1.0.0</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L35">src/market/catalog.ts:35</a>.</li>
+<li><strong>Compatibility Rule</strong>: The host application checks the major version of the plugin's <code>apiVersion</code>. If the major version matches the host's <code>PLUGIN_API_VERSION</code>, the plugin is allowed to load <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L28">docs/PLUGIN_SPEC.md:28</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/catalog.ts#L35-L36">src/market/catalog.ts:35-36</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L3-L4">docs/PLUGIN_SPEC.md:3-4</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/docs/PLUGIN_SPEC.md#L26-L29">docs/PLUGIN_SPEC.md:26-29</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

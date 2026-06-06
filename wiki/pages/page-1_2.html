@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>1.2 Application Shell &amp; View Routing · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1 active" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="application-shell-view-routing">Application Shell &amp; View Routing</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/App.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx)
+- [src/ai/chat.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts)
+- [src/ai/settings.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts)
+- [src/components/AiSettingsModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx)
+- [src/hooks/useShortcuts.ts](https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts)
+- [src/store/useStore.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts)
+- [src/store/useUi.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts)
+- [src/views/HomeView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/HomeView.tsx)
+
+</details>
+
+<p>The Application Shell acts as the root orchestrator for OpenPrototype, managing the top-level layout, navigation between distinct product lifecycle views, global event handling, and persistence lifecycles.</p>
+<h2 id="view-orchestration-state-machine">View Orchestration &amp; State Machine</h2>
+<p>The application's navigation is governed by the <code>ViewMode</code> state machine, managed within the <code>useStore</code> Zustand store <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L31-L38">src/store/useStore.ts:31-38</a>. The <code>App.tsx</code> component serves as the primary router, conditionally rendering views based on the <code>view</code> state <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L210-L230">src/App.tsx:210-230</a>.</p>
+<h3 id="view-modes">View Modes</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Mode</th>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>home</code></td>
+<td style="text-align: left;"><code>HomeView</code></td>
+<td style="text-align: left;">File management, templates, and library browsing <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/HomeView.tsx#L29-L169">src/views/HomeView.tsx:29-169</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>requirements</code></td>
+<td style="text-align: left;"><code>RequirementsView</code></td>
+<td style="text-align: left;">Markdown-based PRD editing and AI-assisted drafting.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>design</code></td>
+<td style="text-align: left;"><code>DesignView</code></td>
+<td style="text-align: left;">Core canvas editor for frames, nodes, and components.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>flows</code></td>
+<td style="text-align: left;"><code>FlowsView</code></td>
+<td style="text-align: left;">Visual graph of prototype interactions and screen connections.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>journey</code></td>
+<td style="text-align: left;"><code>JourneyView</code></td>
+<td style="text-align: left;">User journey mapping and emotional curve tracking.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>preview</code></td>
+<td style="text-align: left;"><code>PreviewView</code></td>
+<td style="text-align: left;">Interactive prototype player for testing flows.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>market</code></td>
+<td style="text-align: left;"><code>MarketView</code></td>
+<td style="text-align: left;">Component package and plugin installation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-flow-view-routing">Data Flow: View Routing</h3>
+<p>The following diagram illustrates how the <code>useStore</code> state drives the UI composition in <code>App.tsx</code>.</p>
+<p><strong>View Routing Architecture</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;State Management (useStore.ts)&quot;
+        V[&quot;ViewMode State&quot;]
+        SV[&quot;setView(v: ViewMode)&quot;]
+    end
+
+    subgraph &quot;App Shell (App.tsx)&quot;
+        NAV[&quot;Navigation Tabs&quot;]
+        ROUTER[&quot;Conditional Render Logic&quot;]
+        
+        NAV -- &quot;calls SV&quot; --&gt; SV
+        V -- &quot;triggers re-render&quot; --&gt; ROUTER
+        
+        ROUTER --&gt; HV[&quot;HomeView&quot;]
+        ROUTER --&gt; RV[&quot;RequirementsView&quot;]
+        ROUTER --&gt; DV[&quot;DesignView&quot;]
+        ROUTER --&gt; PV[&quot;PreviewView&quot;]
+    end
+
+    Sources[&quot;Sources: src/store/useStore.ts:31-64, src/App.tsx:188-230&quot;]
+</pre></p>
+<h2 id="persistence-auto-save-lifecycle">Persistence &amp; Auto-Save Lifecycle</h2>
+<p>OpenPrototype implements a multi-tier persistence strategy to ensure data integrity across sessions.</p>
+<ol>
+<li><strong>Memory Store</strong>: Active document state is held in the <code>useStore</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L203">src/store/useStore.ts:203</a>.</li>
+<li><strong>Local Library (IndexedDB/Storage)</strong>: Files are listed and loaded from a local library via <code>listLibrary</code> and <code>loadFromLibrary</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/HomeView.tsx#L39-L56">src/views/HomeView.tsx:39-56</a>.</li>
+<li><strong>Auto-Save</strong>: The <code>App</code> component triggers a background save to local storage whenever the document is marked as <code>dirty</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L203-L207">src/App.tsx:203-207</a>.</li>
+<li><strong>Manual Export</strong>: Users can export the document as a <code>.gpo</code> file (a zipped JSON bundle) using <code>saveGpo</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L4-L4">src/App.tsx:4-4</a>.</li>
+</ol>
+<p><strong>Persistence Data Flow</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;User Actions&quot;
+        Edit[&quot;User Edits Node&quot;]
+        Save[&quot;Manual Save (.gpo)&quot;]
+    end
+
+    subgraph &quot;Code Entities&quot;
+        Store[&quot;useStore (AppState)&quot;]
+        Persist[&quot;persist.ts (saveAuto)&quot;]
+        FileIO[&quot;fileIo.ts (saveGpo)&quot;]
+        Library[&quot;library.ts (saveToLibrary)&quot;]
+    end
+
+    Edit --&gt; Store
+    Store -- &quot;useEffect (dirty)&quot; --&gt; Persist
+    Store -- &quot;HomeView Close&quot; --&gt; Library
+    Save --&gt; FileIO
+
+    Sources[&quot;Sources: src/App.tsx:203-207, src/file/persist.ts, src/file/fileIo.ts, src/views/HomeView.tsx:44-45&quot;]
+</pre></p>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<p>Global keyboard interaction is handled by the <code>useShortcuts</code> hook <a href="https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts#L17-L111">src/hooks/useShortcuts.ts:17-111</a>. This hook listens for keydown events and dispatches actions to <code>useStore</code> or <code>useUi</code>.</p>
+<ul>
+<li><strong>Standard Modifiers</strong>: <code>Cmd/Ctrl</code> is detected via <code>e.metaKey || e.ctrlKey</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts#L27">src/hooks/useShortcuts.ts:27</a>.</li>
+<li><strong>Tool Switching</strong>: Keys <code>v</code>, <code>r</code>, <code>o</code>, <code>l</code>, <code>t</code>, <code>b</code>, <code>i</code> map to specific canvas tools in <code>useUi</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts#L6-L14">src/hooks/useShortcuts.ts:6-14</a>.</li>
+<li><strong>Selection &amp; History</strong>: <ul>
+<li><code>Cmd+Z</code> / <code>Cmd+Shift+Z</code>: Undo/Redo via <code>zundo</code> temporal middleware <a href="https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts#L29-L34">src/hooks/useShortcuts.ts:29-34</a>.</li>
+<li><code>Cmd+D</code>: Duplicate selection <a href="https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts#L45-L49">src/hooks/useShortcuts.ts:45-49</a>.</li>
+<li><code>Cmd+G</code>: Group/Ungroup selection <a href="https://github.com/gaosichun888/openprototype/blob/main/src/hooks/useShortcuts.ts#L58-L63">src/hooks/useShortcuts.ts:58-63</a>.</li>
+</ul>
+</li>
+<li><strong>Z-Order</strong>: <code>Cmd + ]</code> (forward) and <code>Cmd + [</code> (backward) manage node layering <a href="https://github.com/gaosichun888/openprototype/blob/main/` (backward) manage node layering [src/hooks/useShortcuts.ts#L66-L75">src/hooks/useShortcuts.ts:66-75</a>.</li>
+</ul>
+<h2 id="modal-menu-management">Modal &amp; Menu Management</h2>
+<p>The Application Shell manages several global modals and context-sensitive menus:</p>
+<h3 id="global-modals">Global Modals</h3>
+<ul>
+<li><strong>AI Settings</strong>: <code>AiSettingsModal</code> allows configuration of LLM providers (OpenAI, Anthropic, DeepSeek, or Local Heuristic) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L25-L74">src/components/AiSettingsModal.tsx:25-74</a>. Settings are persisted to <code>localStorage</code> via <code>saveAiSettings</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L50-L52">src/ai/settings.ts:50-52</a>.</li>
+<li><strong>Design System</strong>: <code>DesignSystemModal</code> for editing global tokens and variables <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L33">src/App.tsx:33</a>.</li>
+<li><strong>Cloud Collaboration</strong>: <code>CloudModal</code> for remote project management <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L34">src/App.tsx:34</a>.</li>
+</ul>
+<h3 id="export-menu">Export Menu</h3>
+<p>The <code>ExportMenu</code> in <code>App.tsx</code> provides access to various code and asset generators <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L49-L144">src/App.tsx:49-144</a>:
+*   <strong>Prototypes</strong>: <code>downloadHtml</code> for self-contained interactive prototypes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L81-L84">src/App.tsx:81-84</a>.
+*   <strong>Assets</strong>: <code>downloadFramePng</code>, <code>frameToSvg</code>, and <code>downloadFramePdf</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L85-L99">src/App.tsx:85-99</a>.
+*   <strong>Code Components</strong>: Generators for React, Vue, and Tailwind <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L115-L129">src/App.tsx:115-129</a>.</p>
+<p>Sources: <code>src/App.tsx</code>, <code>src/store/useStore.ts</code>, <code>src/hooks/useShortcuts.ts</code>, <code>src/ai/settings.ts</code>, <code>src/views/HomeView.tsx</code>.</p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>11 Cloud Backend &amp; Collaboration · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0 active" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="cloud-backend-collaboration">Cloud Backend &amp; Collaboration</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [server/README.md](https://github.com/gaosichun888/openprototype/blob/main/server/README.md)
+- [server/app/__init__.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/__init__.py)
+- [server/app/main.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py)
+- [server/app/models.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py)
+- [server/app/schemas.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py)
+- [server/pyproject.toml](https://github.com/gaosichun888/openprototype/blob/main/server/pyproject.toml)
+- [src/cloud/api.ts](https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts)
+
+</details>
+
+<p>OpenPrototype includes an optional SaaS backend designed to extend the local-first experience with cloud-based persistence, version history, and team collaboration. The backend is built with <strong>FastAPI</strong> and <strong>PostgreSQL</strong>, while the frontend integrates via a dedicated TypeScript client and UI modals.</p>
+<h2 id="overview">Overview</h2>
+<p>The cloud subsystem transitions the application from a single-user local tool to a collaborative platform. It supports:
+- <strong>Identity Management</strong>: JWT-based authentication with bcrypt password hashing <a href="https://github.com/gaosichun888/openprototype/blob/main/server/README.md#L10-L10">server/README.md:10-10</a>.
+- <strong>Document Persistence</strong>: Storing <code>.gpo</code> documents as <code>JSONB</code> in PostgreSQL <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L18-L18">server/app/models.py:18-18</a>.
+- <strong>Collaboration</strong>: Role-Based Access Control (RBAC) with <code>owner</code>, <code>editor</code>, and <code>viewer</code> roles <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py#L6-L6">server/app/schemas.py:6-6</a>.
+- <strong>Version Control</strong>: Automatic snapshotting of document states on every save <a href="https://github.com/gaosichun888/openprototype/blob/main/server/README.md#L58-L59">server/README.md:58-59</a>.</p>
+<h3 id="system-architecture">System Architecture</h3>
+<p>The following diagram illustrates the relationship between the FastAPI backend entities and the frontend integration layer.</p>
+<p><strong>Cloud System Mapping</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Natural Language Space&quot;
+        User[&quot;User Account&quot;]
+        Project[&quot;Cloud Project&quot;]
+        History[&quot;Version History&quot;]
+        Team[&quot;Collaboration&quot;]
+    end
+
+    subgraph &quot;Code Entity Space (Backend)&quot;
+        M_User[&quot;class User [models.py]&quot;]
+        M_Proj[&quot;class Project [models.py]&quot;]
+        M_Ver[&quot;class DocumentVersion [models.py]&quot;]
+        M_Mem[&quot;class ProjectMember [models.py]&quot;]
+        R_Auth[&quot;router auth [auth.py]&quot;]
+        R_Proj[&quot;router projects [projects.py]&quot;]
+    end
+
+    subgraph &quot;Code Entity Space (Frontend)&quot;
+        C_Api[&quot;cloudApi [api.ts]&quot;]
+        C_Tok[&quot;cloudToken [api.ts]&quot;]
+    end
+
+    User --&gt; M_User
+    Project --&gt; M_Proj
+    History --&gt; M_Ver
+    Team --&gt; M_Mem
+    
+    C_Api -- &quot;REST API&quot; --&gt; R_Auth
+    C_Api -- &quot;REST API&quot; --&gt; R_Proj
+    C_Tok -- &quot;Bearer Token&quot; --&gt; R_Auth
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L25-L90">server/app/models.py:25-90</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L44-L109">src/cloud/api.ts:44-109</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py#L35-L37">server/app/main.py:35-37</a></p>
+<h2 id="backend-api-fastapi-server">Backend API (FastAPI Server)</h2>
+<p>The backend is a Python-based service located in the <code>/server</code> directory. It uses <strong>SQLAlchemy 2.0</strong> for ORM and <strong>Pydantic</strong> for data validation <a href="https://github.com/gaosichun888/openprototype/blob/main/server/pyproject.toml#L9-L10">server/pyproject.toml:9-10</a>.</p>
+<p>The server orchestrates the lifecycle of a design project through several key routers:
+- <strong>Auth</strong>: Handles registration and login, returning JWT tokens for session management <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py#L21-L23">server/app/schemas.py:21-23</a>.
+- <strong>Projects</strong>: Manages the CRUD operations for design files. Documents are stored in the <code>Project</code> model's <code>document</code> field <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L45-L45">server/app/models.py:45-45</a>.
+- <strong>Members</strong>: Implements RBAC, allowing owners to invite others via email <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py#L65-L68">server/app/schemas.py:65-68</a>.</p>
+<p>For technical details on the server architecture, database models, and API endpoints, see <a href="page-11_1.html">Backend API (FastAPI Server)</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/server/pyproject.toml#L1-L17">server/pyproject.toml:1-17</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py#L1-L38">server/app/main.py:1-38</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L1-L90">server/app/models.py:1-90</a></p>
+<h2 id="frontend-cloud-integration">Frontend Cloud Integration</h2>
+<p>The frontend communicates with the backend through the <code>cloudApi</code> client <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L74-L109">src/cloud/api.ts:74-109</a>. This client abstracts the <code>fetch</code> logic, including the automatic attachment of the <code>Authorization: Bearer</code> header retrieved from <code>localStorage</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L55-L56">src/cloud/api.ts:55-56</a>.</p>
+<h3 id="integration-flow">Integration Flow</h3>
+<p>When a user opens a cloud project, the frontend fetches the <code>ProjectDetail</code> which contains the <code>GpoDocument</code> JSON <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L20-L22">src/cloud/api.ts:20-22</a>. This JSON is then loaded into the centralized Zustand store for editing.</p>
+<p><strong>Document Synchronization Flow</strong>
+<pre class="mermaid">sequenceDiagram
+    participant UI as &quot;CloudModal [UI]&quot;
+    participant API as &quot;cloudApi [api.ts]&quot;
+    participant Srv as &quot;FastAPI [main.py]&quot;
+    participant DB as &quot;PostgreSQL [JsonDoc]&quot;
+
+    UI-&gt;&gt;API: saveDocument(id, doc)
+    API-&gt;&gt;Srv: PUT /api/projects/{id}/document
+    Srv-&gt;&gt;DB: INSERT INTO document_versions
+    Srv-&gt;&gt;DB: UPDATE projects SET document = doc
+    DB--&gt;&gt;Srv: Success
+    Srv--&gt;&gt;API: ProjectDetail
+    API--&gt;&gt;UI: Update UI State
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L94-L98">src/cloud/api.ts:94-98</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L75-L87">server/app/models.py:75-87</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/README.md#L50-L52">server/README.md:50-52</a></p>
+<p>The user interface for these features is primarily contained within the <code>CloudModal</code>, which provides screens for project browsing, version selection, and member management.</p>
+<p>For details on the TypeScript client and UI implementation, see <a href="page-11_2.html">Frontend Cloud Integration</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L38-L72">src/cloud/api.ts:38-72</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L74-L109">src/cloud/api.ts:74-109</a></p>
+<h2 id="data-persistence-roles">Data Persistence &amp; Roles</h2>
+<p>The system uses a flexible schema to handle different environments. While production uses <strong>PostgreSQL</strong> with <code>JSONB</code> for efficient document querying, the test suite utilizes <strong>SQLite</strong> with a standard <code>JSON</code> variant <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L17-L18">server/app/models.py:17-18</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Role</th>
+<th style="text-align: left;">Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Owner</strong></td>
+<td style="text-align: left;">Full control: delete project, manage members, edit document.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Editor</strong></td>
+<td style="text-align: left;">Write access: save new document versions, rename project.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Viewer</strong></td>
+<td style="text-align: left;">Read access: view document, list version history, list members.</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py#L6-L6">server/app/schemas.py:6-6</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/README.md#L39-L55">server/README.md:39-55</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L59-L73">server/app/models.py:59-73</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

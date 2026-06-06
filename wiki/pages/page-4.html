@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>4 Canvas &amp; Design Editor · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0 active" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="canvas-design-editor">Canvas &amp; Design Editor</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/views/DesignView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx)
+- [src/views/canvas/CanvasStage.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx)
+
+</details>
+
+<p>The <strong>Canvas &amp; Design Editor</strong> is the central visual workspace of OpenPrototype. It provides a multi-panel environment for layout, vector editing, and component management, powered by a high-performance 2D rendering engine.</p>
+<h2 id="overview">Overview</h2>
+<p>The design editor is orchestrated by the <code>DesignView</code> component <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L35-L95">src/views/DesignView.tsx:35-95</a>, which manages the layout of the toolbars and sidebars. The workspace is divided into several specialized regions that interact via the centralized <code>useStore</code> and <code>useUi</code> Zustand stores.</p>
+<h3 id="editor-layout-panel-orchestration">Editor Layout &amp; Panel Orchestration</h3>
+<p>The editor uses a classic three-column layout:
+*   <strong>Left Sidebar</strong>: Contains the <code>LayersPanel</code> for hierarchy navigation and the <code>AssetsPanel</code> for component library access <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L97-L175">src/views/DesignView.tsx:97-175</a>.
+*   <strong>Center Workspace</strong>: The <code>CanvasStage</code> acts as the primary viewport for direct manipulation <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L185-L187">src/views/DesignView.tsx:185-187</a>.
+*   <strong>Right Sidebar</strong>: Switches between the <code>PropertiesPanel</code> for visual styling and the <code>DevModePanel</code> for inspection and code export <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L189-L191">src/views/DesignView.tsx:189-191</a>.</p>
+<h3 id="system-architecture-code-to-ui-mapping">System Architecture: Code to UI Mapping</h3>
+<p>The following diagram shows how UI components in the Design View map to their respective logic in the codebase.</p>
+<p><strong>Design View Component Map</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;DesignView (src/views/DesignView.tsx)&quot;
+        Toolbar[&quot;Toolbar (TOOLS/BOOL_OPS)&quot;]
+        Center[&quot;CanvasStage (src/views/canvas/CanvasStage.tsx)&quot;]
+        Left[&quot;LayersPanel (src/views/canvas/LayersPanel.tsx)&quot;]
+        Right[&quot;PropertiesPanel (src/views/canvas/PropertiesPanel.tsx)&quot;]
+        Dev[&quot;DevModePanel (src/views/canvas/DevModePanel.tsx)&quot;]
+    end
+
+    Toolbar --&gt; |&quot;setTool()&quot;| UI_Store[&quot;useUi Store&quot;]
+    Center --&gt; |&quot;selectNodes()&quot;| Doc_Store[&quot;useStore (Document)&quot;]
+    Right --&gt; |&quot;updateNode()&quot;| Doc_Store
+    Left --&gt; |&quot;reorderNodes()&quot;| Doc_Store
+    
+    Center -.-&gt; |&quot;Konva Layer&quot;| Konva[&quot;react-konva Stage&quot;]
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L8-L14">src/views/DesignView.tsx:8-14</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L97-L192">src/views/DesignView.tsx:97-192</a></p>
+<hr />
+<h2 id="core-subsystems">Core Subsystems</h2>
+<h3 id="canvasstage-konva-rendering-engine"><a href="page-4_1.html">CanvasStage: Konva Rendering Engine</a></h3>
+<p>The <code>CanvasStage</code> component <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L90">src/views/canvas/CanvasStage.tsx:90</a> utilizes <code>react-konva</code> to render the <code>GpoDocument</code> schema. It handles the complex math of viewport management (zoom/pan), coordinate transforms between screen and world space, and provides the visual feedback for snapping and distance guides <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L15-L26">src/views/canvas/CanvasStage.tsx:15-26</a>.</p>
+<ul>
+<li><strong>Key Function</strong>: <code>strokeRectGeometry</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L36-L55">src/views/canvas/CanvasStage.tsx:36-55</a> handles Figma-style inside/outside stroke alignment.</li>
+<li><strong>Interaction</strong>: Manages the <code>Transformer</code> for resizing and the marquee selection logic <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L159-L162">src/views/canvas/CanvasStage.tsx:159-162</a>.</li>
+</ul>
+<p>For details, see <a href="page-4_1.html">CanvasStage: Konva Rendering Engine</a>.</p>
+<h3 id="vector-editing-boolean-operations"><a href="page-4_2.html">Vector Editing &amp; Boolean Operations</a></h3>
+<p>OpenPrototype supports advanced vector workflows including a Pen tool for Bézier path creation and boolean operations (Union, Subtract, Intersect, Exclude) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L28-L33">src/views/DesignView.tsx:28-33</a>. </p>
+<ul>
+<li><strong>Logic</strong>: Vector math is handled in <code>@/vector/geometry</code>, while <code>setNodePath</code> and <code>booleanSelection</code> actions in <code>useStore</code> persist the changes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L59-L60">src/views/DesignView.tsx:59-60</a>.</li>
+<li><strong>Modes</strong>: The editor supports a dedicated <code>vecEdit</code> mode for anchor manipulation <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L110">src/views/canvas/CanvasStage.tsx:110</a>.</li>
+</ul>
+<p>For details, see <a href="page-4_2.html">Vector Editing &amp; Boolean Operations</a>.</p>
+<h3 id="properties-panel-node-inspection"><a href="page-4_3.html">Properties Panel &amp; Node Inspection</a></h3>
+<p>The <code>PropertiesPanel</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx">src/views/canvas/PropertiesPanel.tsx</a> allows users to modify the <code>Node</code> schema directly. This includes styling (fills, strokes, shadows), Auto Layout settings, and Interaction wiring. When <code>devMode</code> is toggled <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L40-L41">src/views/DesignView.tsx:40-41</a>, the panel switches to <code>DevModePanel</code>, providing CSS/React code snippets and precise measurement tools for developers.</p>
+<p>For details, see <a href="page-4_3.html">Properties Panel &amp; Node Inspection</a>.</p>
+<h3 id="canvas-panels-layers-assets-comments-context-menu"><a href="page-4_4.html">Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a></h3>
+<p>The workspace includes several auxiliary panels to manage document complexity:
+*   <strong>LayersPanel</strong>: A tree view of the <code>Page</code> and <code>Frame</code> hierarchy <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx">src/views/canvas/LayersPanel.tsx</a>.
+*   <strong>AssetsPanel</strong>: Browsing and dragging components from the <code>DesignSystem</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx">src/views/canvas/AssetsPanel.tsx</a>.
+*   <strong>CommentsPanel</strong>: Managing feedback threads via <code>commentMode</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L159-L168">src/views/DesignView.tsx:159-168</a>.
+*   <strong>ContextMenu</strong>: Right-click actions like Group (Ctrl+G), Ungroup, and Reordering <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/ContextMenu.tsx">src/views/canvas/ContextMenu.tsx</a>.</p>
+<p>For details, see <a href="page-4_4.html">Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>.</p>
+<hr />
+<h2 id="editor-state-flow">Editor State Flow</h2>
+<p>The Design Editor bridges user input on the Canvas with the underlying <code>GpoDocument</code> data structure.</p>
+<p><strong>Input Handling Flow</strong>
+<pre class="mermaid">sequenceDiagram
+    participant User
+    participant CS as CanvasStage (Konva)
+    participant Store as useStore (Zustand)
+    participant Hist as History (zundo)
+
+    User-&gt;&gt;CS: Drag Node
+    CS-&gt;&gt;CS: calculateSnapping()
+    CS-&gt;&gt;Store: updateNode(frameId, nodeId, {x, y})
+    Store-&gt;&gt;Hist: pushState()
+    Store--&gt;&gt;CS: Render updated doc
+    CS--&gt;&gt;User: Visual Update
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L121-L122">src/views/canvas/CanvasStage.tsx:121-122</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L5-L6">src/views/DesignView.tsx:5-6</a></p>
+<h3 id="summary-table-tools-actions">Summary Table: Tools &amp; Actions</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Tools / Actions</th>
+<th style="text-align: left;">File Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Creation</strong></td>
+<td style="text-align: left;">Rect, Ellipse, Line, Text, Pen</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L17-L26">src/views/DesignView.tsx:17-26</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Arrangement</strong></td>
+<td style="text-align: left;">Group, Ungroup, Reorder</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L117-L118">src/views/DesignView.tsx:117-118</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Boolean</strong></td>
+<td style="text-align: left;">Union, Subtract, Intersect, Exclude</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L28-L33">src/views/DesignView.tsx:28-33</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Components</strong></td>
+<td style="text-align: left;">Create Component, Instantiate</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L58-L155">src/views/DesignView.tsx:58-155</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Collaboration</strong></td>
+<td style="text-align: left;">Comment Mode, Resolve Threads</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L159-L168">src/views/DesignView.tsx:159-168</a></td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L17-L168">src/views/DesignView.tsx:17-168</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L102-L135">src/views/canvas/CanvasStage.tsx:102-135</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

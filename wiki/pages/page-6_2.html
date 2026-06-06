@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>6.2 Design Rules Engine &amp; Audit · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1 active" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="design-rules-engine-audit">Design Rules Engine &amp; Audit</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/__tests__/core.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts)
+- [src/designsystem/audit.ts](https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts)
+- [src/designsystem/rules.ts](https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts)
+- [src/interop/importDesign.ts](https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts)
+- [src/schema/layout.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts)
+
+</details>
+
+<p>The Design Rules Engine and Audit system provides a validation and correction layer for the OpenPrototype design environment. It ensures that generated or manually edited designs adhere to the semantic constraints of the <code>DesignSystem</code> and meet accessibility standards. This subsystem acts as a bridge between high-level design intent (e.g., "use the primary color") and the concrete properties of nodes on the canvas.</p>
+<h2 id="design-rules-engine">Design Rules Engine</h2>
+<p>The Rules Engine is responsible for the automated enforcement of design consistency. It operates primarily through the <code>applyRules</code> function, which traverses a frame's node hierarchy and applies corrective logic based on the active <code>DesignSystem.rules</code>.</p>
+<h3 id="designrule-types">DesignRule Types</h3>
+<p>Rules are defined as objects within the <code>DesignSystem</code> and typically fall into three categories:
+- <strong><code>primary-button-token</code></strong>: Enforces that any node identified as a "button" uses the <code>primary</code> color token for its fill <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L23-L35">src/designsystem/rules.ts:23-35</a>.
+- <strong><code>card-radius</code></strong>: Synchronizes the <code>radius</code> property of rectangles and images with a global design system value <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L36-L51">src/designsystem/rules.ts:36-51</a>.
+- <strong><code>min-tap-target</code></strong>: An accessibility rule that ensures interactive elements (buttons, inputs) meet a minimum height requirement (e.g., 40px or 44px) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L52-L62">src/designsystem/rules.ts:52-62</a>.</p>
+<h3 id="auto-fix-pipeline">Auto-fix Pipeline</h3>
+<p>The <code>applyRules</code> function implements an auto-fix pipeline. When the AI generates a new frame or a user modifies a component, the system runs this pipeline to ensure compliance.</p>
+<h4 id="rule-application-data-flow">Rule Application Data Flow</h4>
+<p>The following diagram illustrates how the <code>applyRules</code> function processes a <code>Frame</code> and generates <code>RuleViolation</code> logs.</p>
+<p><pre class="mermaid">graph TD
+  subgraph &quot;Rule Application Logic&quot;
+    &quot;applyRules&quot;[applyRules] --&gt; &quot;fixNode&quot;[fixNode Recursive]
+    &quot;fixNode&quot; --&gt; &quot;checkRules&quot;[&quot;Iterate ds.rules&quot;]
+    &quot;checkRules&quot; --&gt; &quot;Rule_Primary&quot;[&quot;primary-button-token&quot;]
+    &quot;checkRules&quot; --&gt; &quot;Rule_Radius&quot;[&quot;card-radius&quot;]
+    &quot;checkRules&quot; --&gt; &quot;Rule_Tap&quot;[&quot;min-tap-target&quot;]
+  end
+
+  &quot;Input_Frame&quot;[&quot;Frame Object&quot;] --&gt; &quot;applyRules&quot;
+  &quot;DesignSystem&quot;[&quot;DesignSystem.rules&quot;] --&gt; &quot;applyRules&quot;
+
+  &quot;Rule_Primary&quot; -- &quot;If type=&#x27;button&#x27; &amp;&amp; fill != &#x27;primary&#x27;&quot; --&gt; &quot;Fix_Fill&quot;[&quot;Update node.style.fill&quot;]
+  &quot;Rule_Radius&quot; -- &quot;If type=&#x27;rect&#x27; &amp;&amp; radius != rule.value&quot; --&gt; &quot;Fix_Radius&quot;[&quot;Update node.style.radius&quot;]
+  &quot;Rule_Tap&quot; -- &quot;If height &lt; rule.value&quot; --&gt; &quot;Fix_Height&quot;[&quot;Update node.height&quot;]
+
+  &quot;Fix_Fill&quot; --&gt; &quot;Violation&quot;[&quot;RuleViolation Log&quot;]
+  &quot;Fix_Radius&quot; --&gt; &quot;Violation&quot;
+  &quot;Fix_Height&quot; --&gt; &quot;Violation&quot;
+
+  &quot;fixNode&quot; -- &quot;Recursive Map&quot; --&gt; &quot;Output_Frame&quot;[&quot;Fixed Frame&quot;]
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L14-L69">src/designsystem/rules.ts:14-69</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L72-L102">src/<strong>tests</strong>/core.test.ts:72-102</a></p>
+<h2 id="design-system-audit">Design System Audit</h2>
+<p>While the Rules Engine fixes specific nodes, the Audit system evaluates the health and completeness of the <code>DesignSystem</code> itself. It is designed to act as a "Senior PM / Designer" check <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L29-L33">src/designsystem/audit.ts:29-33</a>.</p>
+<h3 id="auditfinding-levels">AuditFinding Levels</h3>
+<p>Findings are categorized into three levels:
+- <code>ok</code>: Requirement met or best practice followed.
+- <code>warn</code>: Minor inconsistency or missing non-critical scale (e.g., missing elevation levels).
+- <code>error</code>: Critical deficiency (e.g., missing mandatory semantic colors).</p>
+<h3 id="key-audit-metrics">Key Audit Metrics</h3>
+<p>The <code>auditDesignSystem</code> function performs the following checks:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Check</th>
+<th style="text-align: left;">Logic</th>
+<th style="text-align: left;">Target / Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Semantic Completeness</strong></td>
+<td style="text-align: left;">Verifies existence of specific keys in <code>tokens.colors</code></td>
+<td style="text-align: left;"><code>primary</code>, <code>bg</code>, <code>surface</code>, <code>border</code>, <code>text</code>, <code>muted</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L39-L45">src/designsystem/audit.ts:39-45</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>WCAG Contrast</strong></td>
+<td style="text-align: left;">Calculates contrast ratio between <code>primary</code> and <code>primary-fg</code></td>
+<td style="text-align: left;">Ratio ≥ 4.5:1 (WCAG AA) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L47-L60">src/designsystem/audit.ts:47-60</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Type Scale</strong></td>
+<td style="text-align: left;">Counts entries in <code>tokens.fonts.sizes</code></td>
+<td style="text-align: left;">Recommended ≥ 4 levels <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L62-L69">src/designsystem/audit.ts:62-69</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Spacing Scale</strong></td>
+<td style="text-align: left;">Counts entries in <code>tokens.spacing</code></td>
+<td style="text-align: left;">Recommended ≥ 4 levels <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L70-L76">src/designsystem/audit.ts:70-76</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Elevation</strong></td>
+<td style="text-align: left;">Verifies <code>tokens.elevation</code></td>
+<td style="text-align: left;">Recommended ≥ 2 levels <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L83-L87">src/designsystem/audit.ts:83-87</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="contrast-calculation">Contrast Calculation</h3>
+<p>The system implements standard WCAG relative luminance formulas to determine accessibility compliance <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L9-L27">src/designsystem/audit.ts:9-27</a>.</p>
+<p><pre class="mermaid">graph LR
+  &quot;hexColor&quot;[&quot;Hex Color String&quot;] --&gt; &quot;luminance&quot;[&quot;luminance()&quot;]
+  &quot;luminance&quot; --&gt; &quot;sRGB&quot;[&quot;Normalize 0..255 to 0..1&quot;]
+  &quot;sRGB&quot; --&gt; &quot;Pow&quot;[&quot;Apply Gamma Correction (v^2.4)&quot;]
+  &quot;Pow&quot; --&gt; &quot;L&quot;[&quot;0.2126*R + 0.7152*G + 0.0722*B&quot;]
+  &quot;L&quot; --&gt; &quot;contrastRatio&quot;[&quot;contrastRatio(L1, L2)&quot;]
+  &quot;contrastRatio&quot; --&gt; &quot;Result&quot;[&quot;(hi + 0.05) / (lo + 0.05)&quot;]
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L8-L27">src/designsystem/audit.ts:8-27</a></p>
+<h2 id="integration-with-ai-generation">Integration with AI Generation</h2>
+<p>Design rules are deeply integrated into the AI generation workflow to ensure that the output of Large Language Models (LLMs) or local heuristics is immediately usable and on-brand.</p>
+<ol>
+<li><strong>Local Generation</strong>: The <code>generateFrameFromMarkdown</code> utility uses the <code>DesignSystem</code> to map generic element names (like "Login Button") to specific node types and default tokenized styles <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L59-L70">src/<strong>tests</strong>/core.test.ts:59-70</a>.</li>
+<li><strong>Post-Processing</strong>: Immediately after a frame is generated by the AI (via <code>generatePage</code> or <code>generateFlow</code>), <code>applyRules</code> is called to "clean up" the output, ensuring all buttons use the primary token and interactive elements are large enough for touch <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L14-L17">src/designsystem/rules.ts:14-17</a>.</li>
+<li><strong>Token Binding</strong>: During the <code>fixNode</code> process, hardcoded hex values are replaced with token references (e.g., <code>{ type: "token", token: "primary" }</code>), which ensures that if the design system tokens are updated later, the AI-generated screens update automatically <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L27">src/designsystem/rules.ts:27</a>.</li>
+</ol>
+<h3 id="system-architecture-rules-audit">System Architecture: Rules &amp; Audit</h3>
+<p>The following diagram bridges the Natural Language concepts (Rules/Audit) to the Code Entities.</p>
+<p><pre class="mermaid">classDiagram
+    class DesignSystem {
+        +DesignTokens tokens
+        +DesignRule[] rules
+    }
+    class DesignRule {
+        +string id
+        +string kind
+        +number|string value
+    }
+    class RuleViolation {
+        +string ruleId
+        +string nodeId
+        +string message
+        +boolean fixed
+    }
+    class AuditFinding {
+        +string level
+        +string message
+    }
+
+    DesignSystem &quot;1&quot; *-- &quot;many&quot; DesignRule
+    
+    class RulesEngine {
+        &lt;&lt;Utility&gt;&gt;
+        +applyRules(Frame, DesignSystem) : {frame, violations}
+    }
+    
+    class AuditEngine {
+        &lt;&lt;Utility&gt;&gt;
+        +auditDesignSystem(DesignSystem) : AuditFinding[]
+        +contrastRatio(hex, hex) : number
+    }
+
+    RulesEngine ..&gt; RuleViolation : creates
+    AuditEngine ..&gt; AuditFinding : creates
+    RulesEngine ..&gt; DesignRule : reads
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L3-L17">src/designsystem/rules.ts:3-17</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L3-L6">src/designsystem/audit.ts:3-6</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts">src/schema/types.ts</a> (implied)</p>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="node-traversal">Node Traversal</h3>
+<p>The <code>applyRules</code> function uses a recursive <code>fixNode</code> inner function to ensure that rules are applied to nested children within groups or frames <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L20-L66">src/designsystem/rules.ts:20-66</a>.</p>
+<h3 id="rule-customization">Rule Customization</h3>
+<p>Rules are not hardcoded; they respect the <code>value</code> field within the <code>DesignRule</code> object. For example, if a user updates the <code>card-radius</code> rule in the <code>DesignSystem</code> to <code>12</code>, subsequent calls to <code>applyRules</code> will automatically adjust rectangles to <code>12px</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L104-L125">src/<strong>tests</strong>/core.test.ts:104-125</a>.</p>
+<p><strong>Sources:</strong>
+- <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L1-L70">src/designsystem/rules.ts:1-70</a>
+- <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L1-L91">src/designsystem/audit.ts:1-91</a>
+- <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L72-L126">src/<strong>tests</strong>/core.test.ts:72-126</a>
+- <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L1-L29">src/interop/importDesign.ts:1-29</a> (context for token structures)</p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

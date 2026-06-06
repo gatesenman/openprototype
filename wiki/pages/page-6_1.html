@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>6.1 Design Tokens, Variables &amp; Presets · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1 active" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="design-tokens-variables-presets">Design Tokens, Variables &amp; Presets</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/components/CloudModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx)
+- [src/components/DesignSystemModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx)
+- [src/designsystem/presets.ts](https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts)
+- [src/export/exportTokens.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportTokens.ts)
+- [src/market/elementPlus.ts](https://github.com/gaosichun888/openprototype/blob/main/src/market/elementPlus.ts)
+- [src/views/canvas/PropertiesPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx)
+
+</details>
+
+<p>OpenPrototype utilizes a multi-layered design system architecture that bridges high-level design tokens with low-level CSS/JSON exports and reusable UI presets. The system is designed to ensure visual consistency across AI-generated screens while providing Figma-like flexibility for manual overrides and variable binding.</p>
+<h2 id="designtokens-structure">DesignTokens Structure</h2>
+<p>The <code>DesignTokens</code> interface defines the core visual constants of a project. These tokens are stored within the <code>DesignSystem</code> object of a <code>GpoDocument</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts">src/schema/types.ts</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Data Structure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Colors</strong></td>
+<td style="text-align: left;">Semantic color mappings (primary, bg, text, etc.)</td>
+<td style="text-align: left;"><code>Record&lt;string, string&gt;</code> (Hex codes)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Radii</strong></td>
+<td style="text-align: left;">Corner radius scales (sm, md, lg, full)</td>
+<td style="text-align: left;"><code>Record&lt;string, number&gt;</code> (Pixels)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Spacing</strong></td>
+<td style="text-align: left;">Layout padding and gap scales (xs, sm, md, lg, xl)</td>
+<td style="text-align: left;"><code>Record&lt;string, number&gt;</code> (Pixels)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Fonts</strong></td>
+<td style="text-align: left;">Font family and type scale (sizes: xs to 2xl)</td>
+<td style="text-align: left;"><code>{ family: string, sizes: Record&lt;string, number&gt; }</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Elevation</strong></td>
+<td style="text-align: left;">Box shadow definitions for depth</td>
+<td style="text-align: left;"><code>Record&lt;string, Shadow&gt;</code> (x, y, blur, color)</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L11-L18">src/designsystem/presets.ts:11-18</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L27-L47">src/designsystem/presets.ts:27-47</a></p>
+<h2 id="named-variables">Named Variables</h2>
+<p>Beyond standard tokens, the system supports <strong>Variables</strong>. These are named entities that can be bound to node properties, similar to Figma Variables. Variables are categorized into <code>color</code> or <code>number</code> types and organized into collections.</p>
+<h3 id="variable-lifecycle">Variable Lifecycle</h3>
+<ol>
+<li><strong>Creation</strong>: Users add variables via the <code>DesignSystemModal</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L58-L68">src/components/DesignSystemModal.tsx:58-68</a>.</li>
+<li><strong>Storage</strong>: Variables are stored in the <code>ds.variables</code> array <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L31">src/components/DesignSystemModal.tsx:31</a>.</li>
+<li><strong>Binding</strong>: Variables can be applied to node styles (e.g., fill color or corner radius) to maintain global sync.</li>
+</ol>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L3-L4">src/components/DesignSystemModal.tsx:3-4</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L56-L68">src/components/DesignSystemModal.tsx:56-68</a></p>
+<h2 id="design-system-presets">Design System Presets</h2>
+<p>OpenPrototype includes several built-in presets that allow users to jumpstart projects with industry-standard design languages. The <code>DESIGN_SYSTEM_PRESETS</code> registry contains configurations for:</p>
+<ul>
+<li><strong>OpenPrototype Default</strong>: A neutral, indigo-based system <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L23-L52">src/designsystem/presets.ts:23-52</a>.</li>
+<li><strong>Material 3</strong>: Google's design language with large radii and purple primary colors <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L53-L82">src/designsystem/presets.ts:53-82</a>.</li>
+<li><strong>Ant Design</strong>: Enterprise-focused with small radii and "Sunrise Blue" <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L83-L112">src/designsystem/presets.ts:83-112</a>.</li>
+<li><strong>Element Plus</strong>: A Vue-ecosystem standard with 4px radii and "Vitality Blue" <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L114-L142">src/designsystem/presets.ts:114-142</a>.</li>
+</ul>
+<h3 id="preset-implementation">Preset Implementation</h3>
+<p>Presets are applied using the <code>applyPreset</code> function in the UI, which updates the local state of the <code>DesignSystemModal</code> before committing to the global store <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L33-L44">src/components/DesignSystemModal.tsx:33-44</a>.</p>
+<h3 id="component-marketplace-integration">Component Marketplace Integration</h3>
+<p>Specific libraries like <strong>Element Plus</strong> also provide high-fidelity component packages (<code>EP</code>) that use fixed color palettes to ensure visual fidelity with the original framework <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/elementPlus.ts#L12-L27">src/market/elementPlus.ts:12-27</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L22-L143">src/designsystem/presets.ts:22-143</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/elementPlus.ts#L5-L11">src/market/elementPlus.ts:5-11</a></p>
+<h2 id="token-export-mechanisms">Token Export Mechanisms</h2>
+<p>Design systems can be exported into developer-friendly formats using the <code>exportTokens.ts</code> utilities.</p>
+<h3 id="css-custom-properties">CSS Custom Properties</h3>
+<p>The <code>tokensToCss</code> function iterates through colors, radii, spacing, and font sizes to generate a <code>:root</code> block <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportTokens.ts#L4-L18">src/export/exportTokens.ts:4-18</a>.
+*   <strong>Prefixes</strong>: <code>--color-</code>, <code>--radius-</code>, <code>--space-</code>, <code>--font-</code>.
+*   <strong>Units</strong>: Numbers are automatically suffixed with <code>px</code> where appropriate <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportTokens.ts#L9-L15">src/export/exportTokens.ts:9-15</a>.</p>
+<h3 id="json-w3c-format">JSON (W3C Format)</h3>
+<p>The <code>tokensToJson</code> function serializes the tokens into a structured JSON object, following a format compatible with many design-to-code pipelines <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportTokens.ts#L21-L33">src/export/exportTokens.ts:21-33</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportTokens.ts#L1-L34">src/export/exportTokens.ts:1-34</a></p>
+<h2 id="system-architecture-diagrams">System Architecture Diagrams</h2>
+<h3 id="token-data-flow-from-preset-to-export">Token Data Flow: From Preset to Export</h3>
+<p>This diagram illustrates how data flows from the static <code>DESIGN_SYSTEM_PRESETS</code> into the application state and eventually to external formats.</p>
+<p><strong>Preset Data Flow</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Natural Language &amp; UI Space&quot;
+        A[&quot;DesignSystemModal UI&quot;]
+        B[&quot;applyPreset(&#x27;preset_ant&#x27;)&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        C[&quot;DESIGN_SYSTEM_PRESETS&quot;]
+        D[&quot;useStore (Zustand)&quot;]
+        E[&quot;updateDesignSystem()&quot;]
+        F[&quot;tokensToCss(ds)&quot;]
+        G[&quot;tokensToJson(ds)&quot;]
+    end
+
+    A --&gt; B
+    B -- &quot;Finds preset in&quot; --&gt; C
+    C -- &quot;Returns DesignTokens&quot; --&gt; B
+    B -- &quot;Dispatches&quot; --&gt; E
+    E -- &quot;Updates doc.designSystem&quot; --&gt; D
+    D -- &quot;Input for&quot; --&gt; F
+    D -- &quot;Input for&quot; --&gt; G
+    F -- &quot;Returns&quot; --&gt; H[&quot;:root { --color-primary... }&quot;]
+    G -- &quot;Returns&quot; --&gt; I[&quot;{ &#x27;color&#x27;: { ... } }&quot;]
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L33-L54">src/components/DesignSystemModal.tsx:33-54</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportTokens.ts#L4-L33">src/export/exportTokens.ts:4-33</a></p>
+<h3 id="variable-and-component-mapping">Variable and Component Mapping</h3>
+<p>This diagram bridges the conceptual "Design System" with the specific code entities that manage them.</p>
+<p><strong>Design System Entity Mapping</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;Natural Language Concepts&quot;
+        Token[&quot;Visual Constants (Tokens)&quot;]
+        Var[&quot;Named Variables&quot;]
+        Preset[&quot;System Presets&quot;]
+        Comp[&quot;UI Components&quot;]
+    end
+
+    subgraph &quot;Code Entities (src/schema/types.ts)&quot;
+        DS[&quot;DesignSystem Object&quot;]
+        DT[&quot;DesignTokens Interface&quot;]
+        V[&quot;Variable Type&quot;]
+        CD[&quot;ComponentDef&quot;]
+    end
+
+    subgraph &quot;Logic &amp; UI&quot;
+        DSM[&quot;DesignSystemModal.tsx&quot;]
+        PS[&quot;presets.ts&quot;]
+        EP[&quot;elementPlus.ts&quot;]
+    end
+
+    Token --&gt; DT
+    Var --&gt; V
+    Preset --&gt; PS
+    Comp --&gt; CD
+    
+    DT -- &quot;part of&quot; --&gt; DS
+    V -- &quot;stored in&quot; --&gt; DS
+    CD -- &quot;stored in&quot; --&gt; DS
+    
+    PS -- &quot;populates&quot; --&gt; DSM
+    DSM -- &quot;updates&quot; --&gt; DS
+    EP -- &quot;defines&quot; --&gt; CD
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts">src/schema/types.ts</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L16-L31">src/components/DesignSystemModal.tsx:16-31</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/presets.ts#L11-L18">src/designsystem/presets.ts:11-18</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/market/elementPlus.ts#L99-L105">src/market/elementPlus.ts:99-105</a></p>
+<h2 id="designsystemmodal-ui">DesignSystemModal UI</h2>
+<p>The <code>DesignSystemModal</code> provides a comprehensive interface for managing the design system <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L15">src/components/DesignSystemModal.tsx:15</a>.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>Preset Grid</strong>: Visual cards for one-click application of standard systems <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L99-L112">src/components/DesignSystemModal.tsx:99-112</a>.</li>
+<li><strong>Audit List</strong>: Real-time feedback from <code>auditDesignSystem</code> highlighting accessibility (WCAG) and consistency issues <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L116-L125">src/components/DesignSystemModal.tsx:116-125</a>.</li>
+<li><strong>Token Editors</strong>: Grid-based inputs for colors, radii, spacing, and font sizes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L133-L152">src/components/DesignSystemModal.tsx:133-152</a>.</li>
+<li><strong>Variable Management</strong>: Interface for adding and patching named variables <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L56-L68">src/components/DesignSystemModal.tsx:56-68</a>.</li>
+<li><strong>System Prompt</strong>: A textarea for defining "System Level Prompts" that are injected into AI generation requests to enforce design rules <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L160-L165">src/components/DesignSystemModal.tsx:160-165</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L1-L165">src/components/DesignSystemModal.tsx:1-165</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts">src/designsystem/audit.ts</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

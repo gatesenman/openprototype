@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>5.1 Page &amp; Flow Generation · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1 active" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="page-flow-generation">Page &amp; Flow Generation</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/ai/flow.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts)
+- [src/ai/frameName.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/frameName.ts)
+- [src/ai/generate.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts)
+- [src/ai/localGenerator.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts)
+- [src/views/canvas/AiAssistant.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AiAssistant.tsx)
+
+</details>
+
+<p>OpenPrototype features a dual-path generation system that converts natural language requirements into editable design frames. This system supports both single-page generation and multi-page interactive flows, utilizing either a remote Large Language Model (LLM) or a local heuristic engine for offline use.</p>
+<h2 id="generation-pipeline-overview">Generation Pipeline Overview</h2>
+<p>The generation process follows a structured pipeline that transforms a text brief into a normalized <code>Frame</code> object compatible with the canvas.</p>
+<h3 id="data-flow-requirements-to-canvas">Data Flow: Requirements to Canvas</h3>
+<p>The following diagram illustrates how natural language is processed through the generation system into the internal data model.</p>
+<p><strong>Natural Language to Code Entity Mapping</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Natural Language Space&quot;
+        Brief[&quot;User Brief / Markdown&quot;]
+        Instruction[&quot;Fine-tune Instruction&quot;]
+    end
+
+    subgraph &quot;Generation Logic (src/ai/)&quot;
+        GP[&quot;generatePage()&quot;]
+        GF[&quot;generateFlow()&quot;]
+        FT[&quot;fineTuneNode()&quot;]
+        LGM[&quot;generateFrameFromMarkdown()&quot;]
+        GFB[&quot;generateFlowFromBrief()&quot;]
+    end
+
+    subgraph &quot;Code Entity Space (src/schema/)&quot;
+        Frame[&quot;Frame Object&quot;]
+        Node[&quot;Node (button, input, etc.)&quot;]
+        Interaction[&quot;Interaction (targetFrameId)&quot;]
+    end
+
+    Brief --&gt; GP
+    Brief --&gt; GF
+    Instruction --&gt; FT
+    
+    GP --&gt;|LLM Path| COERCE[&quot;coerceFrame()&quot;]
+    GP --&gt;|Local Path| LGM
+    GF --&gt;|Local Path| GFB
+    
+    LGM --&gt; Frame
+    COERCE --&gt; Frame
+    GFB --&gt;|Auto-wiring| Interaction
+    Interaction --&gt; Node
+    Node --&gt; Frame
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L171-L180">src/ai/generate.ts:171-180</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L151-L176">src/ai/flow.ts:151-176</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L30-L35">src/ai/localGenerator.ts:30-35</a></p>
+<h2 id="single-page-generation-generatepage">Single Page Generation (<code>generatePage</code>)</h2>
+<p>The <code>generatePage</code> function in <code>src/ai/generate.ts</code> is the primary entry point for creating a single screen. It detects the availability of an AI provider and routes the request accordingly.</p>
+<ol>
+<li><strong>Local Path</strong>: If no API key is provided or the provider is set to "local", it invokes <code>generateFrameFromMarkdown</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L179-L180">src/ai/generate.ts:179-180</a>.</li>
+<li><strong>LLM Path</strong>: If a provider (OpenAI, Anthropic, etc.) is configured, it constructs a <code>systemPrompt</code> containing the <code>DesignSystem</code> tokens and rules <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L19-L27">src/ai/generate.ts:19-27</a>.</li>
+<li><strong>Normalization</strong>: Results from the LLM are passed through <code>coerceFrame</code> to ensure type safety and provide defaults for missing fields <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L40-L68">src/ai/generate.ts:40-68</a>.</li>
+<li><strong>Post-processing</strong>: The generated frame is passed through <code>applyRules</code> to ensure compliance with the active design system (e.g., primary buttons using the correct token) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L181">src/ai/generate.ts:181</a>.</li>
+</ol>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L171-L191">src/ai/generate.ts:171-191</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L40-L68">src/ai/generate.ts:40-68</a></p>
+<h2 id="multi-screen-flow-generation-generateflow">Multi-Screen Flow Generation (<code>generateFlow</code>)</h2>
+<p>Flow generation creates multiple screens and automatically links them with <code>Interaction</code> objects to create a functional prototype.</p>
+<h3 id="flow-planning">Flow Planning</h3>
+<p>The <code>generateFlowFromBrief</code> function uses <code>planScreens</code> to select a <code>FlowPlan</code> based on keywords in the user's brief <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L29-L32">src/ai/flow.ts:29-32</a>. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Flow Category</th>
+<th style="text-align: left;">Keywords</th>
+<th style="text-align: left;">Typical Screens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>E-Commerce</strong></td>
+<td style="text-align: left;">shop, cart, commerce</td>
+<td style="text-align: left;">List, Detail, Cart, Checkout</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Auth</strong></td>
+<td style="text-align: left;">login, register, signin</td>
+<td style="text-align: left;">Login, Home, Settings</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Social</strong></td>
+<td style="text-align: left;">feed, chat, message</td>
+<td style="text-align: left;">Feed, Detail</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Generic</strong></td>
+<td style="text-align: left;">(fallback)</td>
+<td style="text-align: left;">Home, Detail, Success</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L33-L119">src/ai/flow.ts:33-119</a></p>
+<h3 id="prototype-auto-wiring">Prototype Auto-Wiring</h3>
+<p>After generating frames for each <code>ScreenSpec</code>, the system "wires" them together:
+1.  It iterates through the generated frames <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L162">src/ai/flow.ts:162</a>.
+2.  It identifies a "forward" node (usually the primary button) using <code>pickForwardNode</code> and an optional <code>forwardHint</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L127-L136">src/ai/flow.ts:127-136</a>.
+3.  It injects an <code>Interaction</code> object into that node, setting the <code>targetFrameId</code> to the subsequent frame's ID <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L165-L171">src/ai/flow.ts:165-171</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L151-L176">src/ai/flow.ts:151-176</a></p>
+<h2 id="local-heuristic-generator">Local Heuristic Generator</h2>
+<p>The <code>localGenerator.ts</code> provides an offline fallback that parses Markdown via simple heuristics. It classifies lines into <code>NodeType</code> based on regex patterns:</p>
+<ul>
+<li><strong>Classification</strong>: Lines containing "button" or "提交" (submit) become <code>button</code> nodes; "input" or "输入框" become <code>input</code> nodes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L17-L24">src/ai/localGenerator.ts:17-24</a>.</li>
+<li><strong>Layout</strong>: It calculates a vertical stack (Y-axis) based on the design system's spacing tokens (<code>ds.tokens.spacing.lg</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L49-L51">src/ai/localGenerator.ts:49-51</a>.</li>
+<li><strong>Styling</strong>: It applies different fills based on the requested <code>fidelity</code>. For "hifi", it maps nodes to specific tokens like <code>primary</code> for buttons <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L124">src/ai/localGenerator.ts:124</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L30-L191">src/ai/localGenerator.ts:30-191</a></p>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="frame-normalization-coerceframe">Frame Normalization (<code>coerceFrame</code>)</h3>
+<p>LLMs often return inconsistent JSON. <code>coerceFrame</code> serves as a validator that:
+*   Ensures <code>width</code> and <code>height</code> are numbers <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L47-L48">src/ai/generate.ts:47-48</a>.
+*   Filters <code>type</code> against the valid <code>NodeType</code> enum <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L53-L57">src/ai/generate.ts:53-57</a>.
+*   Generates unique IDs using <code>id()</code> for every node to prevent collisions <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L52">src/ai/generate.ts:52</a>.</p>
+<h3 id="ai-assistant-integration">AI Assistant Integration</h3>
+<p>The <code>AiAssistant</code> component provides the UI for these operations. It maintains a message history and triggers either <code>send</code> (single page/fine-tune) or <code>sendFlow</code> (multi-page) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AiAssistant.tsx#L34-L96">src/views/canvas/AiAssistant.tsx:34-96</a>.</p>
+<p><strong>Interaction Logic in AiAssistant</strong>
+<pre class="mermaid">sequenceDiagram
+    participant UI as AiAssistant
+    participant Store as useStore
+    participant Gen as generate.ts
+    participant Local as localGenerator.ts
+
+    UI-&gt;&gt;Gen: generatePage(text, ds, ai, fidelity)
+    Gen-&gt;&gt;Local: generateFrameFromMarkdown (if no key)
+    Local--&gt;&gt;Gen: Frame
+    Gen-&gt;&gt;Gen: applyRules(Frame, ds)
+    Gen--&gt;&gt;UI: GenerateResult
+    UI-&gt;&gt;Store: addFrameWithNodes(result.frame)
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AiAssistant.tsx#L54-L63">src/views/canvas/AiAssistant.tsx:54-63</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L171-L191">src/ai/generate.ts:171-191</a></p>
+<h3 id="fine-tuning-nodes">Fine-Tuning Nodes</h3>
+<p>When a single node is selected, the AI Assistant switches to "fine-tune" mode.
+*   <strong>Local Fine-tune</strong>: Supports instructions like "make it bigger", "center it", or "use primary color" via regex mapping in <code>localFineTune</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L121-L146">src/ai/generate.ts:121-146</a>.
+*   <strong>LLM Fine-tune</strong>: Sends the current node's JSON and the instruction to the model to return a patched JSON object <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L157-L160">src/ai/generate.ts:157-160</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L148-L169">src/ai/generate.ts:148-169</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

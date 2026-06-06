@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>1.1 Getting Started &amp; Project Setup · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1 active" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="getting-started-project-setup">Getting Started &amp; Project Setup</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [.eslintrc.cjs](https://github.com/gaosichun888/openprototype/blob/main/.eslintrc.cjs)
+- [README.md](https://github.com/gaosichun888/openprototype/blob/main/README.md)
+- [index.html](https://github.com/gaosichun888/openprototype/blob/main/index.html)
+- [package.json](https://github.com/gaosichun888/openprototype/blob/main/package.json)
+- [src-tauri/Cargo.toml](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/Cargo.toml)
+- [src/main.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/main.tsx)
+- [src/vite-env.d.ts](https://github.com/gaosichun888/openprototype/blob/main/src/vite-env.d.ts)
+- [tsconfig.json](https://github.com/gaosichun888/openprototype/blob/main/tsconfig.json)
+- [vite.config.ts](https://github.com/gaosichun888/openprototype/blob/main/vite.config.ts)
+
+</details>
+
+<p>This page provides a technical overview of the development environment, build processes, and the structural foundation of the OpenPrototype codebase. It covers the transition from source code to executable artifacts (web and desktop) and introduces the <code>.gpo</code> file format used for persistence.</p>
+<h2 id="development-environment-build-commands">Development Environment &amp; Build Commands</h2>
+<p>OpenPrototype is built using <strong>React 18</strong>, <strong>TypeScript</strong>, and <strong>Vite</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L24-L24">README.md:24-24</a>. It utilizes <code>pnpm</code> as the primary package manager. The project supports both a browser-based execution environment and a native desktop experience via <strong>Tauri 2</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L24-L24">README.md:24-24</a>.</p>
+<h3 id="standard-scripts">Standard Scripts</h3>
+<p>The following commands are defined in the <code>package.json</code> for standard development tasks:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Command</th>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">File Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>pnpm dev</code></td>
+<td style="text-align: left;">Starts the Vite development server at <code>http://localhost:5173</code></td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L8-L8">package.json:8-8</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pnpm build</code></td>
+<td style="text-align: left;">Compiles TypeScript and builds the production-ready static site in <code>dist/</code></td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L9-L9">package.json:9-9</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pnpm typecheck</code></td>
+<td style="text-align: left;">Runs the TypeScript compiler (<code>tsc</code>) in <code>noEmit</code> mode to verify types</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L11-L11">package.json:11-11</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pnpm lint</code></td>
+<td style="text-align: left;">Executes ESLint across <code>.ts</code> and <code>.tsx</code> files</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L12-L12">package.json:12-12</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pnpm test</code></td>
+<td style="text-align: left;">Runs unit tests using Vitest</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L13-L13">package.json:13-13</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="desktop-tauri-commands">Desktop (Tauri) Commands</h3>
+<p>For desktop development, the project leverages the <code>@tauri-apps/cli</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L33-L33">package.json:33-33</a>.</p>
+<ul>
+<li><strong>Development</strong>: <code>pnpm tauri dev</code> starts the application in a native window with hot-reloading <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L40-L40">README.md:40-40</a>.</li>
+<li><strong>Production</strong>: <code>pnpm tauri build</code> packages the application into native installers for Windows, macOS, or Linux <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L41-L41">README.md:41-41</a>.</li>
+</ul>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L24-L42">README.md:24-42</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L7-L15">package.json:7-15</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/vite.config.ts#L1-L21">vite.config.ts:1-21</a></p>
+<hr />
+<h2 id="project-directory-structure">Project Directory Structure</h2>
+<p>The source code is organized by functional domain to separate concerns between data modeling, AI logic, and rendering.</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;Root&quot;
+        &quot;src/&quot;[&quot;src/&quot;]
+        &quot;src-tauri/&quot;[&quot;src-tauri/&quot;]
+    end
+
+    subgraph &quot;src/ Directory Structure&quot;
+        &quot;src/&quot; --&gt; &quot;schema/&quot;[&quot;schema/ (.gpo Schema &amp; Serialization)&quot;]
+        &quot;src/&quot; --&gt; &quot;store/&quot;[&quot;store/ (Zustand State Management)&quot;]
+        &quot;src/&quot; --&gt; &quot;ai/&quot;[&quot;ai/ (LLM Providers &amp; Heuristics)&quot;]
+        &quot;src/&quot; --&gt; &quot;render/&quot;[&quot;render/ (Token Parsing &amp; Visuals)&quot;]
+        &quot;src/&quot; --&gt; &quot;views/&quot;[&quot;views/ (Canvas, Requirements, Preview)&quot;]
+        &quot;src/&quot; --&gt; &quot;file/&quot;[&quot;file/ (Platform I/O: Tauri vs Browser)&quot;]
+    end
+
+    subgraph &quot;Desktop Shell&quot;
+        &quot;src-tauri/&quot; --&gt; &quot;Cargo.toml&quot;[&quot;Cargo.toml (Rust Dependencies)&quot;]
+        &quot;src-tauri/&quot; --&gt; &quot;tauri.conf.json&quot;[&quot;tauri.conf.json (App Config)&quot;]
+    end
+</pre></p>
+<h3 id="key-directories">Key Directories</h3>
+<ul>
+<li><code>src/schema/</code>: Defines the <code>GpoDocument</code> structure and handles ZIP serialization <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L61-L61">README.md:61-61</a>.</li>
+<li><code>src/store/</code>: Contains Zustand stores for document state, selection, and UI settings <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L62-L62">README.md:62-62</a>.</li>
+<li><code>src/ai/</code>: Manages the AI gateway (OpenAI/Anthropic) and local generation logic <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L63-L63">README.md:63-63</a>.</li>
+<li><code>src/views/</code>: Contains the primary application views: Requirements, Design (Canvas), and Prototype <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L68-L68">README.md:68-68</a>.</li>
+<li><code>src/file/</code>: Abstracts file system operations, switching between the browser File System Access API and Tauri's native <code>tauri-plugin-fs</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L67-L67">README.md:67-67</a>.</li>
+</ul>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L57-L70">README.md:57-70</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/Cargo.toml#L1-L20">src-tauri/Cargo.toml:1-20</a></p>
+<hr />
+<h2 id="the-gpo-file-format">The .gpo File Format</h2>
+<p>The <code>.gpo</code> (Generative Prototype Object) file is the native persistence format for OpenPrototype <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L5-L5">README.md:5-5</a>. It is a <strong>ZIP container</strong> designed for both human readability and interoperability with other design tools <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L44-L46">README.md:44-46</a>.</p>
+<h3 id="container-structure">Container Structure</h3>
+<p>A <code>.gpo</code> file contains the following internal structure:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>manifest.json</code></td>
+<td style="text-align: left;">Metadata including the schema version <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L49-L49">README.md:49-49</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>document.json</code></td>
+<td style="text-align: left;">The full document tree, including pages, frames, and nodes <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L50-L50">README.md:50-50</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>INTEROP.md</code></td>
+<td style="text-align: left;">Mapping specifications for fields compatible with Figma/Sketch <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L51-L51">README.md:51-51</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>assets/</code></td>
+<td style="text-align: left;">Directory containing binary assets like images and embedded fonts <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L52-L52">README.md:52-52</a>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementation-flow-code-to-disk">Implementation Flow: Code to Disk</h3>
+<p>The following diagram illustrates how the system transitions from the in-memory <code>useStore</code> to the <code>.gpo</code> file on disk.</p>
+<p><pre class="mermaid">sequenceDiagram
+    participant S as &quot;useStore (Zustand)&quot;
+    participant G as &quot;gpoFile.ts (Serialization)&quot;
+    participant J as &quot;JSZip&quot;
+    participant F as &quot;fileIo.ts (Platform Bridge)&quot;
+    participant D as &quot;Disk (.gpo)&quot;
+
+    S-&gt;&gt;G: &quot;Trigger Save (GpoDocument)&quot;
+    G-&gt;&gt;G: &quot;Serialize document.json&quot;
+    G-&gt;&gt;J: &quot;Add document.json &amp; manifest.json&quot;
+    G-&gt;&gt;J: &quot;Add assets/ binary data&quot;
+    J-&gt;&gt;G: &quot;Generate Blob/Uint8Array&quot;
+    G-&gt;&gt;F: &quot;saveFile(data, filename)&quot;
+    alt &quot;isTauri === true&quot;
+        F-&gt;&gt;D: &quot;Write via tauri-plugin-fs&quot;
+    else &quot;Browser&quot;
+        F-&gt;&gt;D: &quot;Download via File System Access API&quot;
+    end
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L44-L55">README.md:44-55</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L20-L20">package.json:20-20</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/main.tsx#L1-L10">src/main.tsx:1-10</a></p>
+<hr />
+<h2 id="system-initialization-entry-point">System Initialization &amp; Entry Point</h2>
+<p>The application initializes through <code>src/main.tsx</code>, which mounts the <code>App</code> component within a <code>React.StrictMode</code> wrapper <a href="https://github.com/gaosichun888/openprototype/blob/main/src/main.tsx#L6-L10">src/main.tsx:6-10</a>.</p>
+<h3 id="configuration-environment">Configuration &amp; Environment</h3>
+<ul>
+<li><strong>Vite Configuration</strong>: Defines the <code>@</code> alias for the <code>src/</code> directory to simplify imports <a href="https://github.com/gaosichun888/openprototype/blob/main/vite.config.ts#L9-L11">vite.config.ts:9-11</a>.</li>
+<li><strong>TypeScript Configuration</strong>: Uses <code>Bundler</code> module resolution and targets <code>ES2020</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/tsconfig.json#L3-L8">tsconfig.json:3-8</a>.</li>
+<li><strong>Environment Variables</strong>: The <code>VITE_CLOUD_API</code> variable is used to configure the optional SaaS backend endpoint <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vite-env.d.ts#L3-L5">src/vite-env.d.ts:3-5</a>.</li>
+</ul>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/main.tsx#L1-L11">src/main.tsx:1-11</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/vite.config.ts#L1-L21">vite.config.ts:1-21</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/tsconfig.json#L1-L25">tsconfig.json:1-25</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vite-env.d.ts#L1-L10">src/vite-env.d.ts:1-10</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

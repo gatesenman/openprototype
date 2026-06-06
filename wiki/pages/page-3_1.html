@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>3.1 useStore: Document &amp; Selection State · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1 active" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="usestore-document-selection-state">useStore: Document &amp; Selection State</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/schema/nodeOps.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts)
+- [src/store/useStore.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts)
+
+</details>
+
+<p>The <code>useStore</code> hook is the central state management hub for OpenPrototype, built using <strong>Zustand</strong> and augmented with the <strong>zundo</strong> temporal middleware for undo/redo history <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L1-L203">src/store/useStore.ts:1-203</a>. It manages the <code>GpoDocument</code> schema, selection state, viewport navigation, and complex design operations like component instantiation and vector path manipulation.</p>
+<h2 id="store-architecture-middleware">Store Architecture &amp; Middleware</h2>
+<p>The store is defined as an <code>AppState</code> interface <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L49-L153">src/store/useStore.ts:49-153</a>. It separates persistent document data (<code>doc</code>) from transient session state such as <code>selectedNodeIds</code>, <code>view</code> mode, and <code>clipboard</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L50-L59">src/store/useStore.ts:50-59</a>.</p>
+<h3 id="temporal-state-undoredo">Temporal State (Undo/Redo)</h3>
+<p>By wrapping the store in <code>temporal()</code>, the system automatically tracks changes to the document. This allows for standard design tool shortcuts (Cmd+Z / Cmd+Shift+Z) to traverse the history of <code>GpoDocument</code> mutations.</p>
+<h3 id="document-mutation-pattern">Document Mutation Pattern</h3>
+<p>The store utilizes helper functions like <code>touch</code> to update the <code>meta.updatedAt</code> timestamp on every change <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L159-L161">src/store/useStore.ts:159-161</a> and <code>mapPages</code> to immutably update nested page structures <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L163-L168">src/store/useStore.ts:163-168</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">State Key</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>doc</code></td>
+<td style="text-align: left;"><code>GpoDocument</code></td>
+<td style="text-align: left;">The full serializable document tree.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>view</code></td>
+<td style="text-align: left;"><code>ViewMode</code></td>
+<td style="text-align: left;">The current application view (design, requirements, journey, etc.).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>selectedNodeIds</code></td>
+<td style="text-align: left;"><code>string[]</code></td>
+<td style="text-align: left;">IDs of nodes currently selected on the canvas.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>activeFrameId</code></td>
+<td style="text-align: left;"><code>string \| null</code></td>
+<td style="text-align: left;">The frame currently being edited.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>commentMode</code></td>
+<td style="text-align: left;"><code>boolean</code></td>
+<td style="text-align: left;">When true, canvas interactions drop <code>FrameComment</code> objects.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L49-L62">src/store/useStore.ts:49-62</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L159-L168">src/store/useStore.ts:159-168</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L203-L206">src/store/useStore.ts:203-206</a></p>
+<hr />
+<h2 id="document-node-crud">Document &amp; Node CRUD</h2>
+<p>CRUD operations are performed via actions that modify the <code>doc</code> object. Many of these actions delegate logic to <code>src/schema/nodeOps.ts</code> for structural changes.</p>
+<h3 id="frame-and-node-lifecycle">Frame and Node Lifecycle</h3>
+<ul>
+<li><strong><code>addFrame</code></strong>: Creates a new <code>Frame</code> using <code>emptyFrame()</code> and appends it to the active page <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L78">src/store/useStore.ts:78</a>.</li>
+<li><strong><code>updateNode</code></strong>: Applies a partial patch to a specific node within a frame. If the node has constraints, <code>applyConstraints</code> is triggered <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L85">src/store/useStore.ts:85</a>.</li>
+<li><strong><code>deleteSelection</code></strong>: Filters the <code>nodes</code> array of the active frame to remove all IDs present in <code>selectedNodeIds</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L89">src/store/useStore.ts:89</a>.</li>
+</ul>
+<h3 id="grouping-and-z-index">Grouping and Z-Index</h3>
+<p>Grouping is handled by <code>makeGroup</code>, which calculates a bounding box (<code>bbox</code>) for selected nodes, creates a new <code>group</code> type node, and transforms child coordinates to be relative to the group's top-left <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L25-L42">src/schema/nodeOps.ts:25-42</a>.</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;Node Hierarchy Management&quot;
+    A[&quot;groupSelection()&quot;] --&gt; B[&quot;makeGroup(frame, selectedNodeIds)&quot;]
+    B --&gt; C[&quot;bbox(selectedNodes)&quot;]
+    C --&gt; D[&quot;New Node (type: &#x27;group&#x27;)&quot;]
+    D --&gt; E[&quot;Relative Coordinate Shift&quot;]
+    
+    F[&quot;ungroupSelection()&quot;] --&gt; G[&quot;ungroup(frame, groupId)&quot;]
+    G --&gt; H[&quot;Absolute Coordinate Shift&quot;]
+    H --&gt; I[&quot;Splice children into frame.nodes&quot;]
+    end
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L78-L100">src/store/useStore.ts:78-100</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L5-L42">src/schema/nodeOps.ts:5-42</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L89-L100">src/schema/nodeOps.ts:89-100</a></p>
+<hr />
+<h2 id="component-system">Component System</h2>
+<p>The component system allows users to create reusable <code>ComponentDef</code> templates and instantiate them across the document.</p>
+<h3 id="creation-and-instantiation">Creation and Instantiation</h3>
+<ul>
+<li><strong><code>createComponentFromSelection</code></strong>: Takes selected nodes, clones them into a <code>ComponentDef</code>, and adds it to <code>doc.designSystem.components</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L115">src/store/useStore.ts:115</a>.</li>
+<li><strong><code>instantiateComponent</code></strong>: Creates a <code>Node</code> where <code>componentRef</code> points to the <code>ComponentDef.id</code>. It clones the master template's children into the instance <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L116">src/store/useStore.ts:116</a>.</li>
+</ul>
+<h3 id="overrides-and-syncing">Overrides and Syncing</h3>
+<ul>
+<li><strong><code>pushInstanceToComponent</code></strong>: Takes the current state of an instance (including overrides) and updates the master <code>ComponentDef</code>. It then iterates through all other instances in the document to sync their structures while preserving their unique IDs and positions <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L121">src/store/useStore.ts:121</a>.</li>
+<li><strong><code>resetInstance</code></strong>: Reverts an instance to the master template by re-cloning the <code>ComponentDef</code> children <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L119">src/store/useStore.ts:119</a>.</li>
+<li><strong><code>isInstanceModified</code></strong>: A utility that compares a normalized version of an instance (stripping IDs/positions) against the template to detect local overrides <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L82-L87">src/schema/nodeOps.ts:82-87</a>.</li>
+</ul>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L113-L124">src/store/useStore.ts:113-124</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L65-L87">src/schema/nodeOps.ts:65-87</a></p>
+<hr />
+<h2 id="vector-operations-geometry">Vector Operations &amp; Geometry</h2>
+<p>The store manages complex vector paths and boolean operations using utility functions from <code>src/vector/geometry.ts</code>.</p>
+<h3 id="boolean-operations">Boolean Operations</h3>
+<p>The <code>booleanSelection</code> action combines multiple nodes into a single vector node using operations like <code>union</code>, <code>subtract</code>, <code>intersect</code>, or <code>exclude</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L108-L109">src/store/useStore.ts:108-109</a>.
+1. Nodes are converted to <code>VectorPath</code> objects in frame coordinates via <code>nodeToFramePath</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L181-L191">src/store/useStore.ts:181-191</a>.
+2. The <code>booleanPaths</code> utility processes the paths <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L24">src/vector/geometry.ts:24</a>.
+3. A new <code>vector</code> node is created, and its bounds are normalized using <code>pathBounds</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L26">src/vector/geometry.ts:26</a>.</p>
+<h3 id="outline-stroke">Outline Stroke</h3>
+<p><code>outlineStroke</code> converts a node's stroke property into a filled vector shape <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L111">src/store/useStore.ts:111</a>. This is essential for creating complex icons or preparing shapes for boolean operations.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L106-L111">src/store/useStore.ts:106-111</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L171-L191">src/store/useStore.ts:171-191</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L22-L29">src/vector/geometry.ts:22-29</a></p>
+<hr />
+<h2 id="journey-requirement-management">Journey &amp; Requirement Management</h2>
+<p>Beyond canvas nodes, <code>useStore</code> manages high-level product artifacts.</p>
+<h3 id="requirements-crud">Requirements CRUD</h3>
+<p>The store manages a collection of <code>RequirementDoc</code> objects <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L130-L132">src/store/useStore.ts:130-132</a>. These documents drive the AI generation engine.
+- <code>addRequirement</code>: Initializes a new doc with a default template <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L130">src/store/useStore.ts:130</a>.
+- <code>updateRequirement</code>: Patches the markdown content or metadata <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L131">src/store/useStore.ts:131</a>.</p>
+<h3 id="journey-mapping">Journey Mapping</h3>
+<p>The Journey Map is a matrix of <code>JourneyStage</code> objects <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L145-L152">src/store/useStore.ts:145-152</a>.
+- <strong><code>addStage</code></strong>: Inserts a new stage (column) into the journey map <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L149">src/store/useStore.ts:149</a>.
+- <strong><code>updateStage</code></strong>: Modifies stage properties like <code>emotion</code> (-2 to 2 scale) or <code>description</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L150">src/store/useStore.ts:150</a>.
+- <strong><code>moveStage</code></strong>: Changes the order of stages within the <code>JourneyMap</code> array <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L152">src/store/useStore.ts:152</a>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L130-L132">src/store/useStore.ts:130-132</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L145-L152">src/store/useStore.ts:145-152</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L9-L13">src/schema/types.ts:9-13</a></p>
+<hr />
+<h2 id="system-integration-diagram">System Integration Diagram</h2>
+<p>This diagram maps the natural language actions used in the UI to the underlying code entities in the <code>useStore</code> and <code>nodeOps</code> systems.</p>
+<p><pre class="mermaid">graph LR
+    subgraph &quot;Natural Language (UI)&quot;
+    UI_ADD[&quot;&#x27;Add Frame&#x27;&quot;]
+    UI_GROUP[&quot;&#x27;Group Selection&#x27;&quot;]
+    UI_COMP[&quot;&#x27;Create Component&#x27;&quot;]
+    UI_BOOL[&quot;&#x27;Union Shapes&#x27;&quot;]
+    end
+
+    subgraph &quot;Code Entity Space (useStore.ts)&quot;
+    UI_ADD --&gt; STORE_AF[&quot;addFrame()&quot;]
+    UI_GROUP --&gt; STORE_GS[&quot;groupSelection()&quot;]
+    UI_COMP --&gt; STORE_CC[&quot;createComponentFromSelection()&quot;]
+    UI_BOOL --&gt; STORE_BS[&quot;booleanSelection()&quot;]
+    
+    STORE_AF --&gt; DEF_EF[&quot;emptyFrame()&quot;]
+    STORE_GS --&gt; OPS_MG[&quot;makeGroup()&quot;]
+    STORE_BS --&gt; GEO_BP[&quot;booleanPaths()&quot;]
+    end
+
+    subgraph &quot;Schema &amp; Operations (nodeOps.ts / geometry.ts)&quot;
+    OPS_MG --&gt; OPS_BB[&quot;bbox()&quot;]
+    GEO_BP --&gt; GEO_PB[&quot;pathBounds()&quot;]
+    end
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L78">src/store/useStore.ts:78</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L98">src/store/useStore.ts:98</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L109">src/store/useStore.ts:109</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L115">src/store/useStore.ts:115</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L5-L42">src/schema/nodeOps.ts:5-42</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L24-L26">src/vector/geometry.ts:24-26</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>4.3 Properties Panel &amp; Node Inspection · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1 active" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="properties-panel-node-inspection">Properties Panel &amp; Node Inspection</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/components/CloudModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx)
+- [src/components/DesignSystemModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx)
+- [src/views/canvas/DevModePanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx)
+- [src/views/canvas/LayersPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx)
+- [src/views/canvas/PropertiesPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx)
+
+</details>
+
+<p>The <strong>Properties Panel</strong> and <strong>DevMode Panel</strong> serve as the primary interfaces for manipulating node attributes and inspecting design specifications for handoff. While the <code>PropertiesPanel</code> focuses on state modification (CRUD operations on nodes), the <code>DevModePanel</code> provides a read-only, measurement-centric view with automated code generation.</p>
+<h2 id="properties-panel-architecture">Properties Panel Architecture</h2>
+<p>The <code>PropertiesPanel</code> is a reactive component that synchronizes with the <code>useStore</code> Zustand store. it dynamically adjusts its interface based on whether a frame, a single node, or multiple nodes are selected.</p>
+<h3 id="multi-selection-alignment">Multi-Selection &amp; Alignment</h3>
+<p>When multiple nodes are selected (<code>selectedNodeIds.length &gt; 1</code>), the panel switches to a specialized view for bulk actions:
+*   <strong>Alignment &amp; Distribution</strong>: Triggers the <code>align</code> action in the store <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L117-L140">src/views/canvas/PropertiesPanel.tsx:117-140</a>.
+*   <strong>Component Creation</strong>: Allows grouping the selection into a new component via <code>createComponentFromSelection</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L142-L150">src/views/canvas/PropertiesPanel.tsx:142-150</a>.</p>
+<h3 id="node-property-editing">Node Property Editing</h3>
+<p>For a single selected node, the panel exposes granular controls for the <code>Node</code> schema:
+*   <strong>Layout &amp; Constraints</strong>: Editing <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, and <code>rotation</code>. It also manages <code>Constraints</code> (Horizontal: Left/Right/Center/Scale; Vertical: Top/Bottom/Center/Scale) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L216-L281">src/views/canvas/PropertiesPanel.tsx:216-281</a>.
+*   <strong>Auto Layout</strong>: Controls for <code>flex-direction</code> (direction), <code>gap</code>, <code>padding</code>, and alignment (<code>itemAlignment</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L283-L334">src/views/canvas/PropertiesPanel.tsx:283-334</a>.
+*   <strong>Appearance</strong>: Fill (solid/gradient/image), Stroke (width/color/position), Corner Radius, and Opacity <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L355-L460">src/views/canvas/PropertiesPanel.tsx:355-460</a>.
+*   <strong>Interactions</strong>: Management of <code>Interaction</code> objects, defining triggers (e.g., <code>onClick</code>) and actions (e.g., <code>navigate</code> to a specific <code>targetFrameId</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L505-L555">src/views/canvas/PropertiesPanel.tsx:505-555</a>.</p>
+<h3 id="instance-override-management">Instance Override Management</h3>
+<p>The panel handles the lifecycle of component instances. It detects if an instance has diverged from its master template using <code>isInstanceModified</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L103-L104">src/views/canvas/PropertiesPanel.tsx:103-104</a>.
+*   <strong>Push to Component</strong>: Merges local overrides back into the master <code>ComponentDef</code> using <code>pushInstanceToComponent</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L199-L201">src/views/canvas/PropertiesPanel.tsx:199-201</a>.
+*   <strong>Reset Instance</strong>: Reverts all local overrides to match the master template via <code>resetInstance</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L202-L204">src/views/canvas/PropertiesPanel.tsx:202-204</a>.</p>
+<p><strong>Data Flow: Selection to UI</strong>
+Title: Property Panel Selection Logic
+<pre class="mermaid">graph TD
+    subgraph &quot;Zustand Store (useStore)&quot;
+        A[&quot;selectedNodeIds&quot;] --&gt; B{&quot;Length?&quot;}
+    end
+
+    subgraph &quot;PropertiesPanel.tsx&quot;
+        B -- &quot;0&quot; --&gt; C[&quot;Empty State&quot;]
+        B -- &quot;1&quot; --&gt; D[&quot;Single Node View&quot;]
+        B -- &quot;&gt;1&quot; --&gt; E[&quot;Multi-Select View&quot;]
+        
+        D --&gt; F[&quot;isInstanceModified()&quot;]
+        F -- &quot;true&quot; --&gt; G[&quot;Show &#x27;Push&#x27; / &#x27;Reset&#x27; Buttons&quot;]
+        
+        D --&gt; H[&quot;Section: Layout&quot;]
+        D --&gt; I[&quot;Section: Fill/Stroke&quot;]
+        D --&gt; J[&quot;Section: Interactions&quot;]
+    end
+    
+    E --&gt; K[&quot;align() Action&quot;]
+    E --&gt; L[&quot;createComponentFromSelection()&quot;]
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L69-L113">src/views/canvas/PropertiesPanel.tsx:69-113</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts#L1-L20">src/schema/nodeOps.ts:1-20</a></p>
+<hr />
+<h2 id="devmode-handoff-inspection">DevMode &amp; Handoff Inspection</h2>
+<p>The <code>DevModePanel</code> is toggled via <code>useUi().devMode</code> and provides a developer-centric view of the canvas <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L23-L30">src/views/canvas/DevModePanel.tsx:23-30</a>.</p>
+<h3 id="measurements-and-specs">Measurements and Specs</h3>
+<p>The panel calculates and displays key CSS-like properties for the selected node:
+*   <strong>Dimensions</strong>: Absolute position and size <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L65-L66">src/views/canvas/DevModePanel.tsx:65-66</a>.
+*   <strong>Visuals</strong>: Resolved fill colors via <code>nodeFill</code>, stroke details, and shadow parameters <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L68-L78">src/views/canvas/DevModePanel.tsx:68-78</a>.
+*   <strong>Typography</strong>: Font family, weight, size, and line height <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L79-L83">src/views/canvas/DevModePanel.tsx:79-83</a>.</p>
+<h3 id="automated-code-generation">Automated Code Generation</h3>
+<p>The panel uses a dispatcher to convert internal node structures into code snippets across multiple frameworks:
+*   <strong>Dispatchers</strong>: <code>nodeToCode</code> and <code>frameToCode</code> handle the conversion <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L46-L49">src/views/canvas/DevModePanel.tsx:46-49</a>.
+*   <strong>Supported Languages</strong>: CSS, React (Tailwind/Inline), HTML, and Vue <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L1-L10">src/export/exportCode.ts:1-10</a>.
+*   <strong>Design Token Integration</strong>: Code generation references the <code>DesignSystem</code> tokens to ensure output matches the defined variables (e.g., using <code>var(--primary)</code> instead of hardcoded hex values) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L48">src/views/canvas/DevModePanel.tsx:48</a>.</p>
+<h3 id="asset-export">Asset Export</h3>
+<p>Developers can export assets directly from the inspection panel:
+*   <strong>Single Node/Frame</strong>: Export as SVG, PNG, or PDF <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L135-L162">src/views/canvas/DevModePanel.tsx:135-162</a>.
+*   <strong>Batch Export</strong>: <code>downloadFramesZip</code> generates a ZIP file containing all frames at @2x scale <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L165-L172">src/views/canvas/DevModePanel.tsx:165-172</a>.</p>
+<p><strong>Handoff Data Flow</strong>
+Title: DevMode Inspection and Code Generation
+<pre class="mermaid">graph LR
+    subgraph &quot;Canvas Selection&quot;
+        Node[&quot;Node Object&quot;]
+    end
+
+    subgraph &quot;DevModePanel.tsx&quot;
+        Node --&gt; Specs[&quot;Specs Calculation&quot;]
+        Node --&gt; Dispatch[&quot;frameToCode / nodeToCode&quot;]
+    end
+
+    subgraph &quot;Export Utilities&quot;
+        Dispatch --&gt; React[&quot;frameToReact()&quot;]
+        Dispatch --&gt; Tailwind[&quot;frameToTailwind()&quot;]
+        Dispatch --&gt; CSS[&quot;toCssText()&quot;]
+    end
+
+    Specs --&gt; UI[&quot;Spec Rows (Copyable)&quot;]
+    React --&gt; Snippet[&quot;Code Preview&quot;]
+    Tailwind --&gt; Snippet
+    CSS --&gt; Snippet
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L46-L49">src/views/canvas/DevModePanel.tsx:46-49</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L5-L15">src/export/exportCode.ts:5-15</a></p>
+<hr />
+<h2 id="component-overrides-and-design-system-sync">Component Overrides and Design System Sync</h2>
+<p>The interaction between the <code>PropertiesPanel</code> and the <code>DesignSystem</code> is critical for maintaining consistency.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Implementation Detail</th>
+<th style="text-align: left;">Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Variable Binding</strong></td>
+<td style="text-align: left;">Nodes can bind colors/numbers to <code>DesignSystem.variables</code>.</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L31-L32">src/components/DesignSystemModal.tsx:31-32</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Audit Integration</strong></td>
+<td style="text-align: left;">The panel alerts if a node violates <code>DesignRule</code> (e.g., non-token color).</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/audit.ts#L5-L15">src/designsystem/audit.ts:5-15</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Fill Resolution</strong></td>
+<td style="text-align: left;"><code>resolveFill</code> converts internal <code>Fill</code> objects to canvas-ready strings.</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L5-L10">src/render/resolve.ts:5-10</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Instance Tracking</strong></td>
+<td style="text-align: left;"><code>componentRef</code> links a node to its <code>ComponentDef</code> in the Design System.</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L100-L102">src/views/canvas/PropertiesPanel.tsx:100-102</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementation-of-isinstancemodified">Implementation of <code>isInstanceModified</code></h3>
+<p>This function performs a deep comparison between the current <code>node</code> and its <code>template</code> from the <code>DesignSystem</code>. It checks for changes in:
+1.  <strong>Style</strong>: Differences in fills, strokes, or effects.
+2.  <strong>Layout</strong>: Changes in size or internal auto-layout settings.
+3.  <strong>Content</strong>: Text content changes in text-type nodes.</p>
+<p>If differences are detected, the <code>PropertiesPanel</code> displays the "Modified" status, enabling the "Push to Main" or "Reset" workflows <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L103-L104">src/views/canvas/PropertiesPanel.tsx:103-104</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx#L1-L113">src/views/canvas/PropertiesPanel.tsx:1-113</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/DevModePanel.tsx#L1-L177">src/views/canvas/DevModePanel.tsx:1-177</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx#L1-L54">src/components/DesignSystemModal.tsx:1-54</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

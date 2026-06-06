@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>8.3 Image, PDF &amp; SVG Export · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1 active" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="image-pdf-svg-export">Image, PDF &amp; SVG Export</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/export/batchExport.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/batchExport.ts)
+- [src/export/exportPdf.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts)
+- [src/export/exportPng.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts)
+- [src/export/exportSvg.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts)
+- [src/render/fill.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.test.ts)
+- [src/render/fill.ts](https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts)
+- [src/render/resolve.ts](https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts)
+
+</details>
+
+<p>The Export system provides multi-format serialization and rasterization of canvas frames and nodes. It supports vector-based SVG generation, raster PNG/JPEG capture via the live Konva stage, PDF document generation, and batch ZIP packaging. Central to all export paths is a resolution engine that maps design tokens, variables, and complex fills (gradients/images) into the specific format's requirements.</p>
+<h2 id="svg-export-implementation">SVG Export Implementation</h2>
+<p>SVG export is implemented as a recursive serialization of the GPO <code>Node</code> tree into an XML string. Unlike raster exports, this process is purely data-driven and does not rely on the active browser DOM or Konva stage.</p>
+<h3 id="serialization-logic">Serialization Logic</h3>
+<p>The primary entry point is <code>frameToSvg</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L122-L132">src/export/exportSvg.ts:122-132</a>, which initializes a <code>defs</code> registry for gradients and iterates through the frame's top-level nodes. The <code>nodeSvg</code> function <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L60-L68">src/export/exportSvg.ts:60-68</a> handles the hierarchy by wrapping each node and its children in a <code>&lt;g&gt;</code> element with appropriate <code>transform</code> (translation) and <code>opacity</code>.</p>
+<h3 id="shape-mapping">Shape Mapping</h3>
+<p>The <code>svgShape</code> function <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L70-L109">src/export/exportSvg.ts:70-109</a> maps GPO node types to SVG primitives:
+*   <strong>Ellipse</strong>: Maps to <code>&lt;ellipse&gt;</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L75-L76">src/export/exportSvg.ts:75-76</a>.
+*   <strong>Vector</strong>: Maps to <code>&lt;path&gt;</code> using <code>pathData</code> to convert anchor points to SVG path syntax <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L86-L89">src/export/exportSvg.ts:86-89</a>.
+*   <strong>Image</strong>: Maps to <code>&lt;image&gt;</code> with <code>preserveAspectRatio="xMidYMid slice"</code> to emulate "cover" behavior <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L82-L85">src/export/exportSvg.ts:82-85</a>.
+*   <strong>Text</strong>: Maps to <code>&lt;text&gt;</code> with alignment-based <code>text-anchor</code> calculations <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L90-L96">src/export/exportSvg.ts:90-96</a>.
+*   <strong>Rect/Group</strong>: Maps to <code>&lt;rect&gt;</code> with optional <code>rx/ry</code> for rounded corners <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L98-L107">src/export/exportSvg.ts:98-107</a>.</p>
+<h3 id="gradient-management">Gradient Management</h3>
+<p>Gradients are handled by <code>gradientDef</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L15-L42">src/export/exportSvg.ts:15-42</a>. It generates unique IDs for <code>&lt;linearGradient&gt;</code> or <code>&lt;radialGradient&gt;</code> elements, calculates normalized coordinates based on the fill angle <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L18-L22">src/export/exportSvg.ts:18-22</a>, and pushes them into the <code>&lt;defs&gt;</code> block of the final SVG document.</p>
+<p><strong>Export Flow: Node to SVG</strong>
+"Natural Language Space" to "Code Entity Space"</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;Serialization Pipeline&quot;
+        A[&quot;frameToSvg(frame, ds)&quot;] --&gt; B[&quot;nodeSvg(node, ds, defs)&quot;]
+        B --&gt; C[&quot;svgShape(node, ds, defs)&quot;]
+        B --&gt; D[&quot;nodeSvg(children, ...)&quot;]
+        C --&gt; E[&quot;fillAttr(node, ds, defs)&quot;]
+        E --&gt; F[&quot;gradientDef(fill, defs)&quot;]
+        E --&gt; G[&quot;nodeFill(node, ds)&quot;]
+    end
+
+    subgraph &quot;SVG Output&quot;
+        H[&quot;&lt;svg&gt;&quot;]
+        I[&quot;&lt;defs&gt;&quot;]
+        J[&quot;&lt;g&gt;&quot;]
+        K[&quot;&lt;rect&gt; / &lt;path&gt; / &lt;text&gt;&quot;]
+    end
+
+    A --- H
+    F --- I
+    B --- J
+    C --- K
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L1-L143">src/export/exportSvg.ts:1-143</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L21-L36">src/render/resolve.ts:21-36</a></p>
+<h2 id="raster-export-png-jpeg">Raster Export (PNG &amp; JPEG)</h2>
+<p>Rasterization utilizes the <code>Konva.Stage</code> instance currently rendering the canvas. This ensures that what the user sees is exactly what is exported, including complex filters or blending modes.</p>
+<h3 id="stage-registration">Stage Registration</h3>
+<p>Because the export utilities reside outside the React tree, the <code>CanvasStage</code> component must call <code>registerStage</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L13-L15">src/export/exportPng.ts:13-15</a> to provide a <code>provider</code> callback. This callback returns the current <code>Konva.Stage</code>, its <code>scale</code>, and its <code>pos</code> (viewport offset) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L4-L10">src/export/exportPng.ts:4-10</a>.</p>
+<h3 id="pixel-perfect-capture">Pixel-Perfect Capture</h3>
+<p>The <code>exportFramePng</code> function <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L21-L37">src/export/exportPng.ts:21-37</a> calculates the bounding box of a frame within the global stage coordinates. It uses <code>stage.toDataURL</code> with a calculated <code>pixelRatio</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L34">src/export/exportPng.ts:34</a> to support high-resolution exports (e.g., 2x or 3x) regardless of the current canvas zoom level.</p>
+<h3 id="batch-export">Batch Export</h3>
+<p><code>downloadFramesZip</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/batchExport.ts#L29-L55">src/export/batchExport.ts:29-55</a> orchestrates multi-frame exports. It iterates through an array of frames, generates PNG data URLs for each, and uses <code>JSZip</code> to package them. It includes a <code>sliceName</code> utility <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/batchExport.ts#L6-L14">src/export/batchExport.ts:6-14</a> to sanitize frame names into safe filenames.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L1-L87">src/export/exportPng.ts:1-87</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/batchExport.ts#L1-L56">src/export/batchExport.ts:1-56</a></p>
+<h2 id="pdf-generation">PDF Generation</h2>
+<p>The system generates standard-compliant PDF 1.4 files without external heavy libraries.</p>
+<h3 id="binary-construction">Binary Construction</h3>
+<p><code>jpegToPdf</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L18-L58">src/export/exportPdf.ts:18-58</a> manually constructs the PDF binary structure:
+1.  <strong>Catalog &amp; Pages</strong>: Defines the document structure (Objects 1 &amp; 2).
+2.  <strong>Page Object</strong>: Sets the <code>MediaBox</code> to match the frame dimensions (Object 3).
+3.  <strong>Image XObject</strong>: Embeds the raw JPEG stream with <code>/DCTDecode</code> filter (Object 4) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L41-L46">src/export/exportPdf.ts:41-46</a>.
+4.  <strong>Content Stream</strong>: Applies a transformation matrix <code>cm</code> to scale the image to the page size and invokes it via <code>/Im0 Do</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L48-L49">src/export/exportPdf.ts:48-49</a>.
+5.  <strong>XRef Table</strong>: A byte-accurate cross-reference table is generated to allow PDF readers to seek objects <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L51-L55">src/export/exportPdf.ts:51-55</a>.</p>
+<h3 id="raster-to-pdf-pipeline">Raster-to-PDF Pipeline</h3>
+<p>The <code>downloadFramePdf</code> function <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L61-L90">src/export/exportPdf.ts:61-90</a> first rasterizes the frame to a PNG via the Konva stage, draws it onto a temporary HTML5 canvas to ensure a white background (PDFs do not support transparency well), converts it to JPEG, and then passes the bytes to the PDF generator.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L1-L91">src/export/exportPdf.ts:1-91</a></p>
+<h2 id="fill-color-resolution">Fill &amp; Color Resolution</h2>
+<p>All renderers (Canvas, SVG, Code Export) rely on a unified fill resolution logic to handle design tokens and variables.</p>
+<h3 id="resolve-utilities">Resolve Utilities</h3>
+<ul>
+<li><strong><code>resolveFill</code></strong>: Maps a <code>Fill</code> object to a CSS-compatible string. It resolves <code>variable</code> types by looking up IDs in <code>ds.variables</code> and <code>token</code> types by looking up keys in <code>ds.tokens.colors</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L3-L18">src/render/resolve.ts:3-18</a>.</li>
+<li><strong><code>nodeFill</code></strong>: Provides fallback colors based on node type (e.g., <code>#ffffff</code> for inputs, <code>ds.tokens.colors.primary</code> for buttons) if no explicit fill is defined <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L21-L35">src/render/resolve.ts:21-35</a>.</li>
+</ul>
+<h3 id="konva-property-mapping">Konva Property Mapping</h3>
+<p>For the live canvas, <code>konvaFillProps</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L35-L87">src/render/fill.ts:35-87</a> transforms GPO fills into Konva-specific configurations:
+*   <strong>Linear Gradients</strong>: Uses <code>linearGradientEndpoints</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L5-L17">src/render/fill.ts:5-17</a> to calculate start/end points based on an angle.
+*   <strong>Radial Gradients</strong>: Centers the gradient and sets the radius to the maximum dimension of the node <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L54-L66">src/render/fill.ts:54-66</a>.
+*   <strong>Image Fills</strong>: Configures <code>fillPatternImage</code> with scaling modes (<code>fit</code>, <code>fill</code>, <code>tile</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L67-L85">src/render/fill.ts:67-85</a>.</p>
+<p><strong>Fill Resolution System</strong>
+"Natural Language Space" to "Code Entity Space"</p>
+<p><pre class="mermaid">graph LR
+    subgraph &quot;Input Schema&quot;
+        FS[&quot;Fill (solid/token/variable/gradient)&quot;]
+        DS[&quot;DesignSystem&quot;]
+    end
+
+    subgraph &quot;Resolution Logic&quot;
+        RF[&quot;resolveFill()&quot;]
+        NF[&quot;nodeFill()&quot;]
+        KFP[&quot;konvaFillProps()&quot;]
+    end
+
+    subgraph &quot;Format Adapters&quot;
+        SVG[&quot;exportSvg.ts&quot;]
+        PNG[&quot;exportPng.ts&quot;]
+        PDF[&quot;exportPdf.ts&quot;]
+    end
+
+    FS --&gt; RF
+    FS --&gt; KFP
+    DS --&gt; RF
+    
+    RF --&gt; SVG
+    NF --&gt; SVG
+    KFP --&gt; PNG
+    PNG --&gt; PDF
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L1-L36">src/render/resolve.ts:1-36</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L1-L87">src/render/fill.ts:1-87</a></p>
+<h2 id="export-function-summary">Export Function Summary</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Output Format</th>
+<th style="text-align: left;">Mechanism</th>
+<th style="text-align: left;">File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>frameToSvg</code></td>
+<td style="text-align: left;"><code>string</code> (XML)</td>
+<td style="text-align: left;">Recursive node serialization</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L122">src/export/exportSvg.ts:122</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>exportFramePng</code></td>
+<td style="text-align: left;"><code>string</code> (Data URL)</td>
+<td style="text-align: left;"><code>stage.toDataURL</code></td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L21">src/export/exportPng.ts:21</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>downloadFramesZip</code></td>
+<td style="text-align: left;"><code>Blob</code> (ZIP)</td>
+<td style="text-align: left;"><code>JSZip</code> + <code>exportFramePng</code></td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/batchExport.ts#L29">src/export/batchExport.ts:29</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>downloadFramePdf</code></td>
+<td style="text-align: left;"><code>Blob</code> (PDF)</td>
+<td style="text-align: left;">Raster → JPEG → PDF Object Stream</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L61">src/export/exportPdf.ts:61</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>konvaFillProps</code></td>
+<td style="text-align: left;"><code>Object</code></td>
+<td style="text-align: left;">Konva Property Mapping</td>
+<td style="text-align: left;"><a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L35">src/render/fill.ts:35</a></td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportSvg.ts#L122-L132">src/export/exportSvg.ts:122-132</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPng.ts#L21-L37">src/export/exportPng.ts:21-37</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/batchExport.ts#L29-L55">src/export/batchExport.ts:29-55</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportPdf.ts#L61-L90">src/export/exportPdf.ts:61-90</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/fill.ts#L35-L87">src/render/fill.ts:35-87</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

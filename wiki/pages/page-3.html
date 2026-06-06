@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>3 State Management · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0 active" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="state-management">State Management</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/store/history.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts)
+- [src/store/useStore.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts)
+
+</details>
+
+<p>OpenPrototype utilizes a centralized state management architecture based on <strong>Zustand</strong>. The system maintains a strict separation between the persistent document data (the project being edited) and transient UI state (editor settings, active tools, and ephemeral interface flags). </p>
+<p>The primary state container, <code>useStore</code>, is wrapped with the <code>zundo</code> middleware to provide a robust undo/redo history system for all document-level modifications.</p>
+<h2 id="store-architecture">Store Architecture</h2>
+<p>The application state is split into two primary stores to optimize for performance and persistence logic. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Store</th>
+<th style="text-align: left;">Purpose</th>
+<th style="text-align: left;">Persistence</th>
+<th style="text-align: left;">History (Undo/Redo)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>useStore</code></td>
+<td style="text-align: left;">Holds the <code>GpoDocument</code>, selection state, and active navigation IDs.</td>
+<td style="text-align: left;">Saved to <code>.gpo</code> files.</td>
+<td style="text-align: left;">Enabled via <code>temporal</code> middleware.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>useUi</code></td>
+<td style="text-align: left;">Holds ephemeral state like <code>activeTool</code>, <code>zoom</code>, <code>showGrid</code>, and <code>devMode</code>.</td>
+<td style="text-align: left;">Partially synced to <code>localStorage</code>.</td>
+<td style="text-align: left;">Disabled.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="system-mapping-store-to-entity">System Mapping: Store to Entity</h3>
+<p>The following diagram illustrates how the Zustand stores interact with the core application logic and the document schema.</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;State Layer (Zustand)&quot;
+        STORE[&quot;useStore (AppState)&quot;]
+        UI[&quot;useUi (UiState)&quot;]
+    end
+
+    subgraph &quot;Code Entities&quot;
+        DOC[&quot;GpoDocument [src/schema/types.ts]&quot;]
+        UNDO[&quot;temporal (zundo) [src/store/useStore.ts]&quot;]
+        ACTIONS[&quot;App Actions (addFrame, updateNode, etc.)&quot;]
+    end
+
+    STORE --&gt;|&quot;manages&quot;| DOC
+    STORE --&gt;|&quot;wrapped by&quot;| UNDO
+    STORE --&gt;|&quot;exposes&quot;| ACTIONS
+    UI --&gt;|&quot;controls&quot;| CANVAS_UI[&quot;Canvas Viewport/Tools&quot;]
+
+    style STORE stroke-width:2px
+    style UI stroke-width:2px
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L49-L153">src/store/useStore.ts:49-153</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L203-L206">src/store/useStore.ts:203-206</a></p>
+<hr />
+<h2 id="document-selection-state-usestore">Document &amp; Selection State (useStore)</h2>
+<p><code>useStore</code> is the "Source of Truth" for the design project. It manages the <code>GpoDocument</code> object <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L50">src/store/useStore.ts:50</a>, which contains all pages, frames, nodes, and design system tokens. </p>
+<p>Key responsibilities include:
+*   <strong>Document CRUD:</strong> Actions for manipulating the node tree, such as <code>addFrame</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L78">src/store/useStore.ts:78</a>, <code>updateNode</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L85">src/store/useStore.ts:85</a>, and <code>deleteSelection</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L89">src/store/useStore.ts:89</a>.
+*   <strong>Selection Management:</strong> Tracking which nodes are currently active via <code>selectedNodeIds</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L54">src/store/useStore.ts:54</a>.
+*   <strong>Complex Operations:</strong> High-level design logic including <code>groupSelection</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L98">src/store/useStore.ts:98</a>, <code>booleanSelection</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L109">src/store/useStore.ts:109</a>, and component instantiation <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L116">src/store/useStore.ts:116</a>.</p>
+<p>For a deep dive into document actions and the component system, see <strong><a href="page-3_1.html">useStore: Document &amp; Selection State</a></strong>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L49-L153">src/store/useStore.ts:49-153</a></p>
+<hr />
+<h2 id="transient-ui-state-useui">Transient UI State (useUi)</h2>
+<p>The <code>useUi</code> store handles state that does not belong in the saved project file. This includes the state of the editor interface itself, such as:
+*   <strong>Editor Configuration:</strong> <code>showGrid</code>, <code>snapEnabled</code>, and <code>devMode</code>.
+*   <strong>Active Interaction:</strong> The currently selected drawing tool (e.g., rect, ellipse, pen).
+*   <strong>Notifications:</strong> Managing the toast notification queue.
+*   <strong>AI Settings:</strong> API keys and provider configurations (persisted to <code>localStorage</code>).</p>
+<p>For details on ephemeral interface state, see <strong><a href="page-3_2.html">useUi: Transient UI State</a></strong>.</p>
+<hr />
+<h2 id="undoredo-history-system">Undo/Redo History System</h2>
+<p>OpenPrototype implements a temporal state history using the <code>zundo</code> middleware for <code>useStore</code>. This tracks changes to the <code>doc</code> and other design-related fields, allowing users to revert mistakes.</p>
+<p>The history system is exposed via a simplified API in <code>src/store/history.ts</code>:
+*   <code>undo()</code>: Reverts the store to the previous state <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts#L3">src/store/history.ts:3</a>.
+*   <code>redo()</code>: Advances the store to the next state in the history stack <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts#L4">src/store/history.ts:4</a>.
+*   <code>clearHistory()</code>: Wipes the temporal stack, typically called when loading a new document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts#L5">src/store/history.ts:5</a>.</p>
+<h3 id="history-flow">History Flow</h3>
+<p><pre class="mermaid">sequenceDiagram
+    participant User
+    participant Action as &quot;useStore Action (e.g., updateNode)&quot;
+    participant Temporal as &quot;Temporal Store (zundo)&quot;
+    participant State as &quot;Current AppState&quot;
+
+    User-&gt;&gt;Action: Trigger Change
+    Action-&gt;&gt;State: Apply Mutation
+    State--&gt;&gt;Temporal: Record Snapshot
+    User-&gt;&gt;Temporal: Call undo()
+    Temporal-&gt;&gt;State: Restore Previous Snapshot
+</pre></p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L204">src/store/useStore.ts:204</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/history.ts#L1-L6">src/store/history.ts:1-6</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

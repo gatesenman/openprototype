@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>5.3 AI Settings &amp; LLM Provider Integration · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1 active" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="ai-settings-llm-provider-integration">AI Settings &amp; LLM Provider Integration</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/ai/chat.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts)
+- [src/ai/flow.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts)
+- [src/ai/generate.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts)
+- [src/ai/localGenerator.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts)
+- [src/ai/settings.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts)
+- [src/components/AiSettingsModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx)
+- [src/store/useUi.ts](https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts)
+
+</details>
+
+<p>OpenPrototype utilizes a multi-provider AI architecture that bridges natural language requirements with structured design entities. The system supports major LLM providers (OpenAI, Anthropic, DeepSeek) alongside a robust local heuristic generator that functions without network connectivity or API keys.</p>
+<h2 id="ai-configuration-persistence">AI Configuration &amp; Persistence</h2>
+<p>The <code>AiSettings</code> interface defines the configuration required for AI operations, including the active provider, authentication keys, and specific model identifiers <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L3-L7">src/ai/settings.ts:3-7</a>.</p>
+<h3 id="supported-providers">Supported Providers</h3>
+<p>The system maintains a registry of providers in the <code>PROVIDERS</code> constant <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L9-L36">src/ai/settings.ts:9-36</a>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Provider</th>
+<th style="text-align: left;">Label</th>
+<th style="text-align: left;">Default Model</th>
+<th style="text-align: left;">Endpoint Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>local</code></td>
+<td style="text-align: left;">本地启发式生成器</td>
+<td style="text-align: left;"><code>heuristic-v1</code></td>
+<td style="text-align: left;">N/A (Offline)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>openai</code></td>
+<td style="text-align: left;">OpenAI</td>
+<td style="text-align: left;"><code>gpt-4o-mini</code></td>
+<td style="text-align: left;">OpenAI Compatible</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>anthropic</code></td>
+<td style="text-align: left;">Anthropic (Claude)</td>
+<td style="text-align: left;"><code>claude-3-5-sonnet-latest</code></td>
+<td style="text-align: left;">Anthropic Custom</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deepseek</code></td>
+<td style="text-align: left;">DeepSeek</td>
+<td style="text-align: left;"><code>deepseek-chat</code></td>
+<td style="text-align: left;">OpenAI Compatible</td>
+</tr>
+</tbody>
+</table>
+<h3 id="persistence-mechanism">Persistence Mechanism</h3>
+<p>Settings are persisted in the browser's <code>localStorage</code> under the key <code>gpo.ai.settings</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/settings.ts#L38">src/ai/settings.ts:38</a>. The <code>useUi</code> store initializes its <code>ai</code> state by calling <code>loadAiSettings()</code> and provides a <code>setAi</code> action that synchronizes updates back to <code>localStorage</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L27-L31">src/store/useUi.ts:27-31</a>.</p>
+<h2 id="ai-execution-pipeline">AI Execution Pipeline</h2>
+<p>The execution pipeline handles the transformation of user prompts into valid <code>Frame</code> and <code>Node</code> objects. It employs a "Local-First" strategy: if no API key is provided or the provider is set to <code>local</code>, the system falls back to <code>localGenerator.ts</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L179-L191">src/ai/generate.ts:179-191</a>.</p>
+<h3 id="chatcomplete-logic">chatComplete Logic</h3>
+<p>The <code>chatComplete</code> function acts as a provider-agnostic wrapper for text generation <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts#L9-L13">src/ai/chat.ts:9-13</a>. It branches logic based on the provider's API shape:
+1.  <strong>Anthropic Path</strong>: Uses <code>x-api-key</code> headers and a top-level <code>system</code> field in the request body <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts#L14-L32">src/ai/chat.ts:14-32</a>.
+2.  <strong>OpenAI/DeepSeek Path</strong>: Uses <code>Authorization: Bearer</code> headers and a <code>messages</code> array containing both <code>system</code> and <code>user</code> roles <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts#L34-L53">src/ai/chat.ts:34-53</a>.</p>
+<h3 id="prompt-engineering-schema-enforcement">Prompt Engineering &amp; Schema Enforcement</h3>
+<p>The system generates a strict system prompt via <code>buildSystemPrompt</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L18-L28">src/ai/generate.ts:18-28</a>. This prompt injects:
+-   The current <code>DesignSystem</code> tokens (colors, spacing, etc.) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L22">src/ai/generate.ts:22</a>.
+-   Design rules/constraints <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L23">src/ai/generate.ts:23</a>.
+-   A TypeScript-like JSON schema for the expected <code>Frame</code> object <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L25">src/ai/generate.ts:25</a>.</p>
+<h3 id="data-flow-text-to-code-entity">Data Flow: Text to Code Entity</h3>
+<p>The following diagram illustrates how natural language requirements are transformed into code-level <code>Frame</code> and <code>Node</code> objects through the AI pipeline.</p>
+<p><strong>AI Generation Data Flow</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Natural Language Space&quot;
+        A[&quot;User Brief / Markdown&quot;]
+    end
+
+    subgraph &quot;AI Integration Layer&quot;
+        B[&quot;generatePage()&quot;]
+        C[&quot;buildSystemPrompt()&quot;]
+        D[&quot;chatComplete()&quot;]
+        E[&quot;extractJson()&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        F[&quot;coerceFrame()&quot;]
+        G[&quot;applyRules()&quot;]
+        H[&quot;Frame Object&quot;]
+        I[&quot;Node[]&quot;]
+    end
+
+    A --&gt; B
+    B --&gt; C
+    C --&gt; D
+    D --&gt; E
+    E --&gt; F
+    F --&gt; G
+    G --&gt; H
+    H --&gt; I
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L171-L205">src/ai/generate.ts:171-205</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/chat.ts#L9-L54">src/ai/chat.ts:9-54</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L2">src/designsystem/rules.ts:2</a>.</p>
+<h2 id="local-heuristic-generator">Local Heuristic Generator</h2>
+<p>When offline or unconfigured, <code>generateFrameFromMarkdown</code> implements a rule-based parser <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L30-L35">src/ai/localGenerator.ts:30-35</a>.</p>
+<ol>
+<li><strong>Classification</strong>: The <code>classify</code> function uses Regex to map line content to <code>NodeType</code> (e.g., "button", "input", "image") <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L17-L24">src/ai/localGenerator.ts:17-24</a>.</li>
+<li><strong>Layout</strong>: Elements are stacked vertically with Y-coordinate increments based on design system spacing tokens <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L112-L185">src/ai/localGenerator.ts:112-185</a>.</li>
+<li><strong>Styling</strong>: The generator applies tokens from the <code>DesignSystem</code> (e.g., <code>ds.tokens.colors.primary</code>) to ensure visual consistency even in heuristic mode <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts#L124-L133">src/ai/localGenerator.ts:124-133</a>.</li>
+</ol>
+<h2 id="flow-generation-auto-wiring">Flow Generation &amp; Auto-Wiring</h2>
+<p>For multi-screen generation, <code>generateFlowFromBrief</code> coordinates the creation of multiple linked frames <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L151-L155">src/ai/flow.ts:151-155</a>.</p>
+<ol>
+<li><strong>Planning</strong>: <code>planScreens</code> analyzes the brief for keywords (e.g., "ecommerce", "login") to select a <code>FlowPlan</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L29-L120">src/ai/flow.ts:29-120</a>.</li>
+<li><strong>Interaction Wiring</strong>: The <code>pickForwardNode</code> function identifies the primary CTA in a generated frame <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L127-L136">src/ai/flow.ts:127-136</a>.</li>
+<li><strong>Interaction Injection</strong>: A new <code>Interaction</code> object is pushed to the node's <code>interactions</code> array, targeting the next <code>frame.id</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L165-L171">src/ai/flow.ts:165-171</a>.</li>
+</ol>
+<p><strong>Flow Generation Architecture</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;Natural Language Space&quot;
+        Brief[&quot;Product Brief&quot;]
+    end
+
+    subgraph &quot;Logic &amp; Heuristics&quot;
+        Plan[&quot;planScreens()&quot;]
+        Gen[&quot;generateFrameFromMarkdown()&quot;]
+        Pick[&quot;pickForwardNode()&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        FR[&quot;Frame&quot;]
+        ND[&quot;Node&quot;]
+        IA[&quot;Interaction&quot;]
+    end
+
+    Brief --&gt; Plan
+    Plan --&gt; Gen
+    Gen --&gt; FR
+    FR --&gt; ND
+    Pick --&gt; ND
+    ND --&gt; IA
+    IA -.-&gt;|&quot;targetFrameId&quot;| FR
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts#L151-L176">src/ai/flow.ts:151-176</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L1">src/schema/types.ts:1</a>.</p>
+<h2 id="user-interface-aisettingsmodal">User Interface: AiSettingsModal</h2>
+<p>The <code>AiSettingsModal</code> provides the UI for managing these integrations <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L5">src/components/AiSettingsModal.tsx:5</a>.</p>
+<ul>
+<li><strong>Provider Selection</strong>: Updates the available model list and toggles the visibility of the API Key field <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L14-L17">src/components/AiSettingsModal.tsx:14-17</a>.</li>
+<li><strong>Security</strong>: API Keys are handled via <code>type="password"</code> inputs and are never sent to the OpenPrototype backend; they reside only in the user's local browser storage <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L48-L55">src/components/AiSettingsModal.tsx:48-55</a>.</li>
+<li><strong>Validation</strong>: The <code>save</code> function triggers a toast notification via <code>showToast</code> and updates the <code>useUi</code> store <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L19-L23">src/components/AiSettingsModal.tsx:19-23</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/AiSettingsModal.tsx#L1-L75">src/components/AiSettingsModal.tsx:1-75</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useUi.ts#L28-L37">src/store/useUi.ts:28-37</a>.</p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

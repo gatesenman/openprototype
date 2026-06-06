@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>7 Requirements &amp; Journey Mapping · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0 active" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="requirements-journey-mapping">Requirements &amp; Journey Mapping</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/journey/journey.ts](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts)
+- [src/schema/types.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts)
+- [src/views/JourneyView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx)
+- [src/views/RequirementsView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx)
+
+</details>
+
+<p>OpenPrototype provides a dedicated product management suite that bridges the gap between high-level product strategy and low-level design entities. This is achieved through two primary views: the <strong>Requirements View</strong>, where natural language documentation is transformed into editable UI components, and the <strong>User Journey Map</strong>, which visualizes the user experience lifecycle and links specific stages to design frames.</p>
+<h2 id="requirements-view">Requirements View</h2>
+<p>The <code>RequirementsView</code> is the entry point for product-driven design. It functions as a Markdown-based editor where users define product specs, which are then used as context for AI-driven page and flow generation.</p>
+<ul>
+<li><strong>Editor &amp; Live Preview</strong>: Uses <code>react-markdown</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L2">src/views/RequirementsView.tsx:2</a> and <code>remarkGfm</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L3">src/views/RequirementsView.tsx:3</a> to provide a rich text experience for editing <code>RequirementDoc</code> entities <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L192-L199">src/schema/types.ts:192-199</a>.</li>
+<li><strong>AI Orchestration</strong>: The view triggers <code>generatePage</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L82">src/views/RequirementsView.tsx:82</a> and <code>generateFlow</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L161">src/views/RequirementsView.tsx:161</a> to convert text into <code>Frame</code> and <code>Node</code> objects on the canvas.</li>
+<li><strong>Slash Commands</strong>: A command palette implemented via <code>detectSlash</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L137">src/views/RequirementsView.tsx:137</a> allows for rapid template insertion and AI assistance actions like "Polish" or "Summarize".</li>
+</ul>
+<p>For implementation details on Markdown processing and AI triggers, see <a href="page-7_1.html">Requirements View</a>.</p>
+<h3 id="document-to-canvas-mapping">Document to Canvas Mapping</h3>
+<p>The following diagram illustrates how natural language requirements are processed into structured design data.</p>
+<p><strong>Requirements Transformation Flow</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;Natural Language Space&quot;
+        REQ[&quot;RequirementDoc (Markdown)&quot;]
+        TEMPLATES[&quot;REQUIREMENT_TEMPLATES&quot;]
+    end
+
+    subgraph &quot;Logic Layer&quot;
+        GP[&quot;generatePage()&quot;]
+        GF[&quot;generateFlow()&quot;]
+        AS[&quot;assistRequirement()&quot;]
+    end
+
+    subgraph &quot;Code Entity Space (useStore)&quot;
+        FR[&quot;Frame Object&quot;]
+        ND[&quot;Node Tree&quot;]
+        INT[&quot;Interaction[]&quot;]
+    end
+
+    REQ --&gt; AS
+    REQ --&gt; GP
+    REQ --&gt; GF
+    TEMPLATES -.-&gt; REQ
+    GP --&gt; FR
+    GP --&gt; ND
+    GF --&gt; INT
+    FR --&gt; ND
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L6-L14">src/views/RequirementsView.tsx:6-14</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L192-L199">src/schema/types.ts:192-199</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L47-L56">src/store/useStore.ts:47-56</a></p>
+<hr />
+<h2 id="user-journey-map">User Journey Map</h2>
+<p>The <code>JourneyView</code> provides a matrix-style visualization of the user experience. It allows product managers to map out personas, scenarios, and emotional arcs, directly linking user stages to specific prototype screens.</p>
+<ul>
+<li><strong>Journey Matrix</strong>: Organizes data into specific rows defined in <code>JOURNEY_ROWS</code> (actions, touchpoints, thoughts, emotion, pains, and opportunities) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L14-L22">src/journey/journey.ts:14-22</a>.</li>
+<li><strong>Emotion Curve</strong>: A specialized <code>EmotionCurve</code> component <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L126">src/views/JourneyView.tsx:126</a> uses <code>emotionCurvePath</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L89">src/journey/journey.ts:89</a> to generate an SVG path using Catmull-Rom interpolation based on <code>JourneyEmotion</code> scores (-2 to 2) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L36-L50">src/journey/journey.ts:36-50</a>.</li>
+<li><strong>Canvas Integration</strong>: Stages can be linked to <code>frameId</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L113">src/schema/types.ts:113</a>, allowing users to jump from a journey step directly to the corresponding design in the <code>design</code> view <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L185-L187">src/views/JourneyView.tsx:185-187</a>.</li>
+</ul>
+<p>For details on the SVG rendering and normalization heuristics, see <a href="page-7_2.html">User Journey Map</a>.</p>
+<h3 id="journey-entity-architecture">Journey Entity Architecture</h3>
+<p>This diagram maps the visual components of the Journey Map to the underlying data structures and rendering logic.</p>
+<p><strong>Journey Mapping Architecture</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;UI Component Space&quot;
+        JV[&quot;JourneyView&quot;]
+        EC[&quot;EmotionCurve (SVG)&quot;]
+        CL[&quot;CellList (Editor)&quot;]
+    end
+
+    subgraph &quot;Data Schema (src/schema/types.ts)&quot;
+        JM[&quot;JourneyMap&quot;]
+        JS[&quot;JourneyStage&quot;]
+        PE[&quot;Persona&quot;]
+    end
+
+    subgraph &quot;Logic (src/journey/journey.ts)&quot;
+        ECP[&quot;emotionCurvePath()&quot;]
+        CE[&quot;clampEmotion()&quot;]
+        JTM[&quot;journeyToMarkdown()&quot;]
+    end
+
+    JV --&gt; JM
+    JM --&gt; JS
+    JM --&gt; PE
+    JV --&gt; EC
+    JV --&gt; CL
+    EC --&gt; ECP
+    ECP --&gt; JS
+    CL --&gt; JS
+    JV --&gt; JTM
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L1-L22">src/journey/journey.ts:1-22</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L126-L172">src/views/JourneyView.tsx:126-172</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L170-L183">src/schema/types.ts:170-183</a></p>
+<hr />
+<h2 id="view-relations">View Relations</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Requirements View</th>
+<th style="text-align: left;">Journey Map</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Primary State</strong></td>
+<td style="text-align: left;"><code>doc.requirements</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L47">src/views/RequirementsView.tsx:47</a></td>
+<td style="text-align: left;"><code>doc.journeys</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L190">src/views/JourneyView.tsx:190</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Generation</strong></td>
+<td style="text-align: left;">Generates UI Frames/Flows <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L78">src/views/RequirementsView.tsx:78</a></td>
+<td style="text-align: left;">Generates Journey Stages <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L223">src/views/JourneyView.tsx:223</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Data Format</strong></td>
+<td style="text-align: left;">Markdown <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L195">src/schema/types.ts:195</a></td>
+<td style="text-align: left;">Structured Matrix <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L14">src/journey/journey.ts:14</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Canvas Link</strong></td>
+<td style="text-align: left;"><code>generatedFrameIds</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L198">src/schema/types.ts:198</a></td>
+<td style="text-align: left;"><code>frameId</code> per stage <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L187">src/views/JourneyView.tsx:187</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Export Options</strong></td>
+<td style="text-align: left;">Markdown</td>
+<td style="text-align: left;">Markdown, CSV <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L161-L182">src/journey/journey.ts:161-182</a></td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L47-L56">src/views/RequirementsView.tsx:47-56</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L174-L190">src/views/JourneyView.tsx:174-190</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L161-L182">src/journey/journey.ts:161-182</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

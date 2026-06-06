@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>2.1 GpoDocument Schema &amp; Types · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1 active" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="gpodocument-schema-types">GpoDocument Schema &amp; Types</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/__tests__/core.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts)
+- [src/interop/importDesign.ts](https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts)
+- [src/journey/journey.ts](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts)
+- [src/schema/layout.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts)
+- [src/schema/nodeOps.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/nodeOps.ts)
+- [src/schema/types.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts)
+- [src/views/JourneyView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx)
+
+</details>
+
+<p>This page provides a detailed technical reference for the <strong>OpenPrototype</strong> data model. The entire application — including the AI generation engine, the canvas renderer, and the persistence layer — operates on a unified, structured tree defined by the <code>GpoDocument</code> schema.</p>
+<h2 id="overview-versioning">Overview &amp; Versioning</h2>
+<p>The core schema is designed to be fully editable. Unlike tools that generate static images, OpenPrototype's AI emits structured JSON that maps directly to canvas entities.</p>
+<ul>
+<li><strong>Schema Version</strong>: The current contract is defined as <code>GPO_SCHEMA_VERSION = "1.0.0"</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L11-L11">src/schema/types.ts:11-11</a>.</li>
+<li><strong>Data Flow</strong>: State is managed in a centralized Zustand store. When the document is saved, it is serialized into a <code>.gpo</code> zip container containing <code>document.json</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L8-L9">src/schema/types.ts:8-9</a>.</li>
+</ul>
+<h3 id="document-hierarchy">Document Hierarchy</h3>
+<p>The following diagram illustrates the relationship between the high-level document structure and the code entities defined in <code>src/schema/types.ts</code>.</p>
+<p><strong>Entity Relationship Diagram</strong>
+<pre class="mermaid">classDiagram
+    class GpoDocument {
+        +Meta meta
+        +Page[] pages
+        +DesignSystem designSystem
+        +RequirementDoc[] requirements
+        +JourneyMap[] journeys
+    }
+    class Page {
+        +string id
+        +Frame[] frames
+    }
+    class Frame {
+        +string id
+        +Node[] nodes
+        +string background
+        +fidelity &quot;wireframe&quot; | &quot;hifi&quot;
+    }
+    class Node {
+        +string id
+        +NodeType type
+        +NodeStyle style
+        +Node[] children
+        +AutoLayout layout
+        +Interaction[] interactions
+    }
+    class DesignSystem {
+        +DesignTokens tokens
+        +ComponentDef[] components
+        +DesignRule[] rules
+    }
+
+    GpoDocument &quot;1&quot; --* &quot;N&quot; Page : contains
+    GpoDocument &quot;1&quot; --* &quot;1&quot; DesignSystem : defines
+    Page &quot;1&quot; --* &quot;N&quot; Frame : contains
+    Frame &quot;1&quot; --* &quot;N&quot; Node : contains
+    Node &quot;1&quot; --* &quot;N&quot; Node : recursive children
+    DesignSystem &quot;1&quot; --* &quot;N&quot; ComponentDef : stores
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L140-L237">src/schema/types.ts:140-237</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L245-L255">src/schema/types.ts:245-255</a></p>
+<hr />
+<h2 id="core-node-schema">Core Node Schema</h2>
+<p>The <code>Node</code> is the atomic unit of the design canvas. It represents everything from a simple rectangle to a complex AI-generated component instance.</p>
+<h3 id="node-definition">Node Definition</h3>
+<p>A <code>Node</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L140-L167">src/schema/types.ts:140-167</a> contains spatial properties (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>rotation</code>), visual styles, and structural metadata.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>type</code></td>
+<td style="text-align: left;"><code>NodeType</code></td>
+<td style="text-align: left;"><code>rect</code>, <code>ellipse</code>, <code>text</code>, <code>button</code>, <code>input</code>, <code>vector</code>, etc. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L69-L80">src/schema/types.ts:69-80</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>style</code></td>
+<td style="text-align: left;"><code>NodeStyle</code></td>
+<td style="text-align: left;">Fill, stroke, radius, shadow, and blend modes. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L117-L127">src/schema/types.ts:117-127</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>layout</code></td>
+<td style="text-align: left;"><code>AutoLayout</code></td>
+<td style="text-align: left;">Flexbox-like positioning for children. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L99-L104">src/schema/types.ts:99-104</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>constraints</code></td>
+<td style="text-align: left;"><code>Constraints</code></td>
+<td style="text-align: left;">Resize behavior (e.g., "left-right", "scale"). <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L135-L138">src/schema/types.ts:135-138</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>componentRef</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">ID of a <code>ComponentDef</code> if this is an instance. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L160-L160">src/schema/types.ts:160-160</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vector-geometry">Vector Geometry</h3>
+<p>For nodes of type <code>vector</code>, the <code>path</code> property defines complex shapes using a list of <code>VectorAnchor</code> points <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L83-L96">src/schema/types.ts:83-96</a>. Each anchor supports Bézier handles (<code>hIn</code>, <code>hOut</code>) for curved segments.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L69-L96">src/schema/types.ts:69-96</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L140-L167">src/schema/types.ts:140-167</a></p>
+<hr />
+<h2 id="styling-fills">Styling &amp; Fills</h2>
+<p>The <code>Fill</code> type supports various modes, enabling the transition from low-fidelity wireframes to high-fidelity designs.</p>
+<ul>
+<li><strong>Solid</strong>: Simple hex color <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L20-L20">src/schema/types.ts:20-20</a>.</li>
+<li><strong>Gradients</strong>: Linear and radial stops <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L21-L22">src/schema/types.ts:21-22</a>.</li>
+<li><strong>Image</strong>: External or embedded asset references <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L23-L23">src/schema/types.ts:23-23</a>.</li>
+<li><strong>Token/Variable</strong>: Semantic references to the Design System <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L24-L25">src/schema/types.ts:24-25</a>.</li>
+</ul>
+<h3 id="visual-compositing">Visual Compositing</h3>
+<p>Nodes support <code>BlendMode</code> values that map directly to standard Canvas <code>globalCompositeOperation</code> types, such as <code>multiply</code>, <code>screen</code>, and <code>overlay</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L31-L43">src/schema/types.ts:31-43</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L19-L57">src/schema/types.ts:19-57</a></p>
+<hr />
+<h2 id="design-system-tokens">Design System &amp; Tokens</h2>
+<p>The <code>DesignSystem</code> object <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L245-L255">src/schema/types.ts:245-255</a> acts as the "source of truth" for the AI and the UI.</p>
+<h3 id="designtokens">DesignTokens</h3>
+<p>Tokens define the primitive values used across the document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L202-L209">src/schema/types.ts:202-209</a>:
+*   <strong>Colors</strong>: Named hex strings (e.g., <code>primary</code>, <code>surface</code>).
+*   <strong>Radii &amp; Spacing</strong>: Pixel values for layout consistency.
+*   <strong>Typography</strong>: Font families and size scales.</p>
+<h3 id="design-rules">Design Rules</h3>
+<p>The <code>DesignRule</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L220-L226">src/schema/types.ts:220-226</a> interface allows the system to enforce constraints on AI output. For example, a <code>min-tap-target</code> rule ensures that buttons are at least 40px tall <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L99-L99">src/<strong>tests</strong>/core.test.ts:99-99</a>.</p>
+<h3 id="variables">Variables</h3>
+<p><code>Variable</code> objects <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L233-L237">src/schema/types.ts:233-237</a> function similarly to Figma Variables, allowing properties to be bound to named values that can be updated globally.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L201-L237">src/schema/types.ts:201-237</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/designsystem/rules.ts#L1-L17">src/designsystem/rules.ts:1-17</a></p>
+<hr />
+<h2 id="layout-prototyping">Layout &amp; Prototyping</h2>
+<h3 id="autolayout-engine">AutoLayout Engine</h3>
+<p>The <code>AutoLayout</code> system <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L99-L104">src/schema/types.ts:99-104</a> implements a subset of Flexbox. The function <code>applyAutoLayout</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L21-L86">src/schema/layout.ts:21-86</a> recomputes child positions based on:
+1.  <strong>Mode</strong>: <code>vertical</code> or <code>horizontal</code>.
+2.  <strong>Gap</strong>: Space between elements.
+3.  <strong>Padding</strong>: Internal offsets.
+4.  <strong>Align</strong>: <code>start</code>, <code>center</code>, <code>end</code>, or <code>stretch</code>.</p>
+<h3 id="interactions">Interactions</h3>
+<p>The <code>Interaction</code> type <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L109-L115">src/schema/types.ts:109-115</a> defines the prototype's behavior. It links a trigger (<code>click</code>, <code>hover</code>) to a <code>targetFrameId</code>, enabling multi-screen flow navigation.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L21-L86">src/schema/layout.ts:21-86</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L99-L115">src/schema/types.ts:99-115</a></p>
+<hr />
+<h2 id="user-journey-schema">User Journey Schema</h2>
+<p>OpenPrototype treats User Journeys as first-class data entities rather than just drawings.</p>
+<h3 id="journeymap-structure">JourneyMap Structure</h3>
+<p>A <code>JourneyMap</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L257-L265">src/schema/types.ts:257-265</a> consists of a <code>persona</code> and a sequence of <code>JourneyStage</code> objects. Each stage tracks:
+*   <strong>Emotion</strong>: A score from -2 to 2 <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L36-L50">src/journey/journey.ts:36-50</a>.
+*   <strong>Lists</strong>: Actions, touchpoints, thoughts, pains, and opportunities <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L14-L22">src/journey/journey.ts:14-22</a>.</p>
+<h3 id="logic-visualization">Logic &amp; Visualization</h3>
+<p>The <code>emotionCurvePath</code> function <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L89-L111">src/journey/journey.ts:89-111</a> calculates a smooth Catmull-Rom spline to render the emotional arc in the <code>JourneyView</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L126-L172">src/views/JourneyView.tsx:126-172</a>.</p>
+<p><strong>Journey Data Flow</strong>
+<pre class="mermaid">graph TD
+    A[&quot;generateJourneyFromBrief()&quot;] -- &quot;AI Output&quot; --&gt; B[&quot;JourneyMap Object&quot;]
+    B -- &quot;emotion scores&quot; --&gt; C[&quot;emotionCurvePath()&quot;]
+    C -- &quot;SVG Path&quot; --&gt; D[&quot;JourneyView Canvas&quot;]
+    B -- &quot;Stage Content&quot; --&gt; E[&quot;CellList Editor&quot;]
+    E -- &quot;updateStage()&quot; --&gt; B
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L1-L111">src/journey/journey.ts:1-111</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L126-L172">src/views/JourneyView.tsx:126-172</a></p>
+<hr />
+<h2 id="interoperability-import">Interoperability &amp; Import</h2>
+<p>The system includes a dedicated interop layer in <code>src/interop/importDesign.ts</code> to convert external formats into the <code>GpoDocument</code> schema.</p>
+<ul>
+<li><strong>Token Parsing</strong>: <code>parseTokens</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L101-L191">src/interop/importDesign.ts:101-191</a> handles W3C Design Tokens (<code>$value</code>), Tokens Studio, and Figma Tokens.</li>
+<li><strong>Normalization</strong>: It includes utilities like <code>figmaColorToHex</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L41-L48">src/interop/importDesign.ts:41-48</a> and <code>toPx</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L51-L62">src/interop/importDesign.ts:51-62</a> to ensure unit consistency (e.g., converting <code>rem</code> to <code>px</code>).</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L1-L191">src/interop/importDesign.ts:1-191</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

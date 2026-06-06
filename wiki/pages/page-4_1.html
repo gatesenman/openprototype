@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>4.1 CanvasStage: Konva Rendering Engine · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1 active" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="canvasstage-konva-rendering-engine">CanvasStage: Konva Rendering Engine</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/render/resolve.ts](https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts)
+- [src/styles.css](https://github.com/gaosichun888/openprototype/blob/main/src/styles.css)
+- [src/views/canvas/CanvasStage.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx)
+
+</details>
+
+<p>The <code>CanvasStage</code> component is the primary 2D rendering engine of OpenPrototype. It leverages <code>react-konva</code> (a React wrapper for the Konva.js HTML5 Canvas library) to provide a high-performance, interactive design environment. It handles complex operations such as viewport manipulation, coordinate transformations between screen and world space, snapping logic, and specialized node rendering for various design primitives.</p>
+<h2 id="viewport-coordinate-management">Viewport &amp; Coordinate Management</h2>
+<p><code>CanvasStage</code> maintains its own viewport state, including <code>scale</code> (zoom level) and <code>pos</code> (panning offset) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L93-L94">src/views/canvas/CanvasStage.tsx:93-94</a>.</p>
+<h3 id="coordinate-systems">Coordinate Systems</h3>
+<p>The engine manages two primary coordinate systems:
+1.  <strong>Screen Space</strong>: The raw pixel coordinates relative to the browser window or the stage container.
+2.  <strong>World Space</strong>: The document coordinates where frames and nodes are positioned.</p>
+<p>To convert between these, <code>CanvasStage</code> uses the stage's transform matrix. For example, finding the world-space coordinate of the mouse cursor is achieved by applying the inverse of the stage's transformation to the pointer position <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L327-L331">src/views/canvas/CanvasStage.tsx:327-331</a>.</p>
+<h3 id="viewport-operations">Viewport Operations</h3>
+<ul>
+<li><strong>Panning</strong>: Handled via the middle mouse button or the Spacebar + Left Click drag <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L342-L351">src/views/canvas/CanvasStage.tsx:342-351</a>.</li>
+<li><strong>Zooming</strong>: Implemented via the mouse wheel (with <code>Ctrl</code> modifier) or trackpad pinch gestures <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L300-L324">src/views/canvas/CanvasStage.tsx:300-324</a>.</li>
+<li><strong>Fit to Screen</strong>: Calculated by comparing the bounding box of all frames against the current stage dimensions <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L184-L206">src/views/canvas/CanvasStage.tsx:184-206</a>.</li>
+</ul>
+<h3 id="viewport-state-flow">Viewport State Flow</h3>
+<p>The following diagram illustrates how user interactions are transformed into viewport updates.</p>
+<p><strong>Viewport Transformation Pipeline</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;User_Input&quot;
+        &quot;Wheel_Event&quot;[&quot;Wheel Event&quot;]
+        &quot;Drag_Event&quot;[&quot;Drag Event&quot;]
+    end
+
+    subgraph &quot;CanvasStage_Logic&quot;
+        &quot;onWheel&quot;[&quot;onWheel handler [300]&quot;]
+        &quot;onMouseMove&quot;[&quot;onMouseMove handler [339]&quot;]
+        &quot;setPos&quot;[&quot;setPos (State Update)&quot;]
+        &quot;setScale&quot;[&quot;setScale (State Update)&quot;]
+    end
+
+    subgraph &quot;Konva_Stage&quot;
+        &quot;Stage_Node&quot;[&quot;Stage Node&quot;]
+        &quot;Layer_Node&quot;[&quot;Layer Node&quot;]
+    end
+
+    &quot;Wheel_Event&quot; --&gt; &quot;onWheel&quot;
+    &quot;Drag_Event&quot; --&gt; &quot;onMouseMove&quot;
+    &quot;onWheel&quot; --&gt; &quot;setScale&quot;
+    &quot;onWheel&quot; --&gt; &quot;setPos&quot;
+    &quot;onMouseMove&quot; --&gt; &quot;setPos&quot;
+    &quot;setScale&quot; --&gt; &quot;Stage_Node&quot;
+    &quot;setPos&quot; --&gt; &quot;Stage_Node&quot;
+    &quot;Stage_Node&quot; --&gt; &quot;Layer_Node&quot;
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L90-L351">src/views/canvas/CanvasStage.tsx:90-351</a></p>
+<h2 id="rendering-pipeline">Rendering Pipeline</h2>
+<p>The rendering process is a recursive dispatch starting from the <code>Page</code> down to individual <code>Node</code> objects.</p>
+<h3 id="renderframe">renderFrame</h3>
+<p>The stage iterates through the frames of the active page. Each frame is rendered as a <code>Group</code> containing a background <code>Rect</code> and its child nodes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L550-L578">src/views/canvas/CanvasStage.tsx:550-578</a>.</p>
+<h3 id="rendernode-dispatch">renderNode Dispatch</h3>
+<p>A dispatcher function maps the abstract <code>Node</code> schema to specific Konva components based on <code>node.type</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L430-L538">src/views/canvas/CanvasStage.tsx:430-538</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Node Type</th>
+<th style="text-align: left;">Konva Implementation</th>
+<th style="text-align: left;">Key Logic / Helper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>rect</code></td>
+<td style="text-align: left;"><code>Rect</code></td>
+<td style="text-align: left;"><code>strokeRectGeometry</code> for inside/outside stroke <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L36-L55">src/views/canvas/CanvasStage.tsx:36-55</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ellipse</code></td>
+<td style="text-align: left;"><code>Ellipse</code></td>
+<td style="text-align: left;">Centered on width/height <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L484-L493">src/views/canvas/CanvasStage.tsx:484-493</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>text</code></td>
+<td style="text-align: left;"><code>Text</code></td>
+<td style="text-align: left;">Font resolution and vertical alignment <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L455-L475">src/views/canvas/CanvasStage.tsx:455-475</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector</code></td>
+<td style="text-align: left;"><code>Path</code></td>
+<td style="text-align: left;">Uses <code>pathToSvgData</code> for Bezier path strings <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L501-L512">src/views/canvas/CanvasStage.tsx:501-512</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>image</code></td>
+<td style="text-align: left;"><code>NodeImage</code></td>
+<td style="text-align: left;">Asynchronous <code>HTMLImageElement</code> loading and <code>fillPattern</code> scaling <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L59-L88">src/views/canvas/CanvasStage.tsx:59-88</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>group</code></td>
+<td style="text-align: left;"><code>Group</code></td>
+<td style="text-align: left;">Recursive call to <code>renderNode</code> for children <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L527-L537">src/views/canvas/CanvasStage.tsx:527-537</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="fill-stroke-resolution">Fill &amp; Stroke Resolution</h3>
+<p>Fills are resolved via <code>nodeFill</code> and <code>resolveFill</code>, which check for solid colors, design system tokens, or variables <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L3-L35">src/render/resolve.ts:3-35</a>. Stroke alignment (inside vs. outside) is simulated by adjusting the geometry because Konva only supports centered strokes natively <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L36-L55">src/views/canvas/CanvasStage.tsx:36-55</a>.</p>
+<p><strong>Node Rendering Architecture</strong>
+<pre class="mermaid">graph TD
+    &quot;Page_State&quot;[&quot;Page State (useStore)&quot;] --&gt; &quot;Frame_Map&quot;[&quot;frames.map()&quot;]
+    &quot;Frame_Map&quot; --&gt; &quot;renderFrame&quot;[&quot;renderFrame [550]&quot;]
+    &quot;renderFrame&quot; --&gt; &quot;Node_Map&quot;[&quot;nodes.map()&quot;]
+    &quot;Node_Map&quot; --&gt; &quot;renderNode&quot;[&quot;renderNode (Dispatcher) [430]&quot;]
+
+    subgraph &quot;Primitive_Components&quot;
+        &quot;renderNode&quot; --&gt; &quot;NodeRect&quot;[&quot;Rect Component&quot;]
+        &quot;renderNode&quot; --&gt; &quot;NodeText&quot;[&quot;Text Component&quot;]
+        &quot;renderNode&quot; --&gt; &quot;NodeImage&quot;[&quot;NodeImage Component [59]&quot;]
+        &quot;renderNode&quot; --&gt; &quot;NodeVector&quot;[&quot;Path Component&quot;]
+    end
+
+    subgraph &quot;Style_Resolution&quot;
+        &quot;NodeRect&quot; --&gt; &quot;nodeFill&quot;[&quot;nodeFill() [src/render/resolve.ts]&quot;]
+        &quot;NodeRect&quot; --&gt; &quot;strokeRectGeometry&quot;[&quot;strokeRectGeometry() [36]&quot;]
+    end
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L430-L578">src/views/canvas/CanvasStage.tsx:430-578</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L1-L35">src/render/resolve.ts:1-35</a></p>
+<h2 id="interaction-engine">Interaction Engine</h2>
+<h3 id="selection-marquee">Selection &amp; Marquee</h3>
+<ul>
+<li><strong>Single/Multi Select</strong>: Clicking a node updates <code>selectedNodeIds</code> in the store. <code>Shift</code> key toggles selection <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L360-L376">src/views/canvas/CanvasStage.tsx:360-376</a>.</li>
+<li><strong>Marquee</strong>: Dragging on the empty canvas creates a selection rectangle. On <code>mouseup</code>, the engine calculates which nodes' bounding boxes intersect the marquee area <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L391-L414">src/views/canvas/CanvasStage.tsx:391-414</a>.</li>
+</ul>
+<h3 id="transformer">Transformer</h3>
+<p>The <code>Transformer</code> is a special Konva component used to provide resize and rotation handles for selected nodes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L590-L610">src/views/canvas/CanvasStage.tsx:590-610</a>.
+*   It attaches to nodes via <code>trRef.current.nodes()</code>.
+*   On transform end, it calculates the new dimensions and positions, then calls <code>updateNode</code> in the store <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L613-L633">src/views/canvas/CanvasStage.tsx:613-633</a>.</p>
+<h3 id="snapping-guides">Snapping &amp; Guides</h3>
+<p>When a node is moved, <code>CanvasStage</code> calculates potential snap points against other nodes in the same frame or the frame boundaries.
+*   <strong>Guides</strong>: Vertical or horizontal lines drawn when a node aligns with another <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L15-L17">src/views/canvas/CanvasStage.tsx:15-17</a>.
+*   <strong>Distance Guides (Measures)</strong>: Red labels showing the pixel distance between the dragged node and its neighbors <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L21-L26">src/views/canvas/CanvasStage.tsx:21-26</a>.</p>
+<h3 id="snapping-logic-implementation">Snapping Logic Implementation</h3>
+<p><pre class="mermaid">sequenceDiagram
+    participant U as User (Mouse Drag)
+    participant C as CanvasStage
+    participant S as useStore
+    participant K as Konva Transformer
+
+    U-&gt;&gt;C: onDragMove
+    C-&gt;&gt;C: Calculate bounds of dragged node
+    C-&gt;&gt;C: Find nearest edges in frame
+    alt Snap Enabled
+        C-&gt;&gt;C: Adjust node position to match edge
+        C-&gt;&gt;C: Generate Guide lines
+    end
+    C-&gt;&gt;C: Generate Distance Measures
+    C-&gt;&gt;K: Update visual handles
+    U-&gt;&gt;C: onDragEnd
+    C-&gt;&gt;S: updateNode(id, { x, y })
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L15-L26">src/views/canvas/CanvasStage.tsx:15-26</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L154-L157">src/views/canvas/CanvasStage.tsx:154-157</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L613-L633">src/views/canvas/CanvasStage.tsx:613-633</a></p>
+<h2 id="advanced-canvas-features">Advanced Canvas Features</h2>
+<h3 id="rulers-grid">Rulers &amp; Grid</h3>
+<p>The canvas provides optional visual aids for precision:
+*   <strong>Rulers</strong>: Drawn at the top and left of the stage, showing coordinates in world space. They update dynamically as the user pans and zooms <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L152-L155">src/views/canvas/CanvasStage.tsx:152-155</a>.
+*   <strong>Grid</strong>: A background pattern (defaulting to 8px increments) that facilitates visual alignment <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L28">src/views/canvas/CanvasStage.tsx:28</a>.</p>
+<h3 id="context-menu">Context Menu</h3>
+<p>A custom <code>ContextMenu</code> is triggered on right-click, providing access to operations like grouping, reordering, and component creation <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L12-L13">src/views/canvas/CanvasStage.tsx:12-13</a>. It calculates its position in screen space to ensure it appears correctly over the canvas <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L378-L385">src/views/canvas/CanvasStage.tsx:378-385</a>.</p>
+<h3 id="export-integration">Export Integration</h3>
+<p><code>CanvasStage</code> registers its underlying Konva stage instance with the <code>exportPng</code> module using <code>registerStage</code>. This allows the application to capture high-resolution screenshots of the design directly from the rendering buffer <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L11">src/views/canvas/CanvasStage.tsx:11</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L164-L166">src/views/canvas/CanvasStage.tsx:164-166</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L1-L650">src/views/canvas/CanvasStage.tsx:1-650</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L1-L36">src/render/resolve.ts:1-36</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

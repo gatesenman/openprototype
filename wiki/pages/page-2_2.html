@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>2.2 Auto Layout &amp; Constraints Engine · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1 active" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="auto-layout-constraints-engine">Auto Layout &amp; Constraints Engine</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/__tests__/core.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts)
+- [src/interop/importDesign.ts](https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts)
+- [src/schema/constraints.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.test.ts)
+- [src/schema/constraints.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts)
+- [src/schema/layout.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts)
+
+</details>
+
+<p>The Auto Layout and Constraints engines are responsible for the spatial orchestration of nodes within the OpenPrototype canvas. They implement a Figma-like layout model that allows for both content-driven stacking (Auto Layout) and container-driven responsive resizing (Constraints).</p>
+<h2 id="auto-layout-engine">Auto Layout Engine</h2>
+<p>The Auto Layout engine, implemented in <code>applyAutoLayout</code>, provides a flexbox-like system for arranging child nodes within a container. It supports vertical and horizontal stacking, configurable gaps, internal padding, and alignment strategies (including "stretch").</p>
+<h3 id="core-implementation">Core Implementation</h3>
+<p>The engine operates as a pure function that takes a <code>Node</code> and returns a new <code>Node</code> with recalculated child positions and container dimensions <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L21-L25">src/schema/layout.ts:21-25</a>.</p>
+<ol>
+<li><strong>Axis Determination</strong>: The engine identifies the primary axis (main-axis) and cross-axis based on the <code>layout.mode</code> ("vertical" or "horizontal") <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L26-L28">src/schema/layout.ts:26-28</a>.</li>
+<li><strong>Cross-Axis Extent</strong>: It calculates the maximum dimension of children on the cross-axis to determine the container's cross-size or to align children <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L31-L34">src/schema/layout.ts:31-34</a>.</li>
+<li><strong>Cursor-Based Positioning</strong>: A <code>cursor</code> tracks the current position along the main-axis, starting from the padding (top for vertical, left for horizontal) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L36-L36">src/schema/layout.ts:36-36</a>.</li>
+<li><strong>Alignment &amp; Stretching</strong>:<ul>
+<li><strong>Start/Center/End</strong>: Positions children relative to the padding and available cross-axis space <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L44-L46">src/schema/layout.ts:44-46</a>.</li>
+<li><strong>Stretch</strong>: If alignment is not start/center/end, the child is forced to match the <code>crossMax</code> dimension <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L49-L49">src/schema/layout.ts:49-49</a>.</li>
+</ul>
+</li>
+<li><strong>Hugging (Sizing)</strong>: The container's width and height are recalculated to "hug" the content main-axis (total children size + gaps) and cross-axis (max child size + padding) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L72-L78">src/schema/layout.ts:72-78</a>.</li>
+</ol>
+<h3 id="auto-layout-data-flow">Auto Layout Data Flow</h3>
+<p>The following diagram illustrates how the <code>applyAutoLayout</code> function transforms node properties.</p>
+<p><strong>Auto Layout Transformation Logic</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Input Node Entity&quot;
+        N[&quot;Node (type: Group/Frame)&quot;]
+        L[&quot;AutoLayout Config&quot;]
+        C[&quot;Children: Node[]&quot;]
+    end
+
+    subgraph &quot;applyAutoLayout Function&quot;
+        direction TB
+        P1[&quot;Calculate crossMax (max child width/height)&quot;]
+        P2[&quot;Iterate Children with main-axis cursor&quot;]
+        P3[&quot;Apply align (start|center|end|stretch)&quot;]
+        P4[&quot;Update Child x, y, width, height&quot;]
+        P5[&quot;Calculate Container main-axis extent&quot;]
+    end
+
+    subgraph &quot;Output Node Entity&quot;
+        RN[&quot;New Node&quot;]
+        RC[&quot;Updated Children (Rounded Coords)&quot;]
+        RS[&quot;Updated Width/Height (Hugging)&quot;]
+    end
+
+    N --&gt; P1
+    L --&gt; P1
+    C --&gt; P2
+    P1 --&gt; P3
+    P2 --&gt; P3
+    P3 --&gt; P4
+    P4 --&gt; P5
+    P5 --&gt; RN
+    P4 --&gt; RC
+    RN --&gt; RS
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L21-L86">src/schema/layout.ts:21-86</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L1-L10">src/schema/types.ts:1-10</a></p>
+<h3 id="configuration-defaults">Configuration Defaults</h3>
+<p>When a container is first enabled for auto-layout, it uses <code>DEFAULT_AUTOLAYOUT</code>:
+*   <strong>Mode</strong>: <code>vertical</code>
+*   <strong>Gap</strong>: <code>12px</code>
+*   <strong>Padding</strong>: <code>16px</code> (all sides)
+*   <strong>Align</strong>: <code>start</code>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L4-L9">src/schema/layout.ts:4-9</a></p>
+<hr />
+<h2 id="constraints-engine">Constraints Engine</h2>
+<p>The Constraints engine handles how nodes behave when their parent frame is manually resized. This allows for responsive behaviors like pinning elements to corners, centering them, or scaling them proportionally.</p>
+<h3 id="constraint-modes">Constraint Modes</h3>
+<p>The engine supports horizontal (<code>HConstraint</code>) and vertical (<code>VConstraint</code>) settings <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L1-L10">src/schema/types.ts:1-10</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Mode</th>
+<th style="text-align: left;">Behavior</th>
+<th style="text-align: left;">Implementation Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>left</code> / <code>top</code></td>
+<td style="text-align: left;">Pin to near edge</td>
+<td style="text-align: left;">Maintains original <code>x</code> or <code>y</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L37-L39">src/schema/constraints.ts:37-39</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>right</code> / <code>bottom</code></td>
+<td style="text-align: left;">Pin to far edge</td>
+<td style="text-align: left;">Maintains constant distance from parent's <code>prev</code> edge <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L22-L24">src/schema/constraints.ts:22-24</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>left-right</code> / <code>top-bottom</code></td>
+<td style="text-align: left;">Stretch</td>
+<td style="text-align: left;">Maintains distance from both edges, changing <code>size</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L25-L27">src/schema/constraints.ts:25-27</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>center</code></td>
+<td style="text-align: left;">Maintain relative center</td>
+<td style="text-align: left;">Offsets the node center based on the parent's center change <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L28-L31">src/schema/constraints.ts:28-31</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>scale</code></td>
+<td style="text-align: left;">Proportional resize</td>
+<td style="text-align: left;">Multiplies <code>start</code> and <code>size</code> by the parent's growth ratio <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L32-L35">src/schema/constraints.ts:32-35</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementation-applyconstraints">Implementation: applyConstraints</h3>
+<p>The function <code>applyConstraints</code> is called when a parent's dimensions change from <code>prev</code> to <code>next</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L47-L51">src/schema/constraints.ts:47-51</a>. It delegates the calculation to <code>resolveAxis</code>, which computes the new <code>start</code> (coordinate) and <code>size</code> (dimension) for a single axis <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L13-L19">src/schema/constraints.ts:13-19</a>.</p>
+<h3 id="constraints-logic-mapping">Constraints Logic Mapping</h3>
+<p>This diagram maps the logical constraints to the code entities that execute the resizing.</p>
+<p><strong>Constraint Execution Pipeline</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;Data Structures&quot;
+        NC[&quot;Node.constraints&quot;]
+        Box[&quot;Box (x, y, w, h)&quot;]
+    end
+
+    subgraph &quot;Logic: resolveAxis&quot;
+        direction TB
+        calc_r[&quot;Right/Bottom: next - end - size&quot;]
+        calc_s[&quot;Stretch: next - start - end&quot;]
+        calc_c[&quot;Center: next/2 + offset - size/2&quot;]
+        calc_sc[&quot;Scale: val * (next/prev)&quot;]
+    end
+
+    subgraph &quot;Core Function: applyConstraints&quot;
+        h_res[&quot;resolveAxis (Horizontal)&quot;]
+        v_res[&quot;resolveAxis (Vertical)&quot;]
+    end
+
+    NC --&gt; h_res
+    NC --&gt; v_res
+    Box --&gt; h_res
+    Box --&gt; v_res
+    
+    h_res -.-&gt; calc_r
+    h_res -.-&gt; calc_s
+    v_res -.-&gt; calc_c
+    v_res -.-&gt; calc_sc
+
+    h_res --&gt; Out[&quot;New Rounded Box&quot;]
+    v_res --&gt; Out
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L13-L61">src/schema/constraints.ts:13-61</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.test.ts#L7-L49">src/schema/constraints.test.ts:7-49</a></p>
+<h3 id="pure-function-characteristics">Pure Function Characteristics</h3>
+<ul>
+<li><strong>Rounding</strong>: Both engines use <code>Math.round</code> on all final coordinates and dimensions to ensure nodes stay on the pixel grid <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L65-L84">src/schema/layout.ts:65-84</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L56-L59">src/schema/constraints.ts:56-59</a>.</li>
+<li><strong>Immutability</strong>: Neither engine mutates the original node; they return new objects with updated properties <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts#L13-L14">src/schema/layout.ts:13-14</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L44-L46">src/schema/constraints.ts:44-46</a>.</li>
+<li><strong>Default Behavior</strong>: If no constraints are provided, the system defaults to <code>left/top</code> pinning, which matches industry standards like Figma <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L10-L10">src/schema/constraints.ts:10-10</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/constraints.ts#L52-L52">src/schema/constraints.ts:52-52</a>.</li>
+</ul>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

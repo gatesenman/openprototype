@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>7.1 Requirements View · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1 active" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="requirements-view">Requirements View</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/ai/assistDoc.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/assistDoc.ts)
+- [src/requirements/slashCommands.ts](https://github.com/gaosichun888/openprototype/blob/main/src/requirements/slashCommands.ts)
+- [src/templates/requirementTemplates.ts](https://github.com/gaosichun888/openprototype/blob/main/src/templates/requirementTemplates.ts)
+- [src/templates/starters.ts](https://github.com/gaosichun888/openprototype/blob/main/src/templates/starters.ts)
+- [src/views/RequirementsView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx)
+
+</details>
+
+<p>The <code>RequirementsView</code> component serves as the primary interface for product definition within OpenPrototype. It bridges the gap between natural language product specifications and visual design by providing a Markdown-based editor integrated with AI generation triggers. It allows users to manage multiple requirement documents, apply industry-standard templates, and use a slash command palette for rapid document construction.</p>
+<h3 id="core-architecture-and-data-flow">Core Architecture and Data Flow</h3>
+<p>The <code>RequirementsView</code> interacts directly with the <code>useStore</code> Zustand store to persist <code>RequirementDoc</code> entities within the <code>GpoDocument</code>. Changes in the editor trigger immediate updates to the document state, which are then used as context for AI generation tasks.</p>
+<h4 id="requirements-data-flow-diagram">Requirements Data Flow Diagram</h4>
+<p>Title: Requirements Data Flow
+<pre class="mermaid">graph TD
+    subgraph &quot;UI Layer (RequirementsView.tsx)&quot;
+        Editor[&quot;Markdown Editor (Textarea)&quot;]
+        Toolbar[&quot;Toolbar (Fidelity/Generate)&quot;]
+        SlashPalette[&quot;Slash Command Palette&quot;]
+    end
+
+    subgraph &quot;State Layer (useStore.ts)&quot;
+        ReqState[&quot;doc.requirements&quot;]
+        ActiveID[&quot;activeRequirementId&quot;]
+        UpdateReq[&quot;updateRequirement()&quot;]
+        AddReq[&quot;addRequirement()&quot;]
+    end
+
+    subgraph &quot;AI Layer&quot;
+        Assist[&quot;assistRequirement()&quot;]
+        GenPage[&quot;generatePage()&quot;]
+        GenFlow[&quot;generateFlow()&quot;]
+    end
+
+    Editor -- &quot;onChange&quot; --&gt; UpdateReq
+    SlashPalette -- &quot;applySlash()&quot; --&gt; UpdateReq
+    Toolbar -- &quot;generate()&quot; --&gt; GenPage
+    Toolbar -- &quot;generateFlowAction()&quot; --&gt; GenFlow
+    SlashPalette -- &quot;runAssist()&quot; --&gt; Assist
+    Assist -- &quot;returns Markdown&quot; --&gt; UpdateReq
+    UpdateReq --&gt; ReqState
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L46-L56">src/views/RequirementsView.tsx:46-56</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L140-L154">src/views/RequirementsView.tsx:140-154</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L156-L172">src/views/RequirementsView.tsx:156-172</a></p>
+<h3 id="component-implementation">Component Implementation</h3>
+<p>The <code>RequirementsView</code> is split into a sidebar for navigation between different requirement sets and a main editing area.</p>
+<h4 id="key-functions-and-state">Key Functions and State</h4>
+<ul>
+<li><strong>Fidelity Selection</strong>: Users can toggle between <code>wireframe</code> and <code>hifi</code> modes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L61">src/views/RequirementsView.tsx:61</a>. This state is passed to the AI generators to determine the visual complexity of the output.</li>
+<li><strong>Requirement CRUD</strong>:<ul>
+<li><code>addRequirement</code>: Creates a new blank document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L51">src/views/RequirementsView.tsx:51</a>.</li>
+<li><code>updateRequirement</code>: Updates the title or markdown content <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L52">src/views/RequirementsView.tsx:52</a>.</li>
+<li><code>deleteRequirement</code>: Removes the requirement from the document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L53">src/views/RequirementsView.tsx:53</a>.</li>
+</ul>
+</li>
+<li><strong>AI Generation Triggers</strong>:<ul>
+<li><code>generate()</code>: Calls <code>generatePage</code> to create a single canvas frame based on the current markdown <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L78-L102">src/views/RequirementsView.tsx:78-102</a>.</li>
+<li><code>generateFlowAction()</code>: Calls <code>generateFlow</code> to generate multiple interconnected frames <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L156-L172">src/views/RequirementsView.tsx:156-172</a>.</li>
+</ul>
+</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L46-L102">src/views/RequirementsView.tsx:46-102</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L156-L172">src/views/RequirementsView.tsx:156-172</a></p>
+<h3 id="slash-command-palette">Slash Command Palette</h3>
+<p>The editor implements a "Slash Command" system triggered by typing <code>/</code>. This allows for rapid insertion of Markdown blocks or triggering AI-assisted document transformations.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Purpose</th>
+<th style="text-align: left;">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Basic</strong></td>
+<td style="text-align: left;">Standard Markdown blocks</td>
+<td style="text-align: left;">H1-H3, Lists, Code blocks, Dividers <a href="https://github.com/gaosichun888/openprototype/blob/main/src/requirements/slashCommands.ts#L38-L145">src/requirements/slashCommands.ts:38-145</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Doc</strong></td>
+<td style="text-align: left;">PRD-specific sections</td>
+<td style="text-align: left;">User Stories, Acceptance Criteria, Goals <a href="https://github.com/gaosichun888/openprototype/blob/main/src/requirements/slashCommands.ts#L147-L220">src/requirements/slashCommands.ts:147-220</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Data</strong></td>
+<td style="text-align: left;">Technical definitions</td>
+<td style="text-align: left;">Data Models, API definitions, State Enums <a href="https://github.com/gaosichun888/openprototype/blob/main/src/requirements/slashCommands.ts#L222-L261">src/requirements/slashCommands.ts:222-261</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI</strong></td>
+<td style="text-align: left;">Intelligent transformations</td>
+<td style="text-align: left;">Draft PRD, Polish, Expand, Summarize <a href="https://github.com/gaosichun888/openprototype/blob/main/src/requirements/slashCommands.ts#L263-L309">src/requirements/slashCommands.ts:263-309</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="slash-command-logic">Slash Command Logic</h4>
+<p>The system uses <code>detectSlash</code> to identify the query string after the <code>/</code> character <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L134-L138">src/views/RequirementsView.tsx:134-138</a>. When a command is selected via <code>applySlash</code>, it either performs a string insertion (for <code>insert</code> kind) or invokes <code>runAssist</code> (for <code>ai</code> kind) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L140-L154">src/views/RequirementsView.tsx:140-154</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/requirements/slashCommands.ts#L15-L26">src/requirements/slashCommands.ts:15-26</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/RequirementsView.tsx#L134-L154">src/views/RequirementsView.tsx:134-154</a></p>
+<h3 id="ai-assistance-assistrequirement">AI Assistance (assistRequirement)</h3>
+<p>The <code>assistRequirement</code> function handles document-level AI tasks. It features a dual-path execution strategy:
+1. <strong>LLM Path</strong>: If an API key is configured in <code>AiSettings</code>, it calls <code>chatComplete</code> with specific system prompts defined in the <code>SYSTEMS</code> registry <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/assistDoc.ts#L140-L156">src/ai/assistDoc.ts:140-156</a>.
+2. <strong>Local Heuristic Path</strong>: If offline or no key is provided, it uses local functions like <code>localDraft</code>, <code>localPolish</code>, and <code>localSummarize</code> to provide basic structural assistance <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/assistDoc.ts#L163-L172">src/ai/assistDoc.ts:163-172</a>.</p>
+<p>Title: AI Assistance Strategy
+<pre class="mermaid">graph LR
+    Input[&quot;Markdown Content&quot;] --&gt; CheckSettings{&quot;AiSettings.apiKey?&quot;}
+    CheckSettings -- &quot;Yes&quot; --&gt; LLM[&quot;chatComplete()&quot;]
+    CheckSettings -- &quot;No&quot; --&gt; Local[&quot;Local Heuristics&quot;]
+
+    subgraph &quot;Local Functions (assistDoc.ts)&quot;
+        Local --&gt; LD[&quot;localDraft()&quot;]
+        Local --&gt; LP[&quot;localPolish()&quot;]
+        Local --&gt; LE[&quot;localExpand()&quot;]
+    end
+
+    subgraph &quot;LLM Prompts (assistDoc.ts)&quot;
+        LLM --&gt; S1[&quot;SYSTEMS[&#x27;draft&#x27;]&quot;]
+        LLM --&gt; S2[&quot;SYSTEMS[&#x27;polish&#x27;]&quot;]
+    end
+
+    LD --&gt; Output[&quot;Updated Markdown&quot;]
+    LP --&gt; Output
+    S1 --&gt; Output
+    S2 --&gt; Output
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/assistDoc.ts#L11-L21">src/ai/assistDoc.ts:11-21</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/ai/assistDoc.ts#L158-L182">src/ai/assistDoc.ts:158-182</a></p>
+<h3 id="templates-and-starters">Templates and Starters</h3>
+<p>To prevent the "blank page" problem, the system provides two levels of templates:
+- <strong>Requirement Templates</strong>: Standardized structures for PRDs, Feature Specs, and User Stories <a href="https://github.com/gaosichun888/openprototype/blob/main/src/templates/requirementTemplates.ts#L15-L128">src/templates/requirementTemplates.ts:15-128</a>.
+- <strong>Starter Templates</strong>: High-level document presets (e.g., "Mobile App", "Web Admin") that initialize both a requirement document and a correctly sized canvas frame <a href="https://github.com/gaosichun888/openprototype/blob/main/src/templates/starters.ts#L62-L113">src/templates/starters.ts:62-113</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/templates/requirementTemplates.ts#L15-L128">src/templates/requirementTemplates.ts:15-128</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/templates/starters.ts#L62-L113">src/templates/starters.ts:62-113</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

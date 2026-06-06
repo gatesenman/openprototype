@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>4.4 Canvas Panels: Layers, Assets, Comments &amp; Context Menu · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1 active" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="canvas-panels-layers-assets-comments-context-menu">Canvas Panels: Layers, Assets, Comments &amp; Context Menu</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/views/canvas/AssetsPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx)
+- [src/views/canvas/CommentsPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx)
+- [src/views/canvas/ContextMenu.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/ContextMenu.tsx)
+- [src/views/canvas/LayersPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx)
+
+</details>
+
+<p>The Canvas View incorporates several specialized panels and overlays that facilitate document navigation, component management, and collaboration. These panels interact directly with the centralized <code>useStore</code> to manipulate the <code>GpoDocument</code> hierarchy and metadata.</p>
+<h2 id="layers-panel-hierarchy-navigation">Layers Panel: Hierarchy &amp; Navigation</h2>
+<p>The <code>LayersPanel</code> provides a structural tree view of the document. It allows users to manage pages, frames, and individual nodes within those frames.</p>
+<h3 id="page-and-frame-management">Page and Frame Management</h3>
+<ul>
+<li><strong>Page Switching</strong>: Users select active pages via a dropdown, which updates <code>activePageId</code> in the store <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L45-L55">src/views/canvas/LayersPanel.tsx:45-55</a>.</li>
+<li><strong>Frame Controls</strong>: Frames are listed as top-level collapsible containers. Clicking a frame sets it as the <code>activeFrameId</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L75-L76">src/views/canvas/LayersPanel.tsx:75-76</a>.</li>
+<li><strong>Expansion State</strong>: The panel maintains local state for collapsed/expanded frames, defaulting the active frame to an expanded state <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L26-L34">src/views/canvas/LayersPanel.tsx:26-34</a>.</li>
+</ul>
+<h3 id="node-manipulation">Node Manipulation</h3>
+<p>The panel renders nodes in reverse order (top-most node first) to match the visual stacking on the canvas <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L71">src/views/canvas/LayersPanel.tsx:71</a>.
+*   <strong>Selection</strong>: Supports single-click selection and Shift-click for multi-selection via <code>toggleSelect</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L158-L160">src/views/canvas/LayersPanel.tsx:158-160</a>.
+*   <strong>Visibility &amp; Locking</strong>: Nodes can be toggled between hidden/visible and locked/unlocked states <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L19-L20">src/views/canvas/LayersPanel.tsx:19-20</a>.
+*   <strong>Reordering</strong>: Implements drag-and-drop reordering. Dropping a node triggers <code>reorderNodeTo</code>, which modifies the node's index within its parent frame's <code>nodes</code> array <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L136-L153">src/views/canvas/LayersPanel.tsx:136-153</a>.</p>
+<h3 id="layers-data-flow">Layers Data Flow</h3>
+<p>Title: Layers Panel Interaction Flow
+<pre class="mermaid">graph TD
+    subgraph &quot;LayersPanel Component&quot;
+        A[&quot;User Action (Click/Drag)&quot;]
+        B[&quot;Local State (renaming/collapsed)&quot;]
+    end
+
+    subgraph &quot;useStore (Zustand)&quot;
+        C[&quot;setActivePage(id)&quot;]
+        D[&quot;reorderNodeTo(id, index)&quot;]
+        E[&quot;updateNode(frameId, nodeId, data)&quot;]
+    end
+
+    subgraph &quot;Document Model&quot;
+        F[&quot;doc.pages&quot;]
+        G[&quot;page.frames&quot;]
+        H[&quot;frame.nodes&quot;]
+    end
+
+    A --&gt; B
+    A --&gt; C
+    A --&gt; D
+    A --&gt; E
+    C --&gt; F
+    D --&gt; H
+    E --&gt; H
+    F --&gt; G
+    G --&gt; H
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L5-L36">src/views/canvas/LayersPanel.tsx:5-36</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/LayersPanel.tsx#L145-L153">src/views/canvas/LayersPanel.tsx:145-153</a></p>
+<hr />
+<h2 id="assets-panel-component-library">Assets Panel: Component Library</h2>
+<p>The <code>AssetsPanel</code> serves as a catalog for components defined in the <code>DesignSystem</code>. It enables users to browse and instantiate reusable elements.</p>
+<ul>
+<li><strong>De-duplication</strong>: The panel groups components by name, showing a count if multiple definitions share the same name <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx#L18-L28">src/views/canvas/AssetsPanel.tsx:18-28</a>.</li>
+<li><strong>Instantiation</strong>: Clicking an asset card calls <code>instantiateComponent(id)</code>, which creates a new node instance in the <code>activeFrameId</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx#L30-L37">src/views/canvas/AssetsPanel.tsx:30-37</a>.</li>
+<li><strong>Management</strong>: Provides inline actions to <code>renameComponent</code> or <code>deleteComponent</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx#L68-L87">src/views/canvas/AssetsPanel.tsx:68-87</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx#L8-L37">src/views/canvas/AssetsPanel.tsx:8-37</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/AssetsPanel.tsx#L58-L91">src/views/canvas/AssetsPanel.tsx:58-91</a></p>
+<hr />
+<h2 id="comments-panel-review-feedback">Comments Panel: Review &amp; Feedback</h2>
+<p>The <code>CommentsPanel</code> aggregates all review threads across the document into a searchable list. This is distinct from the <code>FrameComment</code> component which renders the actual pins on the canvas.</p>
+<h3 id="thread-management">Thread Management</h3>
+<ul>
+<li><strong>Filtering</strong>: Users can filter comments by status: <code>all</code>, <code>open</code>, or <code>resolved</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx#L45-L49">src/views/canvas/CommentsPanel.tsx:45-49</a>.</li>
+<li><strong>Search</strong>: Supports full-text search across message content, authors, and frame names <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx#L27-L38">src/views/canvas/CommentsPanel.tsx:27-38</a>.</li>
+<li><strong>Navigation</strong>: Clicking a comment item triggers <code>jump(frameId, commentId)</code>, which focuses the specific frame and opens the thread UI on the canvas <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx#L40-L43">src/views/canvas/CommentsPanel.tsx:40-43</a>.</li>
+<li><strong>Resolution</strong>: Comments can be toggled between resolved and open states via <code>resolveComment</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx#L102-L111">src/views/canvas/CommentsPanel.tsx:102-111</a>.</li>
+</ul>
+<h3 id="comment-system-architecture">Comment System Architecture</h3>
+<p>Title: Comment System Entity Mapping
+<pre class="mermaid">classDiagram
+    class CommentsPanel {
+        +Filter filter
+        +string query
+        +jump(frameId, commentId)
+    }
+    class CommentThread {
+        +string id
+        +string frameId
+        +boolean resolved
+        +Message[] thread
+    }
+    class Message {
+        +string author
+        +string text
+        +number timestamp
+    }
+    class useStore {
+        +doc.comments: CommentThread[]
+        +resolveComment(id, status)
+        +deleteComment(id)
+    }
+
+    CommentsPanel ..&gt; useStore : selects comments
+    useStore &quot;1&quot; *-- &quot;many&quot; CommentThread : contains
+    CommentThread &quot;1&quot; *-- &quot;many&quot; Message : contains
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx#L9-L14">src/views/canvas/CommentsPanel.tsx:9-14</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CommentsPanel.tsx#L84-L123">src/views/canvas/CommentsPanel.tsx:84-123</a></p>
+<hr />
+<h2 id="context-menu">Context Menu</h2>
+<p>The <code>ContextMenu</code> is a transient UI component that provides access to context-sensitive actions based on the current selection or click target.</p>
+<ul>
+<li><strong>Positioning</strong>: Accepts <code>x</code> and <code>y</code> coordinates (typically from a <code>onContextMenu</code> event) and renders an absolute-positioned overlay <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/ContextMenu.tsx#L14-L24">src/views/canvas/ContextMenu.tsx:14-24</a>.</li>
+<li><strong>Item Configuration</strong>: Each <code>MenuItem</code> supports labels, icons, keyboard shortcuts, and a <code>danger</code> flag for destructive actions like deletion <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/ContextMenu.tsx#L4-L12">src/views/canvas/ContextMenu.tsx:4-12</a>.</li>
+<li><strong>Dismissal Logic</strong>: Automatically closes when clicking outside the menu or pressing the <code>Escape</code> key <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/ContextMenu.tsx#L27-L42">src/views/canvas/ContextMenu.tsx:27-42</a>.</li>
+</ul>
+<h3 id="context-menu-implementation">Context Menu Implementation</h3>
+<p>Title: Context Menu Lifecycle
+<pre class="mermaid">sequenceDiagram
+    participant U as User
+    participant C as CanvasStage
+    participant M as ContextMenu
+    participant S as useStore
+
+    U-&gt;&gt;C: Right Click (onContextMenu)
+    C-&gt;&gt;M: Mount with items &amp; (x, y)
+    U-&gt;&gt;M: Click MenuItem (e.g., &quot;Delete&quot;)
+    M-&gt;&gt;S: Call item.onClick()
+    S-&gt;&gt;S: Update Document State
+    M-&gt;&gt;M: Call onClose()
+    M--&gt;&gt;U: Unmount
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/ContextMenu.tsx#L47-L70">src/views/canvas/ContextMenu.tsx:47-70</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

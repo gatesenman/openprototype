@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>11.2 Frontend Cloud Integration · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1 active" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="frontend-cloud-integration">Frontend Cloud Integration</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [server/.env.example](https://github.com/gaosichun888/openprototype/blob/main/server/.env.example)
+- [server/app/models.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py)
+- [server/app/schemas.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py)
+- [server/docker-compose.yml](https://github.com/gaosichun888/openprototype/blob/main/server/docker-compose.yml)
+- [src/cloud/api.ts](https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts)
+- [src/components/CloudModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx)
+- [src/components/DesignSystemModal.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/components/DesignSystemModal.tsx)
+- [src/views/canvas/PropertiesPanel.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/PropertiesPanel.tsx)
+
+</details>
+
+<p>The Frontend Cloud Integration system enables optional SaaS-based collaboration features for OpenPrototype. It provides a TypeScript client for interacting with the FastAPI backend, handles JWT-based authentication, manages project persistence, and provides a multi-user collaboration UI.</p>
+<h2 id="cloud-api-client">Cloud API Client</h2>
+<p>The <code>cloudApi</code> is a centralized TypeScript client that wraps standard <code>fetch</code> requests to the backend. It handles JSON serialization, error normalization, and automatic injection of the Bearer token for authenticated routes.</p>
+<h3 id="configuration-token-management">Configuration &amp; Token Management</h3>
+<p>The API base URL is determined by the <code>VITE_CLOUD_API</code> environment variable, defaulting to <code>http://localhost:8008/api</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L38-L40">src/cloud/api.ts:38-40</a>. JWT tokens are managed via the <code>cloudToken</code> utility, which persists the string to the browser's <code>localStorage</code> under the key <code>op_cloud_token</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L42-L48">src/cloud/api.ts:42-48</a>.</p>
+<h3 id="core-functions">Core Functions</h3>
+<p>The <code>cloudApi</code> object exposes methods for the full project lifecycle:
+*   <strong>Auth</strong>: <code>register</code>, <code>login</code>, and <code>me</code> (fetch current user profile) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L76-L86">src/cloud/api.ts:76-86</a>.
+*   <strong>Project CRUD</strong>: <code>listProjects</code>, <code>createProject</code>, <code>getProject</code>, and <code>deleteProject</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L87-L93">src/cloud/api.ts:87-93, 99</a>.
+*   <strong>Document Operations</strong>: <code>saveDocument</code> (creates a new version) and <code>listVersions</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L94-L98">src/cloud/api.ts:94-98, 108</a>.
+*   <strong>Collaboration</strong>: <code>listMembers</code>, <code>inviteMember</code>, and <code>removeMember</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L100-L107">src/cloud/api.ts:100-107</a>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L38-L109">src/cloud/api.ts:38-109</a></p>
+<h2 id="data-flow-document-normalization">Data Flow: Document Normalization</h2>
+<p>When a project is fetched from the cloud, it undergoes a normalization process before being loaded into the <code>useStore</code>. This ensures that documents created on older versions of the schema are compatible with the current frontend runtime.</p>
+<h3 id="the-open-project-sequence">The "Open Project" Sequence</h3>
+<ol>
+<li><code>cloudApi.getProject(id)</code> is called to fetch the <code>ProjectDetail</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L100">src/components/CloudModal.tsx:100</a>.</li>
+<li>The retrieved <code>GpoDocument</code> is passed through <code>normalizeDoc</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L101">src/components/CloudModal.tsx:101</a>.</li>
+<li><code>replaceDocument</code> updates the Zustand store with the sanitized document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L101">src/components/CloudModal.tsx:101</a>.</li>
+<li><code>clearHistory</code> resets the undo/redo stack to prevent history corruption across different projects <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L102">src/components/CloudModal.tsx:102</a>.</li>
+</ol>
+<h3 id="entity-association-diagram">Entity Association Diagram</h3>
+<p>This diagram maps frontend TypeScript interfaces to the corresponding Pydantic schemas and SQLAlchemy models used in the backend.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Layer</th>
+<th style="text-align: left;">User Entity</th>
+<th style="text-align: left;">Project Entity</th>
+<th style="text-align: left;">Document Entity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Frontend (TS)</strong></td>
+<td style="text-align: left;"><code>CloudUser</code></td>
+<td style="text-align: left;"><code>ProjectSummary</code></td>
+<td style="text-align: left;"><code>GpoDocument</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API Schema (Py)</strong></td>
+<td style="text-align: left;"><code>UserOut</code></td>
+<td style="text-align: left;"><code>ProjectSummary</code></td>
+<td style="text-align: left;"><code>DocumentUpdate</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Database (SQL)</strong></td>
+<td style="text-align: left;"><code>User</code></td>
+<td style="text-align: left;"><code>Project</code></td>
+<td style="text-align: left;"><code>DocumentVersion</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L5-L36">src/cloud/api.ts:5-36</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/schemas.py#L26-L84">server/app/schemas.py:26-84</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py#L25-L90">server/app/models.py:25-90</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L98-L105">src/components/CloudModal.tsx:98-105</a></p>
+<h2 id="cloudmodal-ui-component">CloudModal UI Component</h2>
+<p>The <code>CloudModal</code> serves as the primary interface for users to interact with cloud features. It manages internal state for authentication modes and project listings while bridging to the global application state.</p>
+<h3 id="authentication-states">Authentication States</h3>
+<p>The modal toggles between <code>login</code> and <code>register</code> modes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L23">src/components/CloudModal.tsx:23</a>. Upon successful authentication, the <code>access_token</code> is stored via <code>cloudToken.set()</code> and the user profile is fetched using <code>cloudApi.me()</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L63-L74">src/components/CloudModal.tsx:63-74</a>.</p>
+<h3 id="project-member-management">Project &amp; Member Management</h3>
+<ul>
+<li><strong>Project List</strong>: Displays projects where the user has a <code>Role</code> (<code>owner</code>, <code>editor</code>, or <code>viewer</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L29">src/components/CloudModal.tsx:29</a>.</li>
+<li><strong>Save Logic</strong>: If a project is already associated (<code>currentId</code>), it calls <code>saveDocument</code>; otherwise, it triggers <code>createProject</code> to initialize a new cloud entry <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L85-L96">src/components/CloudModal.tsx:85-96</a>.</li>
+<li><strong>Member Management</strong>: Owners and editors can invite new members by email and assign roles <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L122-L128">src/components/CloudModal.tsx:122-128</a>. It uses a nested list view to show existing <code>Member</code> entities and provides a <code>kick</code> function to remove them <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L130-L135">src/components/CloudModal.tsx:130-135</a>.</li>
+</ul>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L17-L137">src/components/CloudModal.tsx:17-137</a></p>
+<h2 id="implementation-architecture">Implementation Architecture</h2>
+<p>The following diagram illustrates the interaction between the React UI, the Zustand store, and the Cloud API layer.</p>
+<h3 id="frontend-cloud-interaction-flow">Frontend Cloud Interaction Flow</h3>
+<p>Title: Cloud Sync and Collaboration Flow
+<pre class="mermaid">graph TD
+    subgraph &quot;React UI (CloudModal.tsx)&quot;
+        A[&quot;User Action (Save/Open)&quot;] --&gt; B[&quot;guard() Error Handler&quot;]
+        B --&gt; C{&quot;Auth Status?&quot;}
+        C -- &quot;No&quot; --&gt; D[&quot;login() / register()&quot;]
+        C -- &quot;Yes&quot; --&gt; E[&quot;cloudApi Call&quot;]
+    end
+
+    subgraph &quot;API Client (cloudApi.ts)&quot;
+        E --&gt; F[&quot;request&amp;lt;T&amp;gt;()&quot;]
+        F --&gt; G[&quot;cloudToken.get()&quot;]
+        G --&gt; H[&quot;Fetch with Bearer Token&quot;]
+    end
+
+    subgraph &quot;State Management (useStore.ts)&quot;
+        H -- &quot;Success (Open)&quot; --&gt; I[&quot;normalizeDoc()&quot;]
+        I --&gt; J[&quot;replaceDocument()&quot;]
+        J --&gt; K[&quot;clearHistory()&quot;]
+        H -- &quot;Success (Save)&quot; --&gt; L[&quot;Update currentId&quot;]
+    end
+
+    subgraph &quot;Cloud Backend&quot;
+        H --&gt; M[&quot;FastAPI Endpoint&quot;]
+        M --&gt; N[&quot;SQLAlchemy / PostgreSQL&quot;]
+    end
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L50-L72">src/cloud/api.ts:50-72</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/components/CloudModal.tsx#L52-L114">src/components/CloudModal.tsx:52-114</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L19-L20">src/store/useStore.ts:19-20</a></p>
+<h2 id="key-interfaces-and-types">Key Interfaces and Types</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>Role</code></td>
+<td style="text-align: left;"><code>Union</code></td>
+<td style="text-align: left;">Defines access levels: <code>owner</code>, <code>editor</code>, <code>viewer</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L3">src/cloud/api.ts:3</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ProjectSummary</code></td>
+<td style="text-align: left;"><code>Interface</code></td>
+<td style="text-align: left;">Lightweight project metadata for listing views <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L12-L18">src/cloud/api.ts:12-18</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ProjectDetail</code></td>
+<td style="text-align: left;"><code>Interface</code></td>
+<td style="text-align: left;">Full project data including the <code>GpoDocument</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L20-L22">src/cloud/api.ts:20-22</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Member</code></td>
+<td style="text-align: left;"><code>Interface</code></td>
+<td style="text-align: left;">Represents a user's membership and role within a specific project <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L24-L29">src/cloud/api.ts:24-29</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>VersionInfo</code></td>
+<td style="text-align: left;"><code>Interface</code></td>
+<td style="text-align: left;">Metadata for document history snapshots <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L31-L36">src/cloud/api.ts:31-36</a>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/cloud/api.ts#L3-L36">src/cloud/api.ts:3-36</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

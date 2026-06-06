@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>2.3 File Persistence &amp; .gpo Format · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1 active" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="file-persistence-gpo-format">File Persistence &amp; .gpo Format</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/__tests__/core.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts)
+- [src/file/fileIo.ts](https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts)
+- [src/file/library.ts](https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts)
+- [src/file/persist.ts](https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts)
+- [src/interop/importDesign.ts](https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts)
+- [src/schema/gpoFile.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts)
+- [src/schema/layout.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts)
+
+</details>
+
+<p>OpenPrototype utilizes a structured ZIP container format for project storage, ensuring that generative design data remains portable, inspectable, and interoperable with industry-standard tools. The persistence layer abstracts platform-specific I/O to provide a seamless experience across web browsers and the Tauri-powered desktop application.</p>
+<h2 id="the-gpo-container-format">The .gpo Container Format</h2>
+<p>The <code>.gpo</code> (Generative Prototype Object) format is a ZIP-compressed archive <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L6-L10">src/schema/gpoFile.ts:6-10</a>. This approach provides a "diff-friendly" structure where assets and document state are decoupled, mirroring the architecture used by modern design tools like Sketch.</p>
+<h3 id="container-layout">Container Layout</h3>
+<p>A valid <code>.gpo</code> file contains the following internal structure:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>manifest.json</code></td>
+<td style="text-align: left;">Metadata including <code>format</code> (<code>gpo-container</code>), <code>schemaVersion</code>, and <code>generator</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L54-L61">src/schema/gpoFile.ts:54-61</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>document.json</code></td>
+<td style="text-align: left;">The serialized <code>GpoDocument</code> tree, containing all pages, frames, nodes, and design system tokens <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L62-L62">src/schema/gpoFile.ts:62-62</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>INTEROP.md</code></td>
+<td style="text-align: left;">An embedded markdown specification detailing field mappings for third-party tool developers <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L25-L47">src/schema/gpoFile.ts:25-47</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>thumbnail.txt</code></td>
+<td style="text-align: left;">(Optional) A base64-encoded data URL of the document preview <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L64-L64">src/schema/gpoFile.ts:64-64</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>assets/</code></td>
+<td style="text-align: left;">(Planned) Directory for binary blobs such as images and custom fonts.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="interoperability-mapping">Interoperability Mapping</h3>
+<p>The <code>INTEROP.md</code> file defines how <code>GpoDocument</code> entities map to Figma and Sketch models to facilitate cross-tool workflows <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L31-L43">src/schema/gpoFile.ts:31-43</a>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L1-L79">src/schema/gpoFile.ts:1-79</a></p>
+<hr />
+<h2 id="serialization-pipeline">Serialization Pipeline</h2>
+<p>The serialization process transforms the in-memory Zustand store state into the compressed <code>.gpo</code> blob. Deserialization performs the inverse, including a critical <strong>normalization</strong> step to ensure backward compatibility with older schema versions.</p>
+<h3 id="data-flow-serialization-deserialization">Data Flow: Serialization &amp; Deserialization</h3>
+<p>Title: Serialization and Deserialization Pipeline
+<pre class="mermaid">graph TD
+  subgraph &quot;Memory Space&quot;
+    &quot;useStore[Zustand Store]&quot; --&gt; |&quot;GpoDocument&quot;| &quot;serializeGpo[serializeGpo]&quot;
+  end
+
+  subgraph &quot;Serialization (JSZip)&quot;
+    &quot;serializeGpo[serializeGpo]&quot; --&gt; &quot;Manifest[manifest.json]&quot;
+    &quot;serializeGpo[serializeGpo]&quot; --&gt; &quot;DocJSON[document.json]&quot;
+    &quot;serializeGpo[serializeGpo]&quot; --&gt; &quot;InteropMD[INTEROP.md]&quot;
+    &quot;Manifest[Manifest]&quot; &amp; &quot;DocJSON[DocJSON]&quot; &amp; &quot;InteropMD[InteropMD]&quot; --&gt; &quot;ZipBlob[.gpo Blob]&quot;
+  end
+
+  subgraph &quot;Deserialization&quot;
+    &quot;ZipBlob[.gpo Blob]&quot; --&gt; &quot;deserializeGpo[deserializeGpo]&quot;
+    &quot;deserializeGpo[deserializeGpo]&quot; --&gt; &quot;JSONParse[JSON.parse]&quot;
+    &quot;JSONParse[JSON.parse]&quot; --&gt; &quot;normalizeDoc[normalizeDoc]&quot;
+    &quot;normalizeDoc[normalizeDoc]&quot; --&gt; |&quot;Backfilled GpoDocument&quot;| &quot;useStore[Zustand Store]&quot;
+  end
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L49-L79">src/schema/gpoFile.ts:49-79</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/defaults.ts#L1-L10">src/schema/defaults.ts:1-10</a> (referenced via <code>normalizeDoc</code>)</p>
+<hr />
+<h2 id="platform-adaptive-io">Platform-Adaptive I/O</h2>
+<p>The application detects its environment via <code>window.__TAURI__</code> to determine whether to use native OS file system APIs or browser-based downloads <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L10-L10">src/file/fileIo.ts:10-10</a>.</p>
+<h3 id="io-implementation-details">I/O Implementation Details</h3>
+<ul>
+<li><strong>Tauri Desktop</strong>: Uses <code>@tauri-apps/plugin-dialog</code> for native "Save As" and "Open" dialogs and <code>@tauri-apps/plugin-fs</code> for direct disk access <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L22-L32">src/file/fileIo.ts:22-32</a>.</li>
+<li><strong>Web Browser</strong>: Uses <code>URL.createObjectURL</code> and a hidden <code>&lt;a&gt;</code> element for downloads; uses a hidden <code>&lt;input type="file"&gt;</code> for opening files <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L35-L41">src/file/fileIo.ts:35-41</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L57-L72">src/file/fileIo.ts:57-72</a>.</li>
+</ul>
+<h3 id="code-entity-association-file-io">Code Entity Association: File I/O</h3>
+<p>Title: Platform-Adaptive I/O Routing
+<pre class="mermaid">graph LR
+  &quot;UI_Trigger[User Click Save]&quot; --&gt; &quot;saveGpo[saveGpo (fileIo.ts)]&quot;
+  
+  &quot;saveGpo[saveGpo]&quot; --&gt; &quot;isTauri[isTauri Check]&quot;
+  
+  &quot;isTauri[isTauri Check]&quot; -- &quot;True&quot; --&gt; &quot;TauriFS[Tauri Native API]&quot;
+  &quot;isTauri[isTauri Check]&quot; -- &quot;False&quot; --&gt; &quot;BrowserDL[Browser Download Blob]&quot;
+
+  &quot;TauriFS[Tauri Native API]&quot; --&gt; &quot;TauriDialog[plugin-dialog: save]&quot;
+  &quot;TauriFS[Tauri Native API]&quot; --&gt; &quot;TauriWrite[plugin-fs: writeFile]&quot;
+
+  &quot;BrowserDL[Browser Download Blob]&quot; --&gt; &quot;CreateURL[URL.createObjectURL]&quot;
+  &quot;CreateURL[URL.createObjectURL]&quot; --&gt; &quot;AnchorClick[HTMLAnchorElement.click]&quot;
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L1-L74">src/file/fileIo.ts:1-74</a></p>
+<hr />
+<h2 id="local-library-persistence">Local Library &amp; Persistence</h2>
+<p>Beyond explicit file exports, OpenPrototype maintains a local persistence layer in <code>localStorage</code> to prevent data loss and provide a "Project Home" experience.</p>
+<h3 id="local-library-librarymap">Local Library (<code>LibraryMap</code>)</h3>
+<p>The library acts as a local database for projects. Every document is keyed by its <code>meta.id</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts#L7-L9">src/file/library.ts:7-9</a>.
+*   <strong><code>saveToLibrary(doc)</code></strong>: Upserts the full document into the <code>gpo.library.v1</code> key <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts#L53-L57">src/file/library.ts:53-57</a>.
+*   <strong><code>listLibrary()</code></strong>: Returns a <code>LibrarySummary</code> array (ID, name, counts) sorted by <code>updatedAt</code> for the Home screen <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts#L60-L64">src/file/library.ts:60-64</a>.</p>
+<h3 id="autosave-mechanism">Autosave Mechanism</h3>
+<p>The <code>saveAuto(doc)</code> function persists the current working document to a dedicated <code>gpo.autosave.v1</code> slot <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts#L12-L18">src/file/persist.ts:12-18</a>. This is triggered by the application lifecycle (managed in <code>App.tsx</code>) to ensure that even if the tab is closed, the state is recoverable via <code>loadAuto()</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts#L20-L28">src/file/persist.ts:20-28</a>.</p>
+<h3 id="recent-files">Recent Files</h3>
+<p>The system tracks the 10 most recently modified filenames in <code>gpo.recents.v1</code> to populate "Recent" lists in the UI <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts#L38-L46">src/file/persist.ts:38-46</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Full Library</strong></td>
+<td style="text-align: left;"><code>gpo.library.v1</code></td>
+<td style="text-align: left;"><code>saveToLibrary</code>, <code>loadFromLibrary</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Autosave</strong></td>
+<td style="text-align: left;"><code>gpo.autosave.v1</code></td>
+<td style="text-align: left;"><code>saveAuto</code>, <code>loadAuto</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Recents</strong></td>
+<td style="text-align: left;"><code>gpo.recents.v1</code></td>
+<td style="text-align: left;"><code>pushRecent</code>, <code>getRecents</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts#L1-L84">src/file/library.ts:1-84</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts#L1-L55">src/file/persist.ts:1-55</a></p>
+<hr />
+<h2 id="interop-import-layer">Interop Import Layer</h2>
+<p>The interop layer (located in <code>src/interop/importDesign.ts</code>) is responsible for parsing external formats into the GPO model.</p>
+<h3 id="token-parsing-pipeline">Token Parsing Pipeline</h3>
+<p>The <code>parseTokens</code> function recursively walks design token trees (supporting W3C, Tokens Studio, and Figma formats) and buckets them into GPO categories <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L101-L191">src/interop/importDesign.ts:101-191</a>.</p>
+<ol>
+<li><strong>Category Detection</strong>: Uses <code>categoryFromType</code> (e.g., "color", "spacing") or <code>categoryFromPath</code> (regex matching on keys like "radius" or "gap") <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L64-L82">src/interop/importDesign.ts:64-82</a>.</li>
+<li><strong>Unit Conversion</strong>: The <code>toPx</code> utility normalizes <code>rem</code>, <code>em</code>, and <code>pt</code> units into pixels (using a 16px base) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L51-L62">src/interop/importDesign.ts:51-62</a>.</li>
+<li><strong>Color Normalization</strong>: <code>figmaColorToHex</code> converts 0..1 RGB(A) objects into standard hex strings <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L41-L48">src/interop/importDesign.ts:41-48</a>.</li>
+</ol>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L1-L191">src/interop/importDesign.ts:1-191</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

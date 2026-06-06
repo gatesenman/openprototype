@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>10 Design Interop &amp; Import · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0 active" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="design-interop-import">Design Interop &amp; Import</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/App.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx)
+- [src/__tests__/core.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts)
+- [src/interop/importDesign.ts](https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts)
+- [src/schema/layout.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/layout.ts)
+- [src/views/HomeView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/HomeView.tsx)
+
+</details>
+
+<p>The Design Interop layer provides a bridge between the OpenPrototype <code>.gpo</code> format and industry-standard design tools. It enables the extraction of design tokens, artboards, and reusable components from JSON exports (Figma REST API, Sketch JSON, and W3C Design Tokens) and maps them into the GPO document model.</p>
+<h2 id="implementation-overview">Implementation Overview</h2>
+<p>The interop logic is centered in <code>src/interop/importDesign.ts</code>. It follows a pattern of <strong>auto-detection and routing</strong>: the system receives a raw JSON object and attempts to parse it as tokens, Figma artboards, or Sketch symbols based on structural heuristics <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L101-L207">src/interop/importDesign.ts:101-207</a>.</p>
+<h3 id="data-flow-import-pipeline">Data Flow: Import Pipeline</h3>
+<p>The following diagram illustrates how external design data is transformed into internal <code>GpoDocument</code> entities.</p>
+<p><strong>Import Routing &amp; Transformation</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;External Sources&quot;
+        A[&quot;Figma REST JSON&quot;]
+        B[&quot;Sketch JSON&quot;]
+        C[&quot;W3C Design Tokens&quot;]
+        D[&quot;Tokens Studio&quot;]
+    end
+
+    subgraph &quot;importDesignJson [Routing]&quot;
+        E[&quot;importDesignJson()&quot;]
+    end
+
+    subgraph &quot;Specialized Parsers&quot;
+        F[&quot;parseTokens()&quot;]
+        G[&quot;parseFigmaArtboards()&quot;]
+        H[&quot;parseSketchArtboards()&quot;]
+        I[&quot;parseFigmaComponents()&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        J[&quot;Frame&quot;]
+        K[&quot;DesignTokens&quot;]
+        L[&quot;ComponentDef&quot;]
+    end
+
+    A --&gt; E
+    B --&gt; E
+    C --&gt; E
+    D --&gt; E
+
+    E -- &quot;Detects $value/value&quot; --&gt; F
+    E -- &quot;Detects CANVAS/FRAME&quot; --&gt; G
+    E -- &quot;Detects Page/Symbol&quot; --&gt; H
+    E -- &quot;Detects COMPONENT&quot; --&gt; I
+
+    F --&gt; K
+    G --&gt; J
+    H --&gt; J
+    I --&gt; L
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L209-L225">src/interop/importDesign.ts:209-225</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L244-L247">src/interop/importDesign.ts:244-247</a>.</p>
+<h2 id="design-token-parsing">Design Token Parsing</h2>
+<p>The <code>parseTokens</code> function handles multiple formats including the W3C Design Tokens Community Group specification (<code>$value</code>/<code>$type</code>), Tokens Studio/Figma Tokens (<code>value</code>/<code>type</code>), and Style Dictionary <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L8-L13">src/interop/importDesign.ts:8-13</a>.</p>
+<h3 id="normalization-heuristics">Normalization Heuristics</h3>
+<ol>
+<li><strong>Category Detection</strong>: Since token trees are often nested, the parser uses <code>categoryFromType</code> (checking the <code>$type</code> field) and falls back to <code>categoryFromPath</code> (regex-matching path segments like <code>color</code>, <code>spacing</code>, <code>radius</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L64-L82">src/interop/importDesign.ts:64-82</a>.</li>
+<li><strong>Unit Conversion</strong>: The <code>toPx</code> utility converts <code>rem</code> and <code>em</code> values to pixels (assuming a 16px base) and strips unit strings <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L51-L62">src/interop/importDesign.ts:51-62</a>.</li>
+<li><strong>Color Normalization</strong>: Figma's internal <code>0..1</code> float representation for RGBA is converted to standard hex strings via <code>figmaColorToHex</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L41-L48">src/interop/importDesign.ts:41-48</a>.</li>
+<li><strong>Key Disambiguation</strong>: To flatten nested trees into the GPO flat token structure, <code>uniqueKey</code> generates names by joining path segments (e.g., <code>brand.primary.main</code> becomes <code>brand-primary-main</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L84-L98">src/interop/importDesign.ts:84-98</a>.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>W3C Format</strong></td>
+<td style="text-align: left;">Detects <code>$value</code> and <code>$type</code> fields <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L144-L145">src/interop/importDesign.ts:144-145</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tokens Studio</strong></td>
+<td style="text-align: left;">Detects <code>value</code> and <code>type</code> fields <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L144-L145">src/interop/importDesign.ts:144-145</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unit Scaling</strong></td>
+<td style="text-align: left;"><code>rem</code> / <code>em</code> multiplied by 16 <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L59-L59">src/interop/importDesign.ts:59-59</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Deduplication</strong></td>
+<td style="text-align: left;">Appends numeric suffixes if keys collide <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L94-L97">src/interop/importDesign.ts:94-97</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L15-L100">src/interop/importDesign.ts:15-100</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L180-L206">src/<strong>tests</strong>/core.test.ts:180-206</a>.</p>
+<h2 id="frame-artboard-extraction">Frame &amp; Artboard Extraction</h2>
+<p>Artboard extraction involves mapping deeply nested scene graphs into the flattened <code>Frame</code> and <code>Node</code> structure used by the OpenPrototype canvas.</p>
+<h3 id="figma-artboards">Figma Artboards</h3>
+<p>The <code>parseFigmaArtboards</code> function traverses a Figma document tree. It specifically targets nodes of type <code>FRAME</code> or <code>INSTANCE</code> located within a <code>CANVAS</code> (Page). It maps <code>absoluteBoundingBox</code> coordinates to the GPO coordinate system and attempts to preserve hierarchy by recursing through children <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L195-L207">src/interop/importDesign.ts:195-207</a>.</p>
+<h3 id="sketch-symbols">Sketch Symbols</h3>
+<p><code>parseSketchSymbols</code> extracts Sketch <code>symbolMaster</code> and <code>artboard</code> layers. It maps Sketch's <code>frame</code> (x, y, width, height) and <code>backgroundColor</code> into the GPO <code>Frame</code> schema <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L24-L25">src/interop/importDesign.ts:24-25</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L23-L29">src/interop/importDesign.ts:23-29</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/__tests__/core.test.ts#L208-L220">src/<strong>tests</strong>/core.test.ts:208-220</a>.</p>
+<h2 id="interopmd-field-mapping">INTEROP.md Field Mapping</h2>
+<p>The interop layer follows a strict mapping specification defined in the project's <code>INTEROP.md</code> (documented within the schema logic). This ensures that attributes like <code>opacity</code>, <code>fills</code>, and <code>constraints</code> are translated accurately.</p>
+<p><strong>Field Mapping Logic</strong>
+<pre class="mermaid">classDiagram
+    class FigmaNode {
+        +String name
+        +String type
+        +Object absoluteBoundingBox
+        +Object fills
+        +Object constraints
+    }
+    class GPONode {
+        +String name
+        +String type
+        +Number x
+        +Number y
+        +NodeStyle style
+    }
+    class Transformer {
+        +figmaColorToHex()
+        +toPx()
+        +uniqueKey()
+    }
+
+    FigmaNode --&gt; Transformer : Input
+    Transformer --&gt; GPONode : Output
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L12-L13">src/interop/importDesign.ts:12-13</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L41-L62">src/interop/importDesign.ts:41-62</a>.</p>
+<h2 id="integration-with-ui">Integration with UI</h2>
+<p>The import functionality is exposed via the <code>importDesignJson</code> function, which is triggered from the "More" menu in the application shell <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L178-L178">src/App.tsx:178-178</a>.</p>
+<ol>
+<li><strong>User Action</strong>: User selects "Import Figma / Sketch" in the UI <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L178-L178">src/App.tsx:178-178</a>.</li>
+<li><strong>File Loading</strong>: The application reads the JSON file content.</li>
+<li><strong>Auto-Detection</strong>: <code>importDesignJson</code> determines if the content is a Token set, a Figma tree, or a Sketch document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L4-L13">src/interop/importDesign.ts:4-13</a>.</li>
+<li><strong>Store Update</strong>: Validated frames and components are pushed into the <code>useStore</code> document state.</li>
+</ol>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L23-L23">src/App.tsx:23-23</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/interop/importDesign.ts#L23-L29">src/interop/importDesign.ts:23-29</a>.</p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

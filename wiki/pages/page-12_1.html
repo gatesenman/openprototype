@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>12.1 Tauri Runtime &amp; Native Integration · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1 active" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="tauri-runtime-native-integration">Tauri Runtime &amp; Native Integration</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src-tauri/Cargo.lock](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/Cargo.lock)
+- [src-tauri/build.rs](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/build.rs)
+- [src-tauri/src/lib.rs](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs)
+- [src-tauri/src/main.rs](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/main.rs)
+- [src/file/fileIo.ts](https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts)
+- [src/file/library.ts](https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts)
+- [src/file/persist.ts](https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts)
+- [src/schema/gpoFile.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts)
+
+</details>
+
+<p>OpenPrototype utilizes the <strong>Tauri 2</strong> desktop framework to provide a high-performance, native-feeling experience across Windows, macOS, and Linux. The application leverages a Rust-based backend for system-level operations while maintaining a lightweight web-based frontend for the design canvas.</p>
+<h2 id="tauri-runtime-stack">Tauri Runtime Stack</h2>
+<p>The application's runtime is built upon the Tauri architecture, which separates the UI (Frontend) from the system access (Backend/Core) through a secure Inter-Process Communication (IPC) bridge.</p>
+<h3 id="core-components">Core Components</h3>
+<ul>
+<li><strong>Windowing (TAO):</strong> Handles cross-platform window creation and management.</li>
+<li><strong>Webview (WRY):</strong> Provides the rendering engine. It uses <strong>WebView2</strong> (Edge/Chromium) on Windows, <strong>WebKit</strong> (AppKit) on macOS, and <strong>webkit2gtk</strong> (GTK) on Linux.</li>
+<li><strong>Rust Backend:</strong> The entry point of the application is defined in <code>src-tauri/src/main.rs</code>, which invokes the core logic in the library crate <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/main.rs#L4-L6">src-tauri/src/main.rs:4-6</a>.</li>
+<li><strong>Build Pipeline:</strong> The <code>tauri_build</code> crate orchestrates the compilation of Rust assets and the embedding of frontend resources during the build process <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/build.rs#L1-L3">src-tauri/build.rs:1-3</a>.</li>
+</ul>
+<h3 id="application-lifecycle">Application Lifecycle</h3>
+<p>The application initialization is managed in <code>src-tauri/src/lib.rs</code>. This file configures the Tauri Builder and initializes essential plugins for native functionality <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs#L1-L7">src-tauri/src/lib.rs:1-7</a>.</p>
+<p><strong>Runtime Data Flow</strong>
+"The diagram below illustrates the relationship between the Rust core and the TypeScript frontend."</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;Native Host (Rust)&quot;
+        Main[&quot;main.rs (Entry)&quot;] -- calls --&gt; Run[&quot;lib.rs: run()&quot;]
+        Run -- registers --&gt; FS[&quot;tauri-plugin-fs&quot;]
+        Run -- registers --&gt; Dialog[&quot;tauri-plugin-dialog&quot;]
+        TauriCore[&quot;Tauri Core Builder&quot;] -- spawns --&gt; WRY[&quot;WRY Webview&quot;]
+    end
+
+    subgraph &quot;Frontend (TypeScript/React)&quot;
+        WRY -- renders --&gt; App[&quot;App Shell&quot;]
+        App -- uses --&gt; FileIO[&quot;fileIo.ts&quot;]
+        FileIO -- IPC Bridge --&gt; Dialog
+        FileIO -- IPC Bridge --&gt; FS
+    end
+
+    style Main stroke-dasharray: 5 5
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/main.rs#L1-L7">src-tauri/src/main.rs:1-7</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs#L1-L8">src-tauri/src/lib.rs:1-8</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L10-L15">src/file/fileIo.ts:10-15</a></p>
+<h2 id="native-integration-file-io">Native Integration &amp; File I/O</h2>
+<p>OpenPrototype implements a platform-adaptive I/O layer in <code>src/file/fileIo.ts</code>. This layer detects if the application is running within the Tauri shell and chooses between native OS dialogs or browser-based file downloads.</p>
+<h3 id="platform-detection">Platform Detection</h3>
+<p>The <code>isTauri</code> function determines the environment by checking for the existence of the <code>__TAURI__</code> object on the global <code>window</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L4-L10">src/file/fileIo.ts:4-10</a>.</p>
+<h3 id="native-file-operations">Native File Operations</h3>
+<p>When <code>isTauri()</code> returns true, the application uses dynamic imports to load Tauri plugins. This prevents the web build from failing due to missing desktop-only packages <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L12-L15">src/file/fileIo.ts:12-15</a>.</p>
+<ol>
+<li>
+<p><strong>Saving Files (<code>saveGpo</code>):</strong></p>
+<ul>
+<li>Invokes <code>@tauri-apps/plugin-dialog</code>'s <code>save</code> function to open a native "Save As" dialog <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L23-L25">src/file/fileIo.ts:23-25</a>.</li>
+<li>Applies filters for the <code>.gpo</code> extension <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L27">src/file/fileIo.ts:27</a>.</li>
+<li>Uses <code>@tauri-apps/plugin-fs</code>'s <code>writeFile</code> to persist the binary data to the selected path <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L24-L31">src/file/fileIo.ts:24-31</a>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Opening Files (<code>openGpo</code>):</strong></p>
+<ul>
+<li>Invokes <code>@tauri-apps/plugin-dialog</code>'s <code>open</code> function to show a native file picker <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L46-L48">src/file/fileIo.ts:46-48</a>.</li>
+<li>Uses <code>@tauri-apps/plugin-fs</code>'s <code>readFile</code> to load the file into a buffer <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L47-L53">src/file/fileIo.ts:47-53</a>.</li>
+<li>Passes the buffer to <code>deserializeGpo</code> for document reconstruction <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L54">src/file/fileIo.ts:54</a>.</li>
+</ul>
+</li>
+</ol>
+<p><strong>File I/O Implementation Bridge</strong>
+"This diagram maps the high-level file operations to the specific code entities in both the Frontend and the Tauri Plugin space."</p>
+<p><pre class="mermaid">graph LR
+    subgraph &quot;fileIo.ts (Natural Language Space)&quot;
+        Save[&quot;saveGpo()&quot;]
+        Open[&quot;openGpo()&quot;]
+        Check[&quot;isTauri()&quot;]
+    end
+
+    subgraph &quot;Tauri Plugin Entities (Code Entity Space)&quot;
+        DialogSave[&quot;@tauri-apps/plugin-dialog: save&quot;]
+        DialogOpen[&quot;@tauri-apps/plugin-dialog: open&quot;]
+        FSWrite[&quot;@tauri-apps/plugin-fs: writeFile&quot;]
+        FSRead[&quot;@tauri-apps/plugin-fs: readFile&quot;]
+    end
+
+    Save -- &quot;path selection&quot; --&gt; DialogSave
+    Save -- &quot;binary write&quot; --&gt; FSWrite
+    Open -- &quot;path selection&quot; --&gt; DialogOpen
+    Open -- &quot;binary read&quot; --&gt; FSRead
+    Check -- &quot;guards&quot; --&gt; Save
+    Check -- &quot;guards&quot; --&gt; Open
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L17-L55">src/file/fileIo.ts:17-55</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs#L3-L4">src-tauri/src/lib.rs:3-4</a></p>
+<h2 id="persistence-strategy">Persistence Strategy</h2>
+<p>The application employs a tiered persistence strategy depending on the user's workflow and platform.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tier</th>
+<th style="text-align: left;">Mechanism</th>
+<th style="text-align: left;">File/Code Entity</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Native Export</strong></td>
+<td style="text-align: left;">ZIP Container (<code>.gpo</code>)</td>
+<td style="text-align: left;"><code>serializeGpo</code> / <code>deserializeGpo</code></td>
+<td style="text-align: left;">Portable, interoperable file format for sharing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Local Library</strong></td>
+<td style="text-align: left;">LocalStorage (Map)</td>
+<td style="text-align: left;"><code>src/file/library.ts</code></td>
+<td style="text-align: left;">Home screen file management (list, rename, delete).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Autosave</strong></td>
+<td style="text-align: left;">LocalStorage (Key)</td>
+<td style="text-align: left;"><code>src/file/persist.ts</code></td>
+<td style="text-align: left;">Recovery of the active document after crash/refresh.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Recents</strong></td>
+<td style="text-align: left;">LocalStorage (List)</td>
+<td style="text-align: left;"><code>pushRecent</code></td>
+<td style="text-align: left;">Quick access to recently edited file names.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-gpo-format">The .gpo Format</h3>
+<p>The <code>.gpo</code> (Generative Prototype Object) format is a ZIP-compressed container. It includes <code>manifest.json</code> for versioning, <code>document.json</code> for the node tree, and an <code>INTEROP.md</code> file to assist third-party tools in parsing the schema <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L5-L21">src/schema/gpoFile.ts:5-21</a>.</p>
+<ul>
+<li><strong>Serialization:</strong> Uses <code>jszip</code> to bundle the JSON and optional thumbnails <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L52-L66">src/schema/gpoFile.ts:52-66</a>.</li>
+<li><strong>Normalization:</strong> Upon loading, the document is passed through <code>normalizeDoc</code> to ensure compatibility with the current schema version <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L77">src/schema/gpoFile.ts:77</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts#L68">src/file/library.ts:68</a>.</li>
+</ul>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/gpoFile.ts#L1-L78">src/schema/gpoFile.ts:1-78</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/library.ts#L1-L84">src/file/library.ts:1-84</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/persist.ts#L1-L55">src/file/persist.ts:1-55</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

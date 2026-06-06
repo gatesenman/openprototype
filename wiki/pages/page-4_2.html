@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>4.2 Vector Editing &amp; Boolean Operations · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1 active" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="vector-editing-boolean-operations">Vector Editing &amp; Boolean Operations</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/vector/geometry.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.test.ts)
+- [src/vector/geometry.ts](https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts)
+- [src/views/DesignView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx)
+- [src/views/canvas/CanvasStage.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx)
+
+</details>
+
+<p>The vector engine in OpenPrototype provides a comprehensive suite for path manipulation, ranging from low-level Bézier anchor editing to high-level constructive solid geometry (CSG) operations. It supports a "vecEdit" mode for fine-grained control and a Pen tool for path creation.</p>
+<h2 id="vector-data-structures">Vector Data Structures</h2>
+<p>The system represents vector data through a hierarchical structure defined in the schema. Paths are essentially collections of anchors, where each anchor can optionally define Bézier control points.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Entity</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>VectorPath</code></td>
+<td style="text-align: left;">A collection of <code>VectorAnchor</code> objects and a <code>closed</code> boolean flag. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L11-L11">src/schema/types.ts:11-11</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>VectorAnchor</code></td>
+<td style="text-align: left;">A point <code>(x, y)</code> with optional <code>hIn</code> and <code>hOut</code> (incoming/outgoing) Bézier handles. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L11-L11">src/schema/types.ts:11-11</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>hIn</code> / <code>hOut</code></td>
+<td style="text-align: left;">Relative offsets from the anchor's <code>(x, y)</code> position representing Bézier control points. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L37-L38">src/vector/geometry.ts:37-38</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="coordinate-mapping">Coordinate Mapping</h3>
+<p>Vector anchors are stored in <strong>node-local coordinates</strong>. When rendering or performing boolean operations, these are often transformed to a shared coordinate space (e.g., frame-local) to ensure spatial consistency. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L5-L8">src/vector/geometry.ts:5-8</a></p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L1-L100">src/schema/types.ts:1-100</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L1-L40">src/vector/geometry.ts:1-40</a></p>
+<h2 id="path-serialization-geometry">Path Serialization &amp; Geometry</h2>
+<p>The <code>geometry.ts</code> utility handles the conversion between internal data structures and renderable formats like SVG or polylines.</p>
+<h3 id="key-functions">Key Functions</h3>
+<ul>
+<li><strong><code>pathToSvgData(path)</code></strong>: Serializes a <code>VectorPath</code> into an SVG <code>d</code> string. It uses <code>M</code> (MoveTo), <code>L</code> (LineTo), and <code>C</code> (Cubic Bézier) commands based on the presence of <code>hIn</code>/<code>hOut</code> handles. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L29-L49">src/vector/geometry.ts:29-49</a></li>
+<li><strong><code>flattenPath(path, samples)</code></strong>: Converts a curved path into a polyline (array of points). It samples Bézier curves at a default rate (usually 16 samples per segment) using the <code>cubicPoint</code> helper. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L64-L84">src/vector/geometry.ts:64-84</a></li>
+<li><strong><code>pathBounds(path)</code></strong>: Calculates the bounding box of a path by first flattening it and then finding the min/max extents of the resulting points. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L86-L89">src/vector/geometry.ts:86-89</a></li>
+</ul>
+<h3 id="geometry-data-flow">Geometry Data Flow</h3>
+<p>The following diagram illustrates how a <code>VectorPath</code> is transformed for different system requirements:</p>
+<p><strong>Path Transformation Pipeline</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Data Store&quot;
+        VP[&quot;VectorPath (Anchors + Handles)&quot;]
+    end
+
+    VP --&gt;|&quot;pathToSvgData&quot;| SVG[&quot;SVG &#x27;d&#x27; string&quot;]
+    VP --&gt;|&quot;flattenPath&quot;| PL[&quot;Polyline (Pt[])&quot;]
+
+    SVG --&gt;|&quot;Path component&quot;| KONVA[&quot;react-konva Path Render&quot;]
+    PL --&gt;|&quot;pointsBounds&quot;| BB[&quot;Bounding Box (x, y, w, h)&quot;]
+    PL --&gt;|&quot;pathToRing&quot;| PC[&quot;polygon-clipping Ring&quot;]
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L29-L109">src/vector/geometry.ts:29-109</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L2-L7">src/views/canvas/CanvasStage.tsx:2-7</a></p>
+<h2 id="vector-editing-vecedit-pen-tool">Vector Editing (vecEdit) &amp; Pen Tool</h2>
+<p>Vector editing is managed through two primary modes in <code>CanvasStage</code>: a creation mode (Pen tool) and a modification mode (<code>vecEdit</code>).</p>
+<h3 id="pen-tool-workflow">Pen Tool Workflow</h3>
+<ol>
+<li><strong>Activation</strong>: Triggered when <code>tool === 'pen'</code>. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L103-L107">src/views/canvas/CanvasStage.tsx:103-107</a></li>
+<li><strong>Anchor Placement</strong>: On <code>mousedown</code>, a new <code>VectorAnchor</code> is added to the active frame's local coordinates.</li>
+<li><strong>Real-time Preview</strong>: The <code>pen</code> state stores the current anchors and the cursor position to draw a "live" segment before the next click. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L103-L107">src/views/canvas/CanvasStage.tsx:103-107</a></li>
+</ol>
+<h3 id="vecedit-mode">vecEdit Mode</h3>
+<p>This mode allows users to select and move individual anchors or handles of an existing <code>VectorNode</code>.
+*   <strong>State</strong>: Tracked via <code>vecEdit</code> which stores the <code>frameId</code> and <code>nodeId</code>. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L110-L110">src/views/canvas/CanvasStage.tsx:110-110</a>
+*   <strong>Interactions</strong>: Users can drag <code>(x, y)</code> anchors or adjust the relative <code>hIn</code>/<code>hOut</code> offsets to change curve curvature.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L90-L160">src/views/canvas/CanvasStage.tsx:90-160</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L22-L22">src/views/DesignView.tsx:22-22</a></p>
+<h2 id="boolean-operations">Boolean Operations</h2>
+<p>OpenPrototype supports constructive area geometry using the <code>polygon-clipping</code> library. These operations require paths to be closed and flattened into polygons.</p>
+<h3 id="operations-supported">Operations Supported</h3>
+<p>The <code>booleanPaths</code> function acts as a dispatcher for the following operations:
+*   <strong>Union</strong>: Merges multiple shapes into one. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L139-L141">src/vector/geometry.ts:139-141</a>
+*   <strong>Subtract</strong>: Removes the area of overlapping "clip" shapes from the "base" shape. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L142-L144">src/vector/geometry.ts:142-144</a>
+*   <strong>Intersect</strong>: Keeps only the area where all shapes overlap. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L145-L147">src/vector/geometry.ts:145-147</a>
+*   <strong>Exclude (XOR)</strong>: Keeps areas that do not overlap. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L148-L150">src/vector/geometry.ts:148-150</a></p>
+<h3 id="implementation-detail">Implementation Detail</h3>
+<p>Since <code>polygon-clipping</code> operates on discrete points, the system flattens all curves before processing. The resulting rings are then converted back into <code>VectorAnchor</code> sets. Note that in the current implementation, internal holes in polygons are ignored during the conversion back to <code>VectorPath</code>. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L153-L156">src/vector/geometry.ts:153-156</a></p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L122-L165">src/vector/geometry.ts:122-165</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/DesignView.tsx#L28-L33">src/views/DesignView.tsx:28-33</a></p>
+<h2 id="stroke-to-outline">Stroke to Outline</h2>
+<p>The <code>strokeToOutline</code> feature converts a path with a stroke width into a filled shape representing the stroke's geometry.</p>
+<ol>
+<li><strong>Segment Generation</strong>: For every segment in the path, it calculates the normal vector. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L167-L172">src/vector/geometry.ts:167-172</a></li>
+<li><strong>Quad Construction</strong>: It creates a rectangular quad for each segment, offset by <code>width / 2</code> in both directions along the normal. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L201-L206">src/vector/geometry.ts:201-206</a></li>
+<li><strong>Joins and Caps</strong>: It generates circular rings at anchor points to simulate round joins. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L174-L181">src/vector/geometry.ts:174-181</a></li>
+<li><strong>Union</strong>: All generated quads and join-circles are unioned together using <code>polygonClipping.union</code> to produce the final outline. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L188-L195">src/vector/geometry.ts:188-195</a></li>
+</ol>
+<p><strong>Stroke to Outline Logic</strong>
+<pre class="mermaid">graph LR
+    P[&quot;VectorPath (Stroke)&quot;] --&gt; F[&quot;flattenPath&quot;]
+    F --&gt; S[&quot;Segment Normals&quot;]
+    S --&gt; Q[&quot;Construct Quads&quot;]
+    S --&gt; J[&quot;Construct Round Joins&quot;]
+    Q &amp; J --&gt; U[&quot;polygonClipping.union&quot;]
+    U --&gt; O[&quot;VectorPath (Fill)&quot;]
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L188-L210">src/vector/geometry.ts:188-210</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L1-L100">src/store/useStore.ts:1-100</a> (implied by <code>outlineStroke</code> action)</p>
+<h2 id="integration-with-canvas-stage">Integration with Canvas Stage</h2>
+<p>The <code>CanvasStage</code> component acts as the bridge between the geometry logic and the Konva rendering engine.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Role in Vector Operations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>strokeRectGeometry</code></td>
+<td style="text-align: left;">Adjusts rectangle bounds to simulate "inside" or "outside" stroke alignment, as Konva default strokes are centered. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L36-L55">src/views/canvas/CanvasStage.tsx:36-55</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>registerStage</code></td>
+<td style="text-align: left;">Captures the stage for SVG/PNG export, ensuring vector paths are correctly serialized. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L164-L166">src/views/canvas/CanvasStage.tsx:164-166</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>updateNode</code></td>
+<td style="text-align: left;">Used by vector tools to persist anchor changes back to the Zustand store. <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L121-L121">src/views/canvas/CanvasStage.tsx:121-121</a></td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/canvas/CanvasStage.tsx#L36-L166">src/views/canvas/CanvasStage.tsx:36-166</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/vector/geometry.ts#L1-L100">src/vector/geometry.ts:1-100</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

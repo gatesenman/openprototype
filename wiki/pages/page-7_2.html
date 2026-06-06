@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>7.2 User Journey Map · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1 active" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="user-journey-map">User Journey Map</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/ai/flow.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/flow.ts)
+- [src/ai/generate.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts)
+- [src/ai/localGenerator.ts](https://github.com/gaosichun888/openprototype/blob/main/src/ai/localGenerator.ts)
+- [src/journey/journey.ts](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts)
+- [src/schema/types.ts](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts)
+- [src/views/JourneyView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx)
+
+</details>
+
+<p>The User Journey Map is a product management artifact within OpenPrototype that visualizes a persona's experience over time. It represents the "Product Management" layer of the application, bridging high-level requirements with specific design frames. The system supports manual creation, AI-assisted generation, and interactive visualization of emotion curves.</p>
+<h2 id="journey-map-schema">Journey Map Schema</h2>
+<p>The data structure for a journey map is defined within the <code>GpoDocument</code> and resides in <code>src/schema/types.ts</code>. It is composed of a persona, a scenario, and an ordered list of stages.</p>
+<h3 id="core-types">Core Types</h3>
+<ul>
+<li><strong><code>JourneyMap</code></strong>: The root entity containing metadata, persona details, and a collection of <code>JourneyStage</code> objects <code>[src/schema/types.ts:241-250](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L241-L250)</code>.</li>
+<li><strong><code>JourneyStage</code></strong>: A discrete step in the user journey. It contains arrays for qualitative data and a numeric <code>JourneyEmotion</code> score <code>[src/schema/types.ts:252-262](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L252-L262)</code>.</li>
+<li><strong><code>JourneyEmotion</code></strong>: A scale from <code>-2</code> (Very Frustrated) to <code>2</code> (Very Satisfied) <code>[src/schema/types.ts:264-264](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L264-L264)</code>.</li>
+<li><strong><code>JourneyRow</code></strong>: Dimensions of the journey matrix: <code>actions</code>, <code>touchpoints</code>, <code>thoughts</code>, <code>emotion</code>, <code>pains</code>, and <code>opportunities</code> <code>[src/journey/journey.ts:14-22](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L14-L22)</code>.</li>
+</ul>
+<h3 id="frame-linking">Frame Linking</h3>
+<p>A <code>JourneyStage</code> can optionally include a <code>frameId</code> <code>[src/schema/types.ts:261-261](https://github.com/gaosichun888/openprototype/blob/main/src/schema/types.ts#L261-L261)</code>. This links the stage to a specific <code>Frame</code> on the canvas, allowing users to jump from the journey map directly to the corresponding UI design <code>[src/views/JourneyView.tsx:187-187](https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L187-L187)</code>.</p>
+<h2 id="data-flow-generation-normalization">Data Flow: Generation &amp; Normalization</h2>
+<p>Journey maps can be generated via LLM providers or a local heuristic. Because AI outputs can be inconsistent, the system uses a "coerce" pattern to ensure data integrity.</p>
+<h3 id="generation-heuristics">Generation Heuristics</h3>
+<p>The <code>generateJourneyFromBrief</code> function (and its LLM counterparts) takes a text brief and returns a <code>JourneyMap</code>. If no API key is provided, the system falls back to a local generator that parses the brief for keywords to construct a logical sequence of stages <code>[src/ai/generate.ts:218-223](https://github.com/gaosichun888/openprototype/blob/main/src/ai/generate.ts#L218-L223)</code>.</p>
+<h3 id="normalization-coerce">Normalization (Coerce)</h3>
+<p>The <code>coerceJourney</code> function ensures that any object (typically from an LLM) matches the expected schema. It validates that <code>emotion</code> scores are within the <code>-2..2</code> range and that all required arrays (actions, pains, etc.) exist <code>[src/journey/journey.ts:5-11](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L5-L11)</code>.</p>
+<h3 id="system-logic-diagram">System Logic Diagram</h3>
+<p>This diagram shows the relationship between natural language input and the generated code entities.</p>
+<p><pre class="mermaid">graph TD
+    subgraph &quot;Natural Language Space&quot;
+        Brief[&quot;Product Brief / Requirements&quot;]
+    end
+
+    subgraph &quot;Code Entity Space (Logic)&quot;
+        GJFB[&quot;generateJourneyFromBrief()&quot;]
+        CJ[&quot;coerceJourney()&quot;]
+        ES[&quot;emptyStage()&quot;]
+    end
+
+    subgraph &quot;Data Model&quot;
+        JM[&quot;JourneyMap Object&quot;]
+        JS[&quot;JourneyStage[]&quot;]
+    end
+
+    Brief --&gt; GJFB
+    GJFB --&gt; CJ
+    CJ --&gt; JM
+    JM --&gt; JS
+    ES --&gt; JS
+</pre>
+Sources: <code>src/journey/journey.ts</code>, <code>src/ai/generate.ts</code>, <code>src/schema/types.ts</code></p>
+<h2 id="journeyview-matrix-ui">JourneyView Matrix UI</h2>
+<p>The <code>JourneyView</code> component renders the map as a matrix where columns represent <code>JourneyStage</code> units and rows represent <code>JourneyRow</code> dimensions <code>[src/views/JourneyView.tsx:174-216](https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L174-L216)</code>.</p>
+<h3 id="emotioncurve-svg">EmotionCurve SVG</h3>
+<p>The "heart" of the journey map is the <code>EmotionCurve</code> component. It uses an SVG to render a continuous line representing user sentiment across stages.
+*   <strong>Interpolation</strong>: It uses <strong>Catmull-Rom to Bézier</strong> conversion via <code>emotionCurvePath</code> to create a smooth, non-linear curve between discrete emotion points <code>[src/journey/journey.ts:89-111](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L89-L111)</code>.
+*   <strong>Coordinate Mapping</strong>: The <code>emotionPoints</code> function maps the <code>-2..2</code> score to the vertical <code>y</code> coordinate and the stage index to the horizontal <code>x</code> coordinate based on the container width <code>[src/journey/journey.ts:114-131](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L114-L131)</code>.</p>
+<h3 id="celllist-editing">CellList Editing</h3>
+<p>Qualitative rows (e.g., Pains, Actions) are managed by the <code>CellList</code> component. It provides an inline-editing experience for arrays of strings, supporting "Enter to add" and "Click to remove" behaviors <code>[src/views/JourneyView.tsx:25-76](https://github.com/gaosichun888/openprototype/blob/main/src/views/JourneyView.tsx#L25-L76)</code>.</p>
+<h3 id="ui-component-architecture">UI Component Architecture</h3>
+<p><pre class="mermaid">graph BT
+    subgraph &quot;JourneyView (React)&quot;
+        JV[&quot;JourneyView Container&quot;]
+        EC[&quot;EmotionCurve (SVG)&quot;]
+        CL[&quot;CellList (Inputs)&quot;]
+        ECTL[&quot;EmotionControl (Buttons)&quot;]
+    end
+
+    subgraph &quot;Domain Utilities&quot;
+        ECP[&quot;emotionCurvePath()&quot;]
+        EP[&quot;emotionPoints()&quot;]
+        CE[&quot;clampEmotion()&quot;]
+    end
+
+    EC --&gt; ECP
+    ECP --&gt; EP
+    ECTL --&gt; CE
+    JV --&gt; EC
+    JV --&gt; CL
+    JV --&gt; ECTL
+</pre>
+Sources: <code>src/views/JourneyView.tsx</code>, <code>src/journey/journey.ts</code></p>
+<h2 id="export-and-interop">Export and Interop</h2>
+<p>The journey map can be exported to external formats for documentation and stakeholder review.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Format</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>journeyToMarkdown</code></td>
+<td style="text-align: left;"><code>.md</code></td>
+<td style="text-align: left;">Generates a hierarchical document with emojis representing emotion levels <code>[src/journey/journey.ts:161-179](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L161-L179)</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>journeyToCsv</code></td>
+<td style="text-align: left;"><code>.csv</code></td>
+<td style="text-align: left;">Generates a matrix where rows are dimensions and columns are stages, suitable for Excel/Sheets <code>[src/journey/journey.ts:182-198](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L182-L198)</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementation-details">Implementation Details</h3>
+<ul>
+<li><strong>Markdown Export</strong>: Iterates through <code>stages</code> and uses <code>EMOTION_EMOJI</code> and <code>EMOTION_LABELS</code> to provide visual context for the scores <code>[src/journey/journey.ts:170-170](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L170-L170)</code>.</li>
+<li><strong>CSV Export</strong>: Uses a comma-separated format with escaped quotes to handle multi-line strings within cells (e.g., multiple "Pains" in one stage) <code>[src/journey/journey.ts:183-184](https://github.com/gaosichun888/openprototype/blob/main/src/journey/journey.ts#L183-L184)</code>.</li>
+</ul>
+<p>Sources: <code>src/journey/journey.ts</code>, <code>src/views/JourneyView.tsx</code></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

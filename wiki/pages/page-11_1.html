@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>11.1 Backend API (FastAPI Server) · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1 active" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="backend-api-fastapi-server">Backend API (FastAPI Server)</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [server/README.md](https://github.com/gaosichun888/openprototype/blob/main/server/README.md)
+- [server/app/__init__.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/__init__.py)
+- [server/app/database.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/database.py)
+- [server/app/deps.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/deps.py)
+- [server/app/main.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py)
+- [server/app/routers/auth.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/auth.py)
+- [server/app/routers/members.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/members.py)
+- [server/app/routers/projects.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py)
+- [server/app/security.py](https://github.com/gaosichun888/openprototype/blob/main/server/app/security.py)
+- [server/pyproject.toml](https://github.com/gaosichun888/openprototype/blob/main/server/pyproject.toml)
+- [server/tests/conftest.py](https://github.com/gaosichun888/openprototype/blob/main/server/tests/conftest.py)
+- [server/tests/test_auth.py](https://github.com/gaosichun888/openprototype/blob/main/server/tests/test_auth.py)
+- [server/tests/test_collab.py](https://github.com/gaosichun888/openprototype/blob/main/server/tests/test_collab.py)
+- [server/tests/test_projects.py](https://github.com/gaosichun888/openprototype/blob/main/server/tests/test_projects.py)
+
+</details>
+
+<p>The OpenPrototype backend is a SaaS-oriented cloud service that provides centralized storage, authentication, and collaboration features. It is built using <strong>FastAPI</strong> and <strong>SQLAlchemy 2.0</strong>, utilizing <strong>PostgreSQL</strong> with <code>JSONB</code> for storing the core design documents.</p>
+<h2 id="server-architecture">Server Architecture</h2>
+<p>The server follows a modular router-based architecture where the application entry point initializes the database and middleware before mounting functional routers.</p>
+<h3 id="app-entrypoint-and-lifecycle">App Entrypoint and Lifecycle</h3>
+<p>The application is defined in <code>server/app/main.py</code>. It uses a <code>lifespan</code> context manager to initialize the database schema via <code>init_db()</code> when the server starts <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py#L13-L16">server/app/main.py:13-16</a>. It also configures <code>CORSMiddleware</code> to allow cross-origin requests from the frontend, governed by <code>settings.cors_origin_list</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py#L21-L27">server/app/main.py:21-27</a>.</p>
+<h3 id="dependencies-and-authorization">Dependencies and Authorization</h3>
+<p>Authorization is handled via FastAPI dependencies in <code>server/app/deps.py</code>. The system implements a Role-Based Access Control (RBAC) hierarchy defined by <code>_ROLE_RANK</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/deps.py#L14">server/app/deps.py:14</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>get_current_user</code></td>
+<td style="text-align: left;">Extracts JWT from <code>Authorization: Bearer</code> header and retrieves the <code>User</code> from DB <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/deps.py#L17-L29">server/app/deps.py:17-29</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>role_for</code></td>
+<td style="text-align: left;">Determines if a user is the <code>owner</code> or a <code>ProjectMember</code> (editor/viewer) <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/deps.py#L32-L41">server/app/deps.py:32-41</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>require_project</code></td>
+<td style="text-align: left;">Validates that a project exists and the user has at least the <code>min_role</code> required <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/deps.py#L44-L56">server/app/deps.py:44-56</a>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request-flow-diagram">Request Flow Diagram</h3>
+<p>The following diagram illustrates how a request passes through the middleware and dependencies to reach a router.</p>
+<p><strong>Diagram: Backend Request Pipeline</strong>
+<pre class="mermaid">graph TD
+    Client[&quot;HTTP Client&quot;] --&gt; CORS[&quot;CORSMiddleware&quot;]
+    CORS --&gt; AuthDep[&quot;get_current_user (JWT)&quot;]
+    AuthDep --&gt; RoleDep[&quot;require_project (RBAC Check)&quot;]
+    RoleDep --&gt; Router[&quot;Project/Member Router&quot;]
+    Router --&gt; DB[(&quot;PostgreSQL (SQLAlchemy)&quot;)]
+    
+    subgraph &quot;Code Entities&quot;
+        AuthDep -- &quot;app/deps.py&quot; --&gt; UserEntity[&quot;User Model&quot;]
+        RoleDep -- &quot;app/deps.py&quot; --&gt; Rank[&quot;_ROLE_RANK&quot;]
+    end
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/main.py#L19-L38">server/app/main.py:19-38</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/deps.py#L11-L56">server/app/deps.py:11-56</a></p>
+<h2 id="data-models-schema">Data Models &amp; Schema</h2>
+<p>The backend uses SQLAlchemy 2.0 models to map Python classes to database tables. The core design data is stored as a blob in a JSON-compatible column.</p>
+<h3 id="key-models">Key Models</h3>
+<ul>
+<li><strong>User</strong>: Stores identity and hashed passwords <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py">server/app/models.py</a>.</li>
+<li><strong>Project</strong>: The root entity for a design. Contains the current <code>document</code> (JSONB) <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L50">server/app/routers/projects.py:50</a>.</li>
+<li><strong>ProjectMember</strong>: A junction table linking <code>User</code> and <code>Project</code> with a specific <code>role</code> (editor, viewer) <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py">server/app/models.py</a>.</li>
+<li><strong>DocumentVersion</strong>: An immutable snapshot of the document created every time a user saves. It includes a <code>message</code> and an <code>author_id</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L110-L117">server/app/routers/projects.py:110-117</a>.</li>
+</ul>
+<h3 id="entity-relationship-diagram">Entity Relationship Diagram</h3>
+<p>This diagram maps the code-level models to their relationships in the database.</p>
+<p><strong>Diagram: Backend Data Relationships</strong>
+<pre class="mermaid">erDiagram
+    User ||--o{ Project : &quot;owns&quot;
+    User ||--o{ ProjectMember : &quot;is member of&quot;
+    User ||--o{ DocumentVersion : &quot;authored&quot;
+    Project ||--o{ ProjectMember : &quot;has members&quot;
+    Project ||--o{ DocumentVersion : &quot;has history&quot;
+
+    User {
+        int id
+        string email
+        string password_hash
+    }
+    Project {
+        int id
+        string name
+        jsonb document
+        int owner_id
+    }
+    ProjectMember {
+        int project_id
+        int user_id
+        string role
+    }
+    DocumentVersion {
+        int id
+        int project_id
+        jsonb document
+        string message
+    }
+</pre>
+Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/models.py">server/app/models.py</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L101-L127">server/app/routers/projects.py:101-127</a></p>
+<h2 id="api-routers">API Routers</h2>
+<h3 id="auth-router-apiauth">Auth Router (<code>/api/auth</code>)</h3>
+<p>Handles user lifecycle and session management.
+*   <code>POST /register</code>: Hashes passwords using <code>bcrypt</code> and returns a JWT <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/auth.py#L14-L24">server/app/routers/auth.py:14-24</a>.
+*   <code>POST /login</code>: Validates credentials and returns a JWT <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/auth.py#L27-L32">server/app/routers/auth.py:27-32</a>.
+*   <code>GET /me</code>: Returns the current user's profile <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/auth.py#L35-L37">server/app/routers/auth.py:35-37</a>.</p>
+<h3 id="projects-router-apiprojects">Projects Router (<code>/api/projects</code>)</h3>
+<p>Manages the design documents and their versioning.
+*   <strong>CRUD</strong>: Standard Create, Read, Update (rename), and Delete operations <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L46-L98">server/app/routers/projects.py:46-98</a>.
+*   <strong>Document Save</strong>: <code>PUT /{id}/document</code> updates the project's main document and simultaneously appends a new entry to <code>DocumentVersion</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L101-L118">server/app/routers/projects.py:101-118</a>.
+*   <strong>Version History</strong>: <code>GET /{id}/versions</code> lists all snapshots <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L130-L141">server/app/routers/projects.py:130-141</a>.
+*   <strong>Restore</strong>: <code>POST /{id}/versions/{vid}/restore</code> replaces the current project document with a specific historical snapshot <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L144-L164">server/app/routers/projects.py:144-164</a>.</p>
+<h3 id="members-router-apiprojectsidmembers">Members Router (<code>/api/projects/{id}/members</code>)</h3>
+<p>Handles collaboration and RBAC.
+*   <strong>Invite</strong>: <code>POST</code> adds a user to a project by email. Only the <code>owner</code> can perform this <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/members.py#L38-L45">server/app/routers/members.py:38-45</a>.
+*   <strong>Role Management</strong>: If a user is already a member, the invite endpoint updates their role <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/members.py#L58-L59">server/app/routers/members.py:58-59</a>.
+*   <strong>Remove</strong>: <code>DELETE</code> removes a member's access <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/members.py#L66-L82">server/app/routers/members.py:66-82</a>.</p>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="versioning-logic">Versioning Logic</h3>
+<p>Unlike frontend undo/redo which is transient, the backend versioning is persistent. Every save creates a <code>DocumentVersion</code> record <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L110-L117">server/app/routers/projects.py:110-117</a>. This allows the system to provide a "Version History" UI where users can see who changed what and when, and revert the entire project to a previous state <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py#L155-L162">server/app/routers/projects.py:155-162</a>.</p>
+<h3 id="security-and-hashing">Security and Hashing</h3>
+<p>Passwords are never stored in plain text. The <code>hash_password</code> and <code>verify_password</code> utilities in <code>app.security</code> use <code>bcrypt</code> for computationally expensive hashing <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/auth.py#L9">server/app/routers/auth.py:9</a>. JWT tokens are signed using a secret key and contain the <code>user_id</code> as the subject <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/security.py">server/app/security.py</a>.</p>
+<h3 id="development-and-testing">Development and Testing</h3>
+<p>The backend includes a comprehensive test suite in the <code>server/tests/</code> directory. Tests use an in-memory SQLite database via <code>StaticPool</code> to ensure isolation and speed <a href="https://github.com/gaosichun888/openprototype/blob/main/server/tests/conftest.py#L13-L17">server/tests/conftest.py:13-17</a>.
+*   <code>test_project_crud_and_document_versions</code>: Verifies the full lifecycle of project creation, saving, and restoration <a href="https://github.com/gaosichun888/openprototype/blob/main/server/tests/test_projects.py#L4-L53">server/tests/test_projects.py:4-53</a>.
+*   <code>test_invite_roles_and_permissions</code>: Validates that <code>viewer</code> and <code>editor</code> roles correctly restrict API access <a href="https://github.com/gaosichun888/openprototype/blob/main/server/tests/test_collab.py#L4-L81">server/tests/test_collab.py:4-81</a>.</p>
+<p>Sources: <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/projects.py">server/app/routers/projects.py</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/auth.py">server/app/routers/auth.py</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/app/routers/members.py">server/app/routers/members.py</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/server/tests/conftest.py">server/tests/conftest.py</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

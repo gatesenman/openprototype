@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>12.2 Tauri Configuration &amp; Desktop Release · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1 active" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="tauri-configuration-desktop-release">Tauri Configuration &amp; Desktop Release</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [.github/workflows/desktop-release.yml](https://github.com/gaosichun888/openprototype/blob/main/.github/workflows/desktop-release.yml)
+- [src-tauri/build.rs](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/build.rs)
+- [src-tauri/capabilities/default.json](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/capabilities/default.json)
+- [src-tauri/src/lib.rs](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs)
+- [src-tauri/tauri.conf.json](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/tauri.conf.json)
+
+</details>
+
+<p>This page details the configuration and build pipeline for the OpenPrototype desktop application. The application utilizes <strong>Tauri 2.0</strong> to bridge a React-based frontend with a Rust-based backend, providing native performance, secure file system access, and cross-platform distribution.</p>
+<h2 id="tauri-application-configuration">Tauri Application Configuration</h2>
+<p>The core of the desktop application is defined in <code>tauri.conf.json</code>. This file orchestrates the relationship between the frontend build artifacts and the native windowing system.</p>
+<h3 id="core-identity-build-hooks">Core Identity &amp; Build Hooks</h3>
+<p>The application is identified as <code>app.openprototype</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L5-L5">src-tauri/tauri.conf.json:5-5</a>] with a default version of <code>0.1.0</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L4-L4">src-tauri/tauri.conf.json:4-4</a>]. The build pipeline is configured to use <code>pnpm</code> for both development and production builds:
+*   <strong>Frontend Distribution</strong>: The production web assets are expected in <code>../dist</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L7-L7">src-tauri/tauri.conf.json:7-7</a>].
+*   <strong>Build Lifecycle</strong>: Before the native binary is compiled, <code>pnpm build</code> is executed to generate the static frontend [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L10-L10">src-tauri/tauri.conf.json:10-10</a>].</p>
+<h3 id="window-specifications">Window Specifications</h3>
+<p>The main application window is configured with a default resolution of 1440x900 [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L16-L17">src-tauri/tauri.conf.json:16-17</a>] and a minimum constraint of 1024x700 [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L18-L19">src-tauri/tauri.conf.json:18-19</a>] to ensure the multi-pane Canvas UI remains functional.</p>
+<h3 id="asset-embedding-icons">Asset Embedding &amp; Icons</h3>
+<p>Tauri bundles platform-specific icons from the <code>icons/</code> directory, including <code>.icns</code> for macOS, <code>.ico</code> for Windows, and various PNG sizes for Linux/Web [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/tauri.conf.json#L29-L35">src-tauri/tauri.conf.json:29-35</a>].</p>
+<p><strong>Sources:</strong>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/tauri.conf.json#L1-L41">src-tauri/tauri.conf.json:1-41</a></p>
+<hr />
+<h2 id="permission-model-capabilities">Permission Model &amp; Capabilities</h2>
+<p>OpenPrototype utilizes Tauri's granular permission system to restrict access to system resources. These are defined in the <code>capabilities/default.json</code> file.</p>
+<h3 id="default-permissions">Default Permissions</h3>
+<p>The application grants the following capabilities to the <code>main</code> window:
+*   <strong><code>core:default</code></strong>: Basic Tauri runtime functionality [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/capabilities/default.json#L7-L7">src-tauri/capabilities/default.json:7-7</a>].
+*   <strong><code>dialog:default</code></strong>: Access to native system file pickers (Open/Save dialogs) [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/capabilities/default.json#L8-L8">src-tauri/capabilities/default.json:8-8</a>].
+*   <strong><code>fs:default</code></strong>: General file system access permissions [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/capabilities/default.json#L9-L9">src-tauri/capabilities/default.json:9-9</a>].
+*   <strong><code>fs:allow-read-file</code> &amp; <code>fs:allow-write-file</code></strong>: Explicit permissions required for the <code>.gpo</code> file persistence layer [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/capabilities/default.json#L10-L11">src-tauri/capabilities/default.json:10-11</a>].</p>
+<h3 id="plugin-initialization">Plugin Initialization</h3>
+<p>The Rust entry point in <code>src/lib.rs</code> initializes these plugins to make them available to the frontend:
+*   <code>tauri_plugin_dialog::init()</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/src/lib.rs#L3-L3">src-tauri/src/lib.rs:3-3</a>]
+*   <code>tauri_plugin_fs::init()</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/src/lib.rs#L4-L4">src-tauri/src/lib.rs:4-4</a>]</p>
+<p><strong>Sources:</strong>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/capabilities/default.json#L1-L14">src-tauri/capabilities/default.json:1-14</a>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs#L1-L8">src-tauri/src/lib.rs:1-8</a></p>
+<hr />
+<h2 id="compilation-pipeline-buildrs">Compilation Pipeline (<code>build.rs</code>)</h2>
+<p>The Rust compilation process includes a custom build script (<code>build.rs</code>) that executes before the main crate is compiled.</p>
+<h3 id="the-build-script-workflow">The Build Script Workflow</h3>
+<p>The script invokes <code>tauri_build::build()</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/build.rs#L2-L2">src-tauri/build.rs:2-2</a>]. This function performs several critical tasks:
+1.  <strong>Context Generation</strong>: It prepares the <code>tauri::generate_context!()</code> macro used in <code>lib.rs</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[src-tauri/src/lib.rs#L5-L5">src-tauri/src/lib.rs:5-5</a>].
+2.  <strong>Resource Embedding</strong>: It compresses and embeds the frontend assets (from <code>dist/</code>) and icons into the final binary.
+3.  <strong>Config Validation</strong>: It ensures <code>tauri.conf.json</code> matches the required schema.</p>
+<h3 id="configuration-to-binary-flow">Configuration to Binary Flow</h3>
+<p>Title: "Build Configuration to Native Binary Mapping"
+<pre class="mermaid">graph TD
+    subgraph &quot;Natural Language Space&quot;
+        A[&quot;App Metadata&quot;]
+        B[&quot;Security Policy&quot;]
+        C[&quot;Window Constraints&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        A --&gt; ID[&quot;identifier: app.openprototype&quot;]
+        B --&gt; CAP[&quot;capabilities/default.json&quot;]
+        C --&gt; WIN[&quot;tauri.conf.json: app.windows&quot;]
+        
+        ID --&gt; TAURI_BUILD[&quot;tauri_build::build()&quot;]
+        CAP --&gt; PERM[&quot;core:default, fs:default&quot;]
+        WIN --&gt; WRY[&quot;WRY / TAO Runtime&quot;]
+        
+        TAURI_BUILD --&gt; GEN_CTX[&quot;tauri::generate_context!()&quot;]
+        GEN_CTX --&gt; LIB_RS[&quot;src-tauri/src/lib.rs&quot;]
+    end
+</pre></p>
+<p><strong>Sources:</strong>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/build.rs#L1-L4">src-tauri/build.rs:1-4</a>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/src/lib.rs#L1-L8">src-tauri/src/lib.rs:1-8</a>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/tauri.conf.json#L1-L41">src-tauri/tauri.conf.json:1-41</a></p>
+<hr />
+<h2 id="desktop-release-workflow">Desktop Release Workflow</h2>
+<p>The project uses GitHub Actions (<code>desktop-release.yml</code>) to automate cross-platform binary packaging. The workflow is triggered by version tags (e.g., <code>v0.1.0</code>) [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L8-L10">.github/workflows/desktop-release.yml:8-10</a>].</p>
+<h3 id="cross-platform-matrix">Cross-Platform Matrix</h3>
+<p>The workflow runs a build matrix across three platforms:
+1.  <strong>macOS</strong>: Builds a universal binary supporting both Apple Silicon (<code>aarch64</code>) and Intel (<code>x86_64</code>) [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L21-L23">.github/workflows/desktop-release.yml:21-23</a>].
+2.  <strong>Windows</strong>: Generates <code>.exe</code> (NSIS) and <code>.msi</code> (WiX) installers [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L24-L26">.github/workflows/desktop-release.yml:24-26</a>].
+3.  <strong>Linux</strong>: Produces AppImage, <code>.deb</code>, and <code>.rpm</code> packages on Ubuntu 22.04 [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L27-L29">.github/workflows/desktop-release.yml:27-29</a>].</p>
+<h3 id="system-dependencies-linux">System Dependencies (Linux)</h3>
+<p>The Linux build requires specific native libraries for the WebKit2GTK webview and system tray support, including <code>libwebkit2gtk-4.1-dev</code>, <code>libappindicator3-dev</code>, and <code>librsvg2-dev</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L38-L46">.github/workflows/desktop-release.yml:38-46</a>].</p>
+<h3 id="release-automation">Release Automation</h3>
+<p>The workflow utilizes <code>tauri-apps/tauri-action</code> to:
+1.  Run <code>pnpm install</code> and <code>pnpm build</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L70-L72">.github/workflows/desktop-release.yml:70-72</a>].
+2.  Compile the Rust binary via <code>cargo</code> [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L73-L73">.github/workflows/desktop-release.yml:73-73</a>].
+3.  Upload the resulting installers to a GitHub Release draft [<a href="https://github.com/gaosichun888/openprototype/blob/main/[.github/workflows/desktop-release.yml#L80-L80">.github/workflows/desktop-release.yml:80-80</a>].</p>
+<h3 id="release-pipeline-mapping">Release Pipeline Mapping</h3>
+<p>Title: "CI/CD Pipeline to Distribution Artifacts"
+<pre class="mermaid">graph TD
+    subgraph &quot;Natural Language Space&quot;
+        TAG[&quot;Version Tag (v*)&quot;]
+        WIN_DIST[&quot;Windows Installer&quot;]
+        MAC_DIST[&quot;macOS App Bundle&quot;]
+        LIN_DIST[&quot;Linux AppImage&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        TAG --&gt; WORKFLOW[&quot;.github/workflows/desktop-release.yml&quot;]
+        WORKFLOW --&gt; MATRIX[&quot;strategy: matrix&quot;]
+        
+        MATRIX -- &quot;macos-latest&quot; --&gt; DARWIN[&quot;--target universal-apple-darwin&quot;]
+        MATRIX -- &quot;windows-latest&quot; --&gt; NSIS[&quot;NSIS / WiX&quot;]
+        MATRIX -- &quot;ubuntu-22.04&quot; --&gt; DEB[&quot;AppImage / .deb&quot;]
+        
+        DARWIN --&gt; MAC_DIST
+        NSIS --&gt; WIN_DIST
+        DEB --&gt; LIN_DIST
+    end
+</pre></p>
+<p><strong>Sources:</strong>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/.github/workflows/desktop-release.yml#L1-L83">.github/workflows/desktop-release.yml:1-83</a>
+*   <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/tauri.conf.json#L26-L39">src-tauri/tauri.conf.json:26-39</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

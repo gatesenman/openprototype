@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>8.2 HTML Prototype Export &amp; Preview Player · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1 active" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="html-prototype-export-preview-player">HTML Prototype Export &amp; Preview Player</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [src/export/exportCode.test.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.test.ts)
+- [src/export/exportCode.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts)
+- [src/export/exportHtml.ts](https://github.com/gaosichun888/openprototype/blob/main/src/export/exportHtml.ts)
+- [src/views/FlowsView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/FlowsView.tsx)
+- [src/views/PreviewView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx)
+
+</details>
+
+<p>The HTML Prototype Export and Preview system provides a mechanism for transforming design documents into interactive, self-contained web applications. This system spans from code generation utilities that produce static HTML/CSS/React/Vue snippets to a dedicated runtime player within the application that simulates user flows.</p>
+<h2 id="html-export-pipeline">HTML Export Pipeline</h2>
+<p>The export pipeline converts the <code>GpoDocument</code> schema into a standalone HTML file. This file includes the CSS layout for every frame, a JavaScript runtime for navigation, and CSS animations for transitions.</p>
+<h3 id="exporttohtml-and-downloadhtml">exportToHtml and downloadHtml</h3>
+<p>The core logic resides in <code>exportToHtml</code>, which aggregates all frames across all pages into a single document <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportHtml.ts#L75-L122">src/export/exportHtml.ts:75-122</a>. It generates a "device" container that hosts frames as absolute-positioned layers <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportHtml.ts#L91-L93">src/export/exportHtml.ts:91-93</a>.</p>
+<h3 id="interaction-wiring">Interaction Wiring</h3>
+<p>Interactive elements are identified by checking the <code>interactions</code> array on each <code>Node</code>. If a "click" trigger is found, the exporter injects a <code>data-clickable</code> attribute and an <code>onclick</code> handler that calls the embedded <code>gotoFrame</code> runtime function <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportHtml.ts#L59-L62">src/export/exportHtml.ts:59-62</a>.</p>
+<h3 id="runtime-script">Runtime Script</h3>
+<p>The exported HTML contains a lightweight vanilla JavaScript runtime to manage state:
+- <strong><code>gotoFrame(id, anim)</code></strong>: Removes active classes from all frames and applies the <code>active</code> class to the target frame ID. It also triggers CSS animations (e.g., <code>anim-fade</code>, <code>anim-slide-left</code>) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportHtml.ts#L110-L119">src/export/exportHtml.ts:110-119</a>.</p>
+<h3 id="data-flow-document-to-html">Data Flow: Document to HTML</h3>
+<p>The following diagram illustrates how the <code>GpoDocument</code> structure is serialized into a flat HTML file.</p>
+<p><strong>Prototype Serialization Flow</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Document Space&quot;
+        DOC[&quot;GpoDocument&quot;] --&gt; P[&quot;Page[]&quot;]
+        P --&gt; F[&quot;Frame[]&quot;]
+        F --&gt; N[&quot;Node[]&quot;]
+        N --&gt; I[&quot;Interaction[]&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        DOC_HTML[&quot;exportToHtml(doc)&quot;]
+        F_HTML[&quot;frameHtml(frame)&quot;]
+        N_HTML[&quot;nodeHtml(node)&quot;]
+        STYLE[&quot;styleObject(node)&quot;]
+    end
+
+    DOC -- &quot;Iterate Pages&quot; --&gt; DOC_HTML
+    F -- &quot;Iterate Frames&quot; --&gt; F_HTML
+    N -- &quot;Recursive Map&quot; --&gt; N_HTML
+    N_HTML -- &quot;Inject onclick&quot; --&gt; I
+    N_HTML -- &quot;Map Styles&quot; --&gt; STYLE
+    
+    DOC_HTML -- &quot;Output&quot; --&gt; FILE[&quot;Self-contained .html&quot;]
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportHtml.ts#L1-L134">src/export/exportHtml.ts:1-134</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L4-L35">src/export/exportCode.ts:4-35</a></p>
+<hr />
+<h2 id="preview-player-previewview">Preview Player (PreviewView)</h2>
+<p>The <code>PreviewView</code> component provides an in-app interactive player. Unlike the Canvas, which is for editing, the Preview Player focuses on high-fidelity simulation and navigation.</p>
+<h3 id="previewview-component">PreviewView Component</h3>
+<ul>
+<li><strong>Frame Sidebar</strong>: Lists all frames in the document, allowing manual navigation via <code>setPreviewFrame</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L88-L103">src/views/PreviewView.tsx:88-103</a>.</li>
+<li><strong>Recursive Renderer</strong>: Uses the <code>NodeView</code> component to recursively render the node hierarchy using standard React DOM elements and inline styles <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L6-L62">src/views/PreviewView.tsx:6-62</a>.</li>
+<li><strong>State Integration</strong>: Connects to the <code>useStore</code> to track <code>previewFrameId</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L68-L69">src/views/PreviewView.tsx:68-69</a>.</li>
+</ul>
+<h3 id="nodeview-implementation">NodeView Implementation</h3>
+<p><code>NodeView</code> maps <code>Node</code> properties to <code>CSSProperties</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L16-L50">src/views/PreviewView.tsx:16-50</a>. It handles:
+1.  <strong>Fills</strong>: Resolves fills via <code>nodeFill(node, ds)</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L31">src/views/PreviewView.tsx:31</a>.
+2.  <strong>Typography</strong>: Maps <code>node.text</code> properties to flexbox alignment and font styles <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L34-L48">src/views/PreviewView.tsx:34-48</a>.
+3.  <strong>Navigation</strong>: If a node has a click interaction, it calls <code>onNavigate</code>, which updates the store's <code>previewFrameId</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L54">src/views/PreviewView.tsx:54</a>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/PreviewView.tsx#L1-L131">src/views/PreviewView.tsx:1-131</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/render/resolve.ts#L1-L20">src/render/resolve.ts:1-20</a></p>
+<hr />
+<h2 id="prototype-overview-flowsview">Prototype Overview (FlowsView)</h2>
+<p>The <code>FlowsView</code> provides a bird's-eye view of the entire prototype, visualizing the connections between frames as an SVG edge graph.</p>
+<h3 id="edge-generation">Edge Generation</h3>
+<p>The view iterates through every node in every frame. If a node contains an interaction targeting another frame, an edge is created <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/FlowsView.tsx#L26-L34">src/views/FlowsView.tsx:26-34</a>.</p>
+<h3 id="layout-rendering">Layout &amp; Rendering</h3>
+<ul>
+<li><strong>Grid Layout</strong>: Frames are arranged in a multi-column grid using <code>posOf(index)</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/FlowsView.tsx#L19-L22">src/views/FlowsView.tsx:19-22</a>.</li>
+<li><strong>SVG Edges</strong>: Connections are rendered as SVG paths using cubic Bézier curves (<code>C</code> command) <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/FlowsView.tsx#L71-L79">src/views/FlowsView.tsx:71-79</a>.</li>
+<li><strong>Mini Previews</strong>: Each frame in the flow view contains a simplified "mini" version of its nodes to aid recognition <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/FlowsView.tsx#L97-L112">src/views/FlowsView.tsx:97-112</a>.</li>
+</ul>
+<p><strong>FlowsView Mapping Logic</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;State&quot;
+        STORE[&quot;useStore.doc&quot;]
+    end
+
+    subgraph &quot;Logic: FlowsView&quot;
+        MAP[&quot;frames.flatMap&quot;]
+        EDGES[&quot;Collect Interactions&quot;]
+        SVG[&quot;Render SVG Container&quot;]
+    end
+
+    subgraph &quot;UI Entities&quot;
+        FRAME_RECT[&quot;rect (Frame Thumbnail)&quot;]
+        NODE_RECT[&quot;rect (Mini Node)&quot;]
+        PATH[&quot;path (Interaction Edge)&quot;]
+    end
+
+    STORE --&gt; MAP
+    MAP --&gt; EDGES
+    EDGES -- &quot;targetFrameId&quot; --&gt; PATH
+    MAP -- &quot;frame.nodes&quot; --&gt; NODE_RECT
+    MAP -- &quot;frame.background&quot; --&gt; FRAME_RECT
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/FlowsView.tsx#L1-L131">src/views/FlowsView.tsx:1-131</a></p>
+<hr />
+<h2 id="code-export-utilities">Code Export Utilities</h2>
+<p>Beyond the full prototype, individual frames or nodes can be exported into various frontend formats via <code>exportCode.ts</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Format</th>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>React</strong></td>
+<td style="text-align: left;"><code>frameToReact</code></td>
+<td style="text-align: left;">Generates a functional component with absolute-positioned divs and inline JSX styles <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L65-L77">src/export/exportCode.ts:65-77</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Vue</strong></td>
+<td style="text-align: left;"><code>frameToVue</code></td>
+<td style="text-align: left;">Produces a Vue 3 Single File Component (SFC) with <code>&lt;script setup&gt;</code> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L148-L166">src/export/exportCode.ts:148-166</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tailwind</strong></td>
+<td style="text-align: left;"><code>frameToTailwind</code></td>
+<td style="text-align: left;">Uses arbitrary-value utility classes (e.g., <code>left-[10px]</code>) for styling <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L182-L196">src/export/exportCode.ts:182-196</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CSS</strong></td>
+<td style="text-align: left;"><code>frameToCss</code></td>
+<td style="text-align: left;">Generates a stylesheet with one class per node and a <code>.frame</code> container <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L119-L123">src/export/exportCode.ts:119-123</a>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="style-resolution">Style Resolution</h3>
+<p>All exporters rely on <code>styleObject(node, ds)</code>, which normalizes the internal <code>Node</code> style schema into a standard JavaScript object representing CSS properties <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L4-L35">src/export/exportCode.ts:4-35</a>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.ts#L1-L200">src/export/exportCode.ts:1-200</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/export/exportCode.test.ts#L1-L133">src/export/exportCode.test.ts:1-133</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

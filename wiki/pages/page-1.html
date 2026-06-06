@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>1 OpenPrototype Overview · OpenPrototype Wiki</title>
+<link rel="stylesheet" href="../assets/wiki.css"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="page-1.html">OpenPrototype<small>DeepWiki</small></a>
+  <input id="filter" placeholder="筛选页面…" oninput="filterNav(this.value)"/>
+  <nav id="nav"><a class="nav-item depth0 active" href="page-1.html"><span class="num">1</span>OpenPrototype Overview</a>
+<a class="nav-item depth1" href="page-1_1.html"><span class="num">1.1</span>Getting Started &amp; Project Setup</a>
+<a class="nav-item depth1" href="page-1_2.html"><span class="num">1.2</span>Application Shell &amp; View Routing</a>
+<a class="nav-item depth0" href="page-2.html"><span class="num">2</span>Core Data Model &amp; Schema</a>
+<a class="nav-item depth1" href="page-2_1.html"><span class="num">2.1</span>GpoDocument Schema &amp; Types</a>
+<a class="nav-item depth1" href="page-2_2.html"><span class="num">2.2</span>Auto Layout &amp; Constraints Engine</a>
+<a class="nav-item depth1" href="page-2_3.html"><span class="num">2.3</span>File Persistence &amp; .gpo Format</a>
+<a class="nav-item depth0" href="page-3.html"><span class="num">3</span>State Management</a>
+<a class="nav-item depth1" href="page-3_1.html"><span class="num">3.1</span>useStore: Document &amp; Selection State</a>
+<a class="nav-item depth1" href="page-3_2.html"><span class="num">3.2</span>useUi: Transient UI State</a>
+<a class="nav-item depth0" href="page-4.html"><span class="num">4</span>Canvas &amp; Design Editor</a>
+<a class="nav-item depth1" href="page-4_1.html"><span class="num">4.1</span>CanvasStage: Konva Rendering Engine</a>
+<a class="nav-item depth1" href="page-4_2.html"><span class="num">4.2</span>Vector Editing &amp; Boolean Operations</a>
+<a class="nav-item depth1" href="page-4_3.html"><span class="num">4.3</span>Properties Panel &amp; Node Inspection</a>
+<a class="nav-item depth1" href="page-4_4.html"><span class="num">4.4</span>Canvas Panels: Layers, Assets, Comments &amp; Context Menu</a>
+<a class="nav-item depth0" href="page-5.html"><span class="num">5</span>AI Generation System</a>
+<a class="nav-item depth1" href="page-5_1.html"><span class="num">5.1</span>Page &amp; Flow Generation</a>
+<a class="nav-item depth1" href="page-5_2.html"><span class="num">5.2</span>Requirements AI Assistance</a>
+<a class="nav-item depth1" href="page-5_3.html"><span class="num">5.3</span>AI Settings &amp; LLM Provider Integration</a>
+<a class="nav-item depth0" href="page-6.html"><span class="num">6</span>Design System</a>
+<a class="nav-item depth1" href="page-6_1.html"><span class="num">6.1</span>Design Tokens, Variables &amp; Presets</a>
+<a class="nav-item depth1" href="page-6_2.html"><span class="num">6.2</span>Design Rules Engine &amp; Audit</a>
+<a class="nav-item depth0" href="page-7.html"><span class="num">7</span>Requirements &amp; Journey Mapping</a>
+<a class="nav-item depth1" href="page-7_1.html"><span class="num">7.1</span>Requirements View</a>
+<a class="nav-item depth1" href="page-7_2.html"><span class="num">7.2</span>User Journey Map</a>
+<a class="nav-item depth0" href="page-8.html"><span class="num">8</span>Export &amp; Preview</a>
+<a class="nav-item depth1" href="page-8_1.html"><span class="num">8.1</span>Code Export (React, Vue, Tailwind, HTML, CSS)</a>
+<a class="nav-item depth1" href="page-8_2.html"><span class="num">8.2</span>HTML Prototype Export &amp; Preview Player</a>
+<a class="nav-item depth1" href="page-8_3.html"><span class="num">8.3</span>Image, PDF &amp; SVG Export</a>
+<a class="nav-item depth0" href="page-9.html"><span class="num">9</span>Component Marketplace &amp; Plugin System</a>
+<a class="nav-item depth1" href="page-9_1.html"><span class="num">9.1</span>Component Packages &amp; Marketplace</a>
+<a class="nav-item depth1" href="page-9_2.html"><span class="num">9.2</span>Plugin System</a>
+<a class="nav-item depth0" href="page-10.html"><span class="num">10</span>Design Interop &amp; Import</a>
+<a class="nav-item depth0" href="page-11.html"><span class="num">11</span>Cloud Backend &amp; Collaboration</a>
+<a class="nav-item depth1" href="page-11_1.html"><span class="num">11.1</span>Backend API (FastAPI Server)</a>
+<a class="nav-item depth1" href="page-11_2.html"><span class="num">11.2</span>Frontend Cloud Integration</a>
+<a class="nav-item depth0" href="page-12.html"><span class="num">12</span>Desktop Application (Tauri)</a>
+<a class="nav-item depth1" href="page-12_1.html"><span class="num">12.1</span>Tauri Runtime &amp; Native Integration</a>
+<a class="nav-item depth1" href="page-12_2.html"><span class="num">12.2</span>Tauri Configuration &amp; Desktop Release</a>
+<a class="nav-item depth0" href="page-13.html"><span class="num">13</span>Glossary</a></nav>
+  <div class="src">源仓库：<a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></div>
+</aside>
+<main class="content">
+  <article class="md"><h1 id="openprototype-overview">OpenPrototype Overview</h1>
+<details>
+<summary>Relevant source files</summary>
+
+The following files were used as context for generating this wiki page:
+
+- [README.md](https://github.com/gaosichun888/openprototype/blob/main/README.md)
+- [index.html](https://github.com/gaosichun888/openprototype/blob/main/index.html)
+- [package.json](https://github.com/gaosichun888/openprototype/blob/main/package.json)
+- [src-tauri/Cargo.toml](https://github.com/gaosichun888/openprototype/blob/main/src-tauri/Cargo.toml)
+- [src/App.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx)
+- [src/main.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/main.tsx)
+- [src/views/HomeView.tsx](https://github.com/gaosichun888/openprototype/blob/main/src/views/HomeView.tsx)
+
+</details>
+
+<p>OpenPrototype is an AI-driven product prototyping studio that bridges the gap between natural language requirements and structured design entities. Unlike tools that generate static images, OpenPrototype produces editable, structured metadata that resides on an infinite canvas, allowing for manual refinement, interaction wiring, and production-ready code export.</p>
+<h2 id="core-workflow">Core Workflow</h2>
+<p>The system follows a linear progression from abstract concepts to interactive prototypes:</p>
+<ol>
+<li><strong>Requirements</strong>: Users draft or manage product requirements in Markdown. AI assistance can polish, expand, or summarize these drafts <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L13-L14">README.md:13-14</a>.</li>
+<li><strong>AI Generation</strong>: The AI interprets requirements to generate structured page metadata (frames, nodes, and auto-layout settings) <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L10-L11">README.md:10-11</a>.</li>
+<li><strong>Canvas Editing</strong>: Users refine the generated UI on a <code>react-konva</code> powered canvas, adjusting properties, layers, and design tokens <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L15-L16">README.md:15-16</a>.</li>
+<li><strong>Flow &amp; Export</strong>: Screens are linked via interactions to create a "Flow," which can then be exported as a self-contained HTML prototype or individual code components (React, Vue, Tailwind) <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L17-L19">README.md:17-19</a>.</li>
+</ol>
+<h3 id="workflow-logic-to-code-mapping">Workflow Logic to Code Mapping</h3>
+<p>The following diagram illustrates how the conceptual workflow is mapped to specific subsystems and files within the codebase.</p>
+<p><strong>System Workflow Mapping</strong>
+<pre class="mermaid">graph LR
+    subgraph &quot;Natural Language Space&quot;
+        A[&quot;RequirementsView&quot;] -- &quot;Markdown&quot; --&gt; B[&quot;generatePage / generateFlow&quot;]
+    end
+
+    subgraph &quot;Code Entity Space&quot;
+        B -- &quot;GpoDocument Schema&quot; --&gt; C[&quot;useStore (Zustand)&quot;]
+        C -- &quot;Render Dispatch&quot; --&gt; D[&quot;CanvasStage (Konva)&quot;]
+        D -- &quot;Selection/Update&quot; --&gt; E[&quot;PropertiesPanel&quot;]
+        E -- &quot;Sync&quot; --&gt; C
+    end
+
+    subgraph &quot;Export Space&quot;
+        C -- &quot;frameToCode&quot; --&gt; F[&quot;exportCode.ts&quot;]
+        C -- &quot;downloadHtml&quot; --&gt; G[&quot;exportHtml.ts&quot;]
+    end
+
+    style A stroke-dasharray: 5 5
+    style G stroke-width: 2px
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L10-L20">README.md:10-20</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L25-L31">src/App.tsx:25-31</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/store/useStore.ts#L1-L10">src/store/useStore.ts:1-10</a></p>
+<hr />
+<h2 id="technology-stack">Technology Stack</h2>
+<p>OpenPrototype is built as a modern web application with a desktop-first capability via Tauri.</p>
+<ul>
+<li><strong>Frontend Framework</strong>: React 18 + TypeScript <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L24-L30">package.json:24-30</a>.</li>
+<li><strong>Rendering Engine</strong>: <code>react-konva</code> for high-performance 2D canvas operations <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L26">package.json:26</a>.</li>
+<li><strong>State Management</strong>: <code>zustand</code> with <code>zundo</code> for temporal (undo/redo) document state <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L29-L30">package.json:29-30</a>.</li>
+<li><strong>Desktop Shell</strong>: Tauri 2 (Rust) providing native file system access and dialogs <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/Cargo.toml#L14-L17">src-tauri/Cargo.toml:14-17</a>.</li>
+<li><strong>Persistence</strong>: <code>.gpo</code> file format, a ZIP container containing <code>document.json</code> and assets <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L44-L53">README.md:44-53</a>.</li>
+</ul>
+<p><strong>Architecture Hierarchy</strong>
+<pre class="mermaid">graph TD
+    subgraph &quot;Native Layer (Rust)&quot;
+        T[&quot;Tauri 2 Runtime&quot;] -- &quot;IPC Bridge&quot; --&gt; W[&quot;WebView (WRY)&quot;]
+    end
+
+    subgraph &quot;Application Layer (TypeScript)&quot;
+        W --&gt; App[&quot;App.tsx (Shell)&quot;]
+        App --&gt; Store[&quot;useStore (Document State)&quot;]
+        App --&gt; UIStore[&quot;useUi (Transient State)&quot;]
+    end
+
+    subgraph &quot;View Layer&quot;
+        Store --&gt; Design[&quot;DesignView (Canvas)&quot;]
+        Store --&gt; Req[&quot;RequirementsView (Editor)&quot;]
+        Store --&gt; Home[&quot;HomeView (Library)&quot;]
+    end
+
+    subgraph &quot;Data Persistence&quot;
+        Store --&gt; FileIO[&quot;fileIo.ts (Native/Web FS)&quot;]
+        FileIO --&gt; GPO[&quot;.gpo File (ZIP)&quot;]
+    end
+</pre>
+<strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L7-L15">package.json:7-15</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src-tauri/Cargo.toml#L1-L20">src-tauri/Cargo.toml:1-20</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L1-L35">src/App.tsx:1-35</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/file/fileIo.ts#L1-L10">src/file/fileIo.ts:1-10</a></p>
+<hr />
+<h2 id="major-subsystems">Major Subsystems</h2>
+<h3 id="1-application-shell-view-routing">1. Application Shell &amp; View Routing</h3>
+<p>The <code>App.tsx</code> component acts as the primary orchestrator, managing the top-level layout and the <code>ViewMode</code> state machine <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L2-L3">src/App.tsx:2-3</a>. It handles navigation between the Home screen, Requirements editor, and the Design canvas.
+*   For details, see <a href="page-1_2.html">Application Shell &amp; View Routing</a>.</p>
+<h3 id="2-document-state-storage">2. Document State &amp; Storage</h3>
+<p>State is centralized in <code>useStore.ts</code>, which manages the <code>GpoDocument</code> object—the source of truth for all pages, frames, and nodes <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L51-L53">src/App.tsx:51-53</a>. Persistence is handled by <code>fileIo.ts</code> (platform-adaptive for Tauri or Browser) and a local <code>library.ts</code> for recent files <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L4-L21">src/App.tsx:4-21</a>.
+*   For details, see <a href="page-1_1.html">Getting Started &amp; Project Setup</a>.</p>
+<h3 id="3-canvas-properties">3. Canvas &amp; Properties</h3>
+<p>The design environment consists of the <code>CanvasStage</code> (rendering), <code>LayersPanel</code> (hierarchy), and <code>PropertiesPanel</code> (node attributes) <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L15-L16">README.md:15-16</a>. It supports vector editing, auto-layout, and design system token application.</p>
+<h3 id="4-ai-requirements">4. AI &amp; Requirements</h3>
+<p>The AI subsystem integrates with various LLM providers (OpenAI, Anthropic, DeepSeek) and includes local heuristic fallbacks <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L14">README.md:14</a>. It transforms Markdown from <code>RequirementsView</code> into structured UI components within the document.</p>
+<h3 id="5-export-engine">5. Export Engine</h3>
+<p>OpenPrototype provides extensive export options via the <code>ExportMenu</code> in <code>App.tsx</code>, including interactive HTML prototypes, PNG/SVG/PDF assets, and production-ready React/Vue/Tailwind code <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L49-L143">src/App.tsx:49-143</a>.</p>
+<p><strong>Sources:</strong> <a href="https://github.com/gaosichun888/openprototype/blob/main/src/App.tsx#L1-L35">src/App.tsx:1-35</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/src/views/HomeView.tsx#L36-L49">src/views/HomeView.tsx:36-49</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/README.md#L57-L70">README.md:57-70</a>, <a href="https://github.com/gaosichun888/openprototype/blob/main/package.json#L1-L31">package.json:1-31</a></p>
+<hr /></article>
+  <footer>由内部 DeepWiki 知识库生成 · 静态化站点 · <a href="https://github.com/gaosichun888/openprototype" target="_blank">gaosichun888/openprototype</a></footer>
+</main>
+</div>
+<script src="../assets/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+  function filterNav(q){
+    q=q.toLowerCase();
+    document.querySelectorAll('#nav .nav-item').forEach(function(a){
+      a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
