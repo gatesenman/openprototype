@@ -1,0 +1,345 @@
+import { id } from "@/schema/defaults";
+import { DesignSystem, Node } from "@/schema/types";
+import type { ComponentPackage } from "./catalog";
+
+/**
+ * Element Plus 风格的页面组件集。
+ *
+ * 这些组件按 Element Plus 官方设计语言（配色 / 圆角 / 尺寸）构建，作为可直接拖到
+ * 画布使用的高保真 UI 组件。颜色刻意使用 Element Plus 固定调色板（而非设计系统
+ * token），以保证视觉与 Element Plus 一致。
+ */
+export const EP = {
+  primary: "#409eff",
+  success: "#67c23a",
+  warning: "#e6a23c",
+  danger: "#f56c6c",
+  info: "#909399",
+  text: "#303133",
+  regular: "#606266",
+  secondary: "#909399",
+  border: "#dcdfe6",
+  borderLight: "#e4e7ed",
+  fill: "#f5f7fa",
+  white: "#ffffff",
+  radius: 4,
+  font: "-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+};
+
+const rect = (
+  name: string,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  fill: string,
+  over: Partial<Node["style"]> = {},
+): Node => ({
+  id: id(),
+  type: "rect",
+  name,
+  x,
+  y,
+  width,
+  height,
+  style: { fill: { type: "solid", color: fill }, radius: EP.radius, ...over },
+});
+
+const label = (
+  content: string,
+  x: number,
+  y: number,
+  width: number,
+  color = EP.text,
+  over: Partial<Node["text"]> = {},
+): Node => ({
+  id: id(),
+  type: "text",
+  name: content.slice(0, 10) || "文本",
+  x,
+  y,
+  width,
+  height: 20,
+  style: {},
+  text: {
+    content,
+    fontFamily: EP.font,
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: 1.4,
+    color,
+    align: "left",
+    ...over,
+  },
+});
+
+/** A solid-fill EP button as a single button node. */
+function epButton(name: string, text: string, fill: string, fg = EP.white): Node {
+  return {
+    id: id("grp"),
+    type: "button",
+    name,
+    x: 0,
+    y: 0,
+    width: 96,
+    height: 40,
+    style: { fill: { type: "solid", color: fill }, radius: EP.radius },
+    text: {
+      content: text,
+      fontFamily: EP.font,
+      fontSize: 14,
+      fontWeight: 500,
+      lineHeight: 1.4,
+      color: fg,
+      align: "center",
+    },
+  };
+}
+
+export const ELEMENT_PLUS_PACKAGES: ComponentPackage[] = [
+  {
+    id: "ep_button_group",
+    name: "EP 按钮组",
+    category: "Element Plus",
+    description: "Element Plus 按钮：默认 / 主要 / 成功 / 警告 / 危险五色。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 按钮组",
+      x: 0,
+      y: 0,
+      width: 520,
+      height: 40,
+      style: {},
+      children: [
+        { ...epButton("默认按钮", "默认按钮", EP.white, EP.regular), x: 0, style: { fill: { type: "solid", color: EP.white }, radius: EP.radius, stroke: { color: EP.border, width: 1 } } },
+        { ...epButton("主要按钮", "主要按钮", EP.primary), x: 104 },
+        { ...epButton("成功按钮", "成功按钮", EP.success), x: 208 },
+        { ...epButton("警告按钮", "警告按钮", EP.warning), x: 312 },
+        { ...epButton("危险按钮", "危险按钮", EP.danger), x: 416 },
+      ],
+    }),
+  },
+  {
+    id: "ep_input",
+    name: "EP 输入框",
+    category: "Element Plus",
+    description: "Element Plus 文本输入框（带占位符与边框）。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 输入框",
+      x: 0,
+      y: 0,
+      width: 240,
+      height: 40,
+      style: {},
+      children: [
+        rect("输入框底", 0, 0, 240, 40, EP.white, { stroke: { color: EP.border, width: 1 } }),
+        label("请输入内容", 12, 10, 216, EP.secondary),
+      ],
+    }),
+  },
+  {
+    id: "ep_select",
+    name: "EP 下拉选择",
+    category: "Element Plus",
+    description: "Element Plus Select 选择器（带下拉箭头）。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 下拉选择",
+      x: 0,
+      y: 0,
+      width: 240,
+      height: 40,
+      style: {},
+      children: [
+        rect("选择器底", 0, 0, 240, 40, EP.white, { stroke: { color: EP.border, width: 1 } }),
+        label("请选择", 12, 10, 200, EP.secondary),
+        label("⌄", 214, 8, 20, EP.secondary, { align: "center", fontSize: 16 }),
+      ],
+    }),
+  },
+  {
+    id: "ep_switch",
+    name: "EP 开关",
+    category: "Element Plus",
+    description: "Element Plus Switch 开关（开启态主色）。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 开关",
+      x: 0,
+      y: 0,
+      width: 40,
+      height: 20,
+      style: {},
+      children: [
+        rect("轨道", 0, 0, 40, 20, EP.primary, { radius: 10 }),
+        { ...rect("滑块", 22, 2, 16, 16, EP.white, { radius: 999 }) },
+      ],
+    }),
+  },
+  {
+    id: "ep_tag_group",
+    name: "EP 标签组",
+    category: "Element Plus",
+    description: "Element Plus Tag：主要 / 成功 / 警告 / 危险浅底标签。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 标签组",
+      x: 0,
+      y: 0,
+      width: 268,
+      height: 24,
+      style: {},
+      children: [
+        rect("标签1底", 0, 0, 56, 24, "#ecf5ff", { stroke: { color: "#d9ecff", width: 1 } }),
+        label("标签一", 0, 4, 56, EP.primary, { align: "center", fontSize: 12 }),
+        rect("标签2底", 70, 0, 56, 24, "#f0f9eb", { stroke: { color: "#e1f3d8", width: 1 } }),
+        label("成功", 70, 4, 56, EP.success, { align: "center", fontSize: 12 }),
+        rect("标签3底", 140, 0, 56, 24, "#fdf6ec", { stroke: { color: "#faecd8", width: 1 } }),
+        label("警告", 140, 4, 56, EP.warning, { align: "center", fontSize: 12 }),
+        rect("标签4底", 210, 0, 56, 24, "#fef0f0", { stroke: { color: "#fde2e2", width: 1 } }),
+        label("危险", 210, 4, 56, EP.danger, { align: "center", fontSize: 12 }),
+      ],
+    }),
+  },
+  {
+    id: "ep_alert",
+    name: "EP 提示 Alert",
+    category: "Element Plus",
+    description: "Element Plus Alert 成功提示条。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 提示",
+      x: 0,
+      y: 0,
+      width: 360,
+      height: 40,
+      style: {},
+      children: [
+        rect("提示底", 0, 0, 360, 40, "#f0f9eb"),
+        label("✔", 12, 11, 20, EP.success, { fontSize: 14 }),
+        label("操作成功，数据已保存。", 36, 11, 312, EP.success, { fontSize: 13 }),
+      ],
+    }),
+  },
+  {
+    id: "ep_table",
+    name: "EP 表格",
+    category: "Element Plus",
+    description: "Element Plus Table：表头 + 两行数据。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 表格",
+      x: 0,
+      y: 0,
+      width: 420,
+      height: 132,
+      style: {},
+      children: [
+        rect("表格外框", 0, 0, 420, 132, EP.white, { stroke: { color: EP.borderLight, width: 1 } }),
+        rect("表头底", 0, 0, 420, 44, EP.fill),
+        label("名称", 16, 14, 120, EP.text, { fontWeight: 600, fontSize: 13 }),
+        label("状态", 160, 14, 120, EP.text, { fontWeight: 600, fontSize: 13 }),
+        label("操作", 304, 14, 100, EP.text, { fontWeight: 600, fontSize: 13 }),
+        label("项目 A", 16, 56, 120, EP.regular, { fontSize: 13 }),
+        label("启用", 160, 56, 120, EP.success, { fontSize: 13 }),
+        label("编辑", 304, 56, 100, EP.primary, { fontSize: 13 }),
+        rect("分隔线", 0, 88, 420, 1, EP.borderLight),
+        label("项目 B", 16, 100, 120, EP.regular, { fontSize: 13 }),
+        label("停用", 160, 100, 120, EP.danger, { fontSize: 13 }),
+        label("编辑", 304, 100, 100, EP.primary, { fontSize: 13 }),
+      ],
+    }),
+  },
+  {
+    id: "ep_form",
+    name: "EP 表单",
+    category: "Element Plus",
+    description: "Element Plus Form：标签 + 输入 + 提交按钮。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 表单",
+      x: 0,
+      y: 0,
+      width: 360,
+      height: 160,
+      style: {},
+      children: [
+        label("用户名", 0, 10, 72, EP.regular, { align: "right" }),
+        rect("用户名输入", 84, 0, 276, 40, EP.white, { stroke: { color: EP.border, width: 1 } }),
+        label("请输入用户名", 96, 10, 240, EP.secondary),
+        label("密码", 0, 66, 72, EP.regular, { align: "right" }),
+        rect("密码输入", 84, 56, 276, 40, EP.white, { stroke: { color: EP.border, width: 1 } }),
+        label("请输入密码", 96, 66, 240, EP.secondary),
+        { ...epButton("提交", "提交", EP.primary), x: 84, y: 112 },
+        { ...epButton("取消", "取消", EP.white, EP.regular), x: 188, y: 112, style: { fill: { type: "solid", color: EP.white }, radius: EP.radius, stroke: { color: EP.border, width: 1 } } },
+      ],
+    }),
+  },
+  {
+    id: "ep_dialog",
+    name: "EP 对话框",
+    category: "Element Plus",
+    description: "Element Plus Dialog：标题 + 正文 + 底部操作。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 对话框",
+      x: 0,
+      y: 0,
+      width: 420,
+      height: 220,
+      style: {},
+      children: [
+        rect("对话框底", 0, 0, 420, 220, EP.white, { radius: 8, shadow: { x: 0, y: 12, blur: 32, color: "rgba(0,0,0,0.18)" } }),
+        label("提示", 24, 22, 200, EP.text, { fontSize: 18, fontWeight: 600 }),
+        label("✕", 384, 20, 20, EP.secondary, { align: "center", fontSize: 16 }),
+        label("确定要执行此操作吗？该操作不可撤销。", 24, 72, 372, EP.regular),
+        { ...epButton("取消", "取消", EP.white, EP.regular), x: 220, y: 156, style: { fill: { type: "solid", color: EP.white }, radius: EP.radius, stroke: { color: EP.border, width: 1 } } },
+        { ...epButton("确定", "确定", EP.primary), x: 324, y: 156 },
+      ],
+    }),
+  },
+  {
+    id: "ep_pagination",
+    name: "EP 分页",
+    category: "Element Plus",
+    description: "Element Plus Pagination 分页器。",
+    build: () => ({
+      id: id("grp"),
+      type: "group",
+      name: "EP 分页",
+      x: 0,
+      y: 0,
+      width: 240,
+      height: 32,
+      style: {},
+      children: [
+        rect("上一页", 0, 0, 32, 32, EP.fill),
+        label("‹", 0, 6, 32, EP.regular, { align: "center", fontSize: 16 }),
+        rect("第1页", 40, 0, 32, 32, EP.primary),
+        label("1", 40, 6, 32, EP.white, { align: "center" }),
+        rect("第2页", 80, 0, 32, 32, EP.fill),
+        label("2", 80, 6, 32, EP.regular, { align: "center" }),
+        rect("第3页", 120, 0, 32, 32, EP.fill),
+        label("3", 120, 6, 32, EP.regular, { align: "center" }),
+        rect("下一页", 160, 0, 32, 32, EP.fill),
+        label("›", 160, 6, 32, EP.regular, { align: "center", fontSize: 16 }),
+      ],
+    }),
+  },
+];
+
+/** Build a fresh ComponentDef-template node for an EP package id (used in tests/seed). */
+export function buildElementPlus(pkgId: string, ds: DesignSystem): Node | null {
+  const pkg = ELEMENT_PLUS_PACKAGES.find((p) => p.id === pkgId);
+  return pkg ? pkg.build(ds) : null;
+}
