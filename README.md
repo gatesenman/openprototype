@@ -4,6 +4,40 @@ AI 驱动的产品原型工具。**需求文档驱动**：先写/管理需求 Ma
 
 > 文件后缀：`.gpo`（Generative Prototype Object）。
 
+## 界面截图
+
+> 以下截图为软件实际运行界面（深灰 Figma 风格主题）。
+
+### 首页 · 文件库
+从模板新建文件，或打开最近的 `.gpo` 设计。
+
+![首页 · 文件库](docs/screenshots/01-home.png)
+
+### 需求文档 · Markdown 编辑 + 实时预览
+左侧 Markdown 编辑（支持 `/` 斜杠命令插入章节模板），右侧实时渲染；可直接「✦ 生成页面 / 多页流程」。
+
+![需求文档](docs/screenshots/03-requirements.png)
+
+### 设计画布 · 无限画布 + Figma 式属性面板
+左侧图层树、中间多框架无限画布、右侧 Figma 风格属性面板（位置 / 布局 / 外观 / 填充 / 描边 / 效果 / 约束 / 导出）。下图为 AI 一键生成的「App 首页 → 详情页 → 完成页」高保真页面。
+
+![设计画布](docs/screenshots/02-design-canvas.png)
+
+### 流程图 · 原型跳转总览
+自动汇总各框架之间的跳转连线，俯瞰整套原型的导航结构。
+
+![流程图](docs/screenshots/05-flow.png)
+
+### 用户旅程地图 · 完整可用
+人物画像 + 阶段矩阵（用户行为 / 触点 / 心声 / 痛点 / 机会点）+ 情绪曲线（随各阶段情绪实时重算），支持 AI 一键生成、增删改、Markdown/CSV 导出。
+
+![用户旅程地图](docs/screenshots/04-journey-map.png)
+
+### 演示模式 · 可交互原型播放
+设备外壳预览，点击页面内可交互元素体验原型跳转。
+
+![演示模式](docs/screenshots/06-preview.png)
+
 ## 已实现（MVP 主干闭环）
 
 ```
