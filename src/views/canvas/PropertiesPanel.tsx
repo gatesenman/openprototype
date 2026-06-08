@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStore } from "@/store/useStore";
-import { BlendMode, Constraints, Fill, GradientStop, HConstraint, Interaction, Node, VConstraint } from "@/schema/types";
+import { BlendMode, Constraints, Fill, GradientStop, HConstraint, Interaction, InteractionAction, InteractionTrigger, Node, TransitionAnimation, VConstraint } from "@/schema/types";
+import { actionLabel, triggerLabel } from "@/prototype/runtime";
 import { id } from "@/schema/defaults";
 import { resolveFill } from "@/render/resolve";
 import { isInstanceModified } from "@/schema/nodeOps";
@@ -85,7 +86,11 @@ export default function PropertiesPanel() {
   const toggleHidden = useStore((s) => s.toggleHidden);
   const toggleLock = useStore((s) => s.toggleLock);
   const outlineStroke = useStore((s) => s.outlineStroke);
+  const addPrototypeVariable = useStore((s) => s.addPrototypeVariable);
+  const updatePrototypeVariable = useStore((s) => s.updatePrototypeVariable);
+  const deletePrototypeVariable = useStore((s) => s.deletePrototypeVariable);
   const showToast = useUi((s) => s.showToast);
+  const protoVars = doc.prototypeVariables ?? [];
 
   const [exportScale, setExportScale] = useState(1);
   const [exportFormat, setExportFormat] = useState<"png" | "jpg">("png");
@@ -255,10 +260,26 @@ export default function PropertiesPanel() {
     input.click();
   };
 
-  const addInteraction = (targetFrameId: string) => {
-    const it: Interaction = { id: id("act"), trigger: "click", targetFrameId, animation: "fade" };
+  const addInteraction = () => {
+    const it: Interaction = {
+      id: id("act"),
+      trigger: "click",
+      action: "navigate",
+      targetFrameId: otherFrames[0]?.id ?? "",
+      animation: "fade",
+      durationMs: 300,
+      easing: "ease-out",
+    };
     patch({ interactions: [...(node.interactions ?? []), it] });
   };
+
+  const updateInteraction = (itId: string, p: Partial<Interaction>) =>
+    patch({
+      interactions: (node.interactions ?? []).map((x) => (x.id === itId ? { ...x, ...p } : x)),
+    });
+
+  const removeInteraction = (itId: string) =>
+    patch({ interactions: (node.interactions ?? []).filter((x) => x.id !== itId) });
 
   const alignBtns: [string, string, IconName][] = [
     ["left", "左对齐", "alignLeft"],
@@ -817,48 +838,237 @@ export default function PropertiesPanel() {
         </Section>
       )}
 
-      <Section title="交互 / 原型跳转" icon="flow">
+      <Section title="行为（滚动 / 固定 / 数据绑定）" icon="frame" defaultOpen={false}>
+        <div className="prop-row">
+          <label>滚动容器</label>
+          <select
+            value={node.scroll ?? "none"}
+            onChange={(e) => patch({ scroll: e.target.value as NonNullable<Node["scroll"]> })}
+          >
+            <option value="none">不滚动</option>
+            <option value="vertical">垂直</option>
+            <option value="horizontal">水平</option>
+            <option value="both">双向</option>
+          </select>
+        </div>
+        <label className="prop-check">
+          <input type="checkbox" checked={!!node.fixed} onChange={(e) => patch({ fixed: e.target.checked })} />
+          固定定位（滚动时不动）
+        </label>
+        <div className="prop-row">
+          <label>数据绑定</label>
+          <select
+            value={node.binding ? `${node.binding.mode}:${node.binding.variableId}` : ""}
+            onChange={(e) => {
+              if (!e.target.value) return patch({ binding: undefined });
+              const [mode, variableId] = e.target.value.split(":");
+              patch({ binding: { mode: mode as "read" | "write", variableId } });
+            }}
+          >
+            <option value="">无</option>
+            {protoVars.map((v) => (
+              <optgroup key={v.id} label={v.name}>
+                <option value={`read:${v.id}`}>读取 · 显示「{v.name}」</option>
+                {node.type === "input" && <option value={`write:${v.id}`}>写入 · 输入更新「{v.name}」</option>}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+        {protoVars.length === 0 && <div className="prop-hint compact">先在下方「原型变量」新建变量后即可绑定。</div>}
+        {node.type !== "input" && <div className="prop-hint compact">提示：文本内容支持 {"{{变量名}}"} 模板，演示时实时替换。</div>}
+      </Section>
+
+      <Section title="交互 / 原型" icon="flow">
         {(node.interactions ?? []).map((it) => {
-          const target = page!.frames.find((f) => f.id === it.targetFrameId);
+          const action = it.action ?? "navigate";
+          const needsFrame = action === "navigate" || action === "overlay";
+          const needsAnim = action === "navigate" || action === "overlay";
           return (
-            <div className="prop-row" key={it.id}>
-              <span style={{ fontSize: 12 }}>点击 → {target?.name ?? "?"}</span>
-              <select
-                value={it.animation}
-                style={{ width: 84, marginLeft: "auto" }}
-                onChange={(e) =>
-                  patch({
-                    interactions: (node.interactions ?? []).map((x) =>
-                      x.id === it.id ? { ...x, animation: e.target.value as Interaction["animation"] } : x,
-                    ),
-                  })
-                }
-              >
-                <option value="none">无</option>
-                <option value="fade">淡入</option>
-                <option value="slide-left">左滑</option>
-                <option value="slide-right">右滑</option>
-              </select>
-              <button
-                className="icon-btn"
-                title="移除跳转"
-                onClick={() => patch({ interactions: (node.interactions ?? []).filter((x) => x.id !== it.id) })}
-              >
-                <Icon name="trash" size={14} />
-              </button>
+            <div className="interaction-card" key={it.id}>
+              <div className="prop-row">
+                <select
+                  value={it.trigger}
+                  style={{ flex: 1 }}
+                  onChange={(e) => updateInteraction(it.id, { trigger: e.target.value as InteractionTrigger })}
+                >
+                  {(["click", "hover", "drag", "key", "delay"] as InteractionTrigger[]).map((t) => (
+                    <option key={t} value={t}>{triggerLabel(t)}</option>
+                  ))}
+                </select>
+                <span style={{ color: "var(--muted)", fontSize: 11 }}>→</span>
+                <select
+                  value={action}
+                  style={{ flex: 1 }}
+                  onChange={(e) => updateInteraction(it.id, { action: e.target.value as InteractionAction })}
+                >
+                  {(["navigate", "overlay", "close-overlay", "back", "scroll-to", "external", "set-variable"] as InteractionAction[]).map((a) => (
+                    <option key={a} value={a}>{actionLabel(a)}</option>
+                  ))}
+                </select>
+                <button className="icon-btn" title="移除交互" onClick={() => removeInteraction(it.id)}>
+                  <Icon name="trash" size={14} />
+                </button>
+              </div>
+
+              {it.trigger === "key" && (
+                <div className="prop-row">
+                  <label>按键</label>
+                  <input value={it.key ?? "Enter"} placeholder="Enter / ArrowRight / Escape" onChange={(e) => updateInteraction(it.id, { key: e.target.value })} />
+                </div>
+              )}
+              {it.trigger === "delay" && (
+                <div className="prop-row">
+                  <label>延时(ms)</label>
+                  <input type="number" min={0} value={it.delayMs ?? 1000} onChange={(e) => updateInteraction(it.id, { delayMs: Number(e.target.value) })} />
+                </div>
+              )}
+
+              {needsFrame && (
+                <div className="prop-row">
+                  <label>目标</label>
+                  <select value={it.targetFrameId} onChange={(e) => updateInteraction(it.id, { targetFrameId: e.target.value })}>
+                    <option value="">选择框架…</option>
+                    {otherFrames.map((f) => (
+                      <option key={f.id} value={f.id}>{f.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {action === "overlay" && (
+                <>
+                  <div className="prop-row">
+                    <label>位置</label>
+                    <select
+                      value={it.overlay?.position ?? "center"}
+                      onChange={(e) => updateInteraction(it.id, { overlay: { position: e.target.value as "center" | "top" | "bottom" | "left" | "right", backdrop: it.overlay?.backdrop ?? true, closeOnClickOutside: it.overlay?.closeOnClickOutside } })}
+                    >
+                      <option value="center">居中（模态）</option>
+                      <option value="top">顶部</option>
+                      <option value="bottom">底部</option>
+                      <option value="left">左侧</option>
+                      <option value="right">右侧</option>
+                    </select>
+                  </div>
+                  <label className="prop-check">
+                    <input
+                      type="checkbox"
+                      checked={it.overlay?.backdrop ?? true}
+                      onChange={(e) => updateInteraction(it.id, { overlay: { position: it.overlay?.position ?? "center", backdrop: e.target.checked, closeOnClickOutside: it.overlay?.closeOnClickOutside } })}
+                    />
+                    背景遮罩
+                  </label>
+                </>
+              )}
+              {action === "scroll-to" && (
+                <div className="prop-row">
+                  <label>滚动到</label>
+                  <select value={it.targetNodeId ?? ""} onChange={(e) => updateInteraction(it.id, { targetNodeId: e.target.value })}>
+                    <option value="">选择节点…</option>
+                    {frame.nodes.filter((n) => n.id !== node.id).map((n) => (
+                      <option key={n.id} value={n.id}>{n.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {action === "external" && (
+                <div className="prop-row">
+                  <label>URL</label>
+                  <input value={it.url ?? ""} placeholder="https://…" onChange={(e) => updateInteraction(it.id, { url: e.target.value })} />
+                </div>
+              )}
+              {action === "set-variable" && (
+                <>
+                  <div className="prop-row">
+                    <label>变量</label>
+                    <select value={it.variableId ?? ""} onChange={(e) => updateInteraction(it.id, { variableId: e.target.value })}>
+                      <option value="">选择变量…</option>
+                      {protoVars.map((v) => (
+                        <option key={v.id} value={v.id}>{v.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="prop-row">
+                    <label>值</label>
+                    <input value={it.variableValue ?? ""} placeholder="值，或 !toggle 切换布尔" onChange={(e) => updateInteraction(it.id, { variableValue: e.target.value })} />
+                  </div>
+                </>
+              )}
+
+              {needsAnim && (
+                <div className="prop-row">
+                  <select value={it.animation ?? "fade"} style={{ flex: 1 }} onChange={(e) => updateInteraction(it.id, { animation: e.target.value as TransitionAnimation })}>
+                    <option value="none">无</option>
+                    <option value="fade">淡入</option>
+                    <option value="dissolve">溶解</option>
+                    <option value="slide-left">左滑</option>
+                    <option value="slide-right">右滑</option>
+                    <option value="slide-up">上滑</option>
+                    <option value="slide-down">下滑</option>
+                    <option value="push-left">推入(左)</option>
+                    <option value="push-right">推入(右)</option>
+                    <option value="cover">覆盖</option>
+                    <option value="smart">智能动画</option>
+                  </select>
+                  <input type="number" min={0} title="时长 ms" style={{ width: 56 }} value={it.durationMs ?? 300} onChange={(e) => updateInteraction(it.id, { durationMs: Number(e.target.value) })} />
+                  <select value={it.easing ?? "ease-out"} title="缓动" style={{ width: 72 }} onChange={(e) => updateInteraction(it.id, { easing: e.target.value as Interaction["easing"] })}>
+                    <option value="linear">linear</option>
+                    <option value="ease">ease</option>
+                    <option value="ease-in">in</option>
+                    <option value="ease-out">out</option>
+                    <option value="ease-in-out">in-out</option>
+                  </select>
+                </div>
+              )}
+
+              <div className="prop-row">
+                <label>条件</label>
+                <select
+                  value={it.condition?.variableId ?? ""}
+                  onChange={(e) =>
+                    updateInteraction(it.id, {
+                      condition: e.target.value ? { variableId: e.target.value, equals: it.condition?.equals ?? "" } : undefined,
+                    })
+                  }
+                >
+                  <option value="">无条件</option>
+                  {protoVars.map((v) => (
+                    <option key={v.id} value={v.id}>仅当 {v.name} =</option>
+                  ))}
+                </select>
+                {it.condition && (
+                  <input value={it.condition.equals} placeholder="等于值" onChange={(e) => updateInteraction(it.id, { condition: { variableId: it.condition!.variableId, equals: e.target.value } })} />
+                )}
+              </div>
             </div>
           );
         })}
-        {otherFrames.length > 0 ? (
-          <select className="btn slim" style={{ width: "100%" }} value="" onChange={(e) => e.target.value && addInteraction(e.target.value)}>
-            <option value="">+ 添加跳转到…</option>
-            {otherFrames.map((f) => (
-              <option key={f.id} value={f.id}>{f.name}</option>
-            ))}
-          </select>
-        ) : (
-          <div className="prop-hint compact">再创建一个框架即可连线跳转。</div>
-        )}
+        <button className="btn slim" style={{ width: "100%" }} onClick={addInteraction}>
+          <Icon name="plus" size={14} /> 添加交互
+        </button>
+      </Section>
+
+      <Section title="原型变量" icon="component" defaultOpen={false}>
+        {protoVars.map((v) => (
+          <div className="prop-row" key={v.id}>
+            <input
+              value={v.name}
+              style={{ flex: 1 }}
+              onChange={(e) => updatePrototypeVariable(v.id, { name: e.target.value })}
+            />
+            <select value={v.type} style={{ width: 64 }} onChange={(e) => updatePrototypeVariable(v.id, { type: e.target.value as "text" | "number" | "boolean" })}>
+              <option value="text">文本</option>
+              <option value="number">数值</option>
+              <option value="boolean">布尔</option>
+            </select>
+            <input value={v.initial} style={{ width: 56 }} title="初始值" onChange={(e) => updatePrototypeVariable(v.id, { initial: e.target.value })} />
+            <button className="icon-btn" title="删除变量" onClick={() => deletePrototypeVariable(v.id)}>
+              <Icon name="trash" size={14} />
+            </button>
+          </div>
+        ))}
+        <button className="btn slim" style={{ width: "100%" }} onClick={() => addPrototypeVariable()}>
+          <Icon name="plus" size={14} /> 新建变量
+        </button>
       </Section>
 
       <Section title="导出" icon="download">
