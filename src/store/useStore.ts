@@ -10,6 +10,7 @@ import {
   JourneyStage,
   Node,
   Page,
+  PrototypeVariable,
   RequirementDoc,
   VectorPath,
 } from "@/schema/types";
@@ -150,6 +151,11 @@ interface AppState {
   updateStage: (journeyId: string, stageId: string, patch: Partial<Omit<JourneyStage, "id">>) => void;
   deleteStage: (journeyId: string, stageId: string) => void;
   moveStage: (journeyId: string, stageId: string, dir: "left" | "right") => void;
+
+  // ---- prototype variables (interactions / conditions / forms) ----
+  addPrototypeVariable: (v?: Partial<PrototypeVariable>) => PrototypeVariable;
+  updatePrototypeVariable: (varId: string, patch: Partial<Omit<PrototypeVariable, "id">>) => void;
+  deletePrototypeVariable: (varId: string) => void;
 }
 
 const COMMENT_AUTHOR = "我";
@@ -1049,6 +1055,38 @@ export const useStore = create<AppState>()(
                 [stages[i], stages[to]] = [stages[to], stages[i]];
                 return { ...j, stages, updatedAt: Date.now() };
               }),
+            }),
+            dirty: true,
+          })),
+
+        addPrototypeVariable: (v) => {
+          const variable: PrototypeVariable = {
+            id: id("pvar"),
+            name: v?.name ?? `变量${(get().doc.prototypeVariables?.length ?? 0) + 1}`,
+            type: v?.type ?? "text",
+            initial: v?.initial ?? "",
+          };
+          set((s) => ({
+            doc: touch({ ...s.doc, prototypeVariables: [...(s.doc.prototypeVariables ?? []), variable] }),
+            dirty: true,
+          }));
+          return variable;
+        },
+        updatePrototypeVariable: (varId, patch) =>
+          set((s) => ({
+            doc: touch({
+              ...s.doc,
+              prototypeVariables: (s.doc.prototypeVariables ?? []).map((v) =>
+                v.id === varId ? { ...v, ...patch } : v,
+              ),
+            }),
+            dirty: true,
+          })),
+        deletePrototypeVariable: (varId) =>
+          set((s) => ({
+            doc: touch({
+              ...s.doc,
+              prototypeVariables: (s.doc.prototypeVariables ?? []).filter((v) => v.id !== varId),
             }),
             dirty: true,
           })),

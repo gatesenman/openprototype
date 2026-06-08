@@ -103,15 +103,88 @@ export interface AutoLayout {
   align: "start" | "center" | "end" | "stretch";
 }
 
-export type InteractionTrigger = "click" | "hover";
+export type InteractionTrigger =
+  | "click"
+  | "hover"
+  | "drag" // press & drag the element
+  | "key" // a keyboard key is pressed (see `key`)
+  | "delay"; // fires automatically N ms after the frame opens
 
-/** A node-level interaction that drives prototype navigation (flows). */
+/** What an interaction does when it fires. */
+export type InteractionAction =
+  | "navigate" // go to another frame (replaces current)
+  | "overlay" // open another frame as a floating overlay / modal
+  | "close-overlay" // close the topmost overlay
+  | "back" // go to the previously visited frame
+  | "scroll-to" // scroll a target node into view
+  | "external" // open an external URL
+  | "set-variable"; // assign a value to a prototype variable (state switch)
+
+/** Transition animation used when navigating / opening an overlay. */
+export type TransitionAnimation =
+  | "none"
+  | "fade"
+  | "dissolve"
+  | "slide-left"
+  | "slide-right"
+  | "slide-up"
+  | "slide-down"
+  | "push-left"
+  | "push-right"
+  | "cover"
+  | "smart"; // smart-animate: cross-fade + move matching layers
+
+export type Easing = "linear" | "ease" | "ease-in" | "ease-out" | "ease-in-out";
+
+/** Overlay placement when `action === "overlay"`. */
+export interface OverlaySpec {
+  position: "center" | "top" | "bottom" | "left" | "right";
+  /** Dim the page behind the overlay (modal backdrop). */
+  backdrop: boolean;
+  /** Clicking the backdrop closes the overlay. */
+  closeOnClickOutside?: boolean;
+}
+
+/** A guard: the interaction only fires when a variable currently equals `equals`. */
+export interface InteractionCondition {
+  variableId: string;
+  equals: string;
+}
+
+/** A node-level interaction that drives prototype navigation & advanced behavior. */
 export interface Interaction {
   id: string;
   trigger: InteractionTrigger;
-  /** Target frame id to navigate to. */
+  /** For trigger === "key": which key (e.g. "Enter", "ArrowRight", "Escape"). */
+  key?: string;
+  /** For trigger === "delay": milliseconds after the frame opens. */
+  delayMs?: number;
+  /** What the interaction does. Defaults to "navigate" (back-compat). */
+  action?: InteractionAction;
+  /** Target frame id (navigate / overlay). Empty for non-frame actions. */
   targetFrameId: string;
-  animation?: "none" | "fade" | "slide-left" | "slide-right";
+  /** Target node id for scroll-to. */
+  targetNodeId?: string;
+  /** External URL for action === "external". */
+  url?: string;
+  /** Variable to set + value, for action === "set-variable". */
+  variableId?: string;
+  variableValue?: string;
+  /** Overlay placement, for action === "overlay". */
+  overlay?: OverlaySpec;
+  /** Optional condition gating whether this fires. */
+  condition?: InteractionCondition;
+  animation?: TransitionAnimation;
+  /** Transition duration in ms (defaults to 300). */
+  durationMs?: number;
+  easing?: Easing;
+}
+
+/** Binding of a node property to a prototype variable (forms / state). */
+export interface NodeBinding {
+  variableId: string;
+  /** "read": display the variable's value; "write": typing updates the variable. */
+  mode: "read" | "write";
 }
 
 export interface NodeStyle {
@@ -159,6 +232,12 @@ export interface Node {
   /** Reference to a design-system component definition. */
   componentRef?: string;
   interactions?: Interaction[];
+  /** Scroll behavior when children overflow (prototype scroll container). */
+  scroll?: "none" | "vertical" | "horizontal" | "both";
+  /** Stay fixed while the frame scrolls (Figma "Fixed position"). */
+  fixed?: boolean;
+  /** Bind this node to a prototype variable (forms / dynamic text). */
+  binding?: NodeBinding;
   children?: Node[];
   locked?: boolean;
   hidden?: boolean;
@@ -328,6 +407,19 @@ export interface DocumentMeta {
   app: "gpo-studio";
 }
 
+/**
+ * A prototype variable: runtime state that interactions can read and write,
+ * driving conditional logic, form simulation and component-state switching
+ * during preview.
+ */
+export interface PrototypeVariable {
+  id: string;
+  name: string;
+  type: "text" | "number" | "boolean";
+  /** Initial value as a string ("true"/"false" for boolean, numeric string for number). */
+  initial: string;
+}
+
 export interface GpoDocument {
   meta: DocumentMeta;
   designSystem: DesignSystem;
@@ -337,4 +429,6 @@ export interface GpoDocument {
   comments: FrameComment[];
   /** User-journey maps (persona × stages with emotion curve). */
   journeys: JourneyMap[];
+  /** Prototype runtime variables (conditions / forms / state switching). */
+  prototypeVariables?: PrototypeVariable[];
 }

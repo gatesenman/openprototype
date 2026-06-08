@@ -273,10 +273,16 @@ export function newDocument(name = "未命名原型"): GpoDocument {
     pages: [emptyPage()],
     comments: [],
     journeys: [seedJourney()],
+    prototypeVariables: [],
   };
 }
 
 /** Backfill fields added in later schema revisions so older docs load cleanly. */
 export function normalizeDoc(doc: GpoDocument): GpoDocument {
-  return { ...doc, comments: doc.comments ?? [], journeys: doc.journeys ?? [] };
+  return {
+    ...doc,
+    comments: doc.comments ?? [],
+    journeys: doc.journeys ?? [],
+    prototypeVariables: doc.prototypeVariables ?? [],
+  };
 }
