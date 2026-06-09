@@ -32,6 +32,7 @@ import MarketView from "@/views/MarketView";
 import AiSettingsModal from "@/components/AiSettingsModal";
 import DesignSystemModal from "@/components/DesignSystemModal";
 import CloudModal from "@/components/CloudModal";
+import VersionHistoryModal from "@/components/VersionHistoryModal";
 
 /** Close a popover when clicking outside of it. */
 function useClickOutside(onClose: () => void) {
@@ -148,11 +149,13 @@ function MoreMenu({
   onAi,
   onCloud,
   onImport,
+  onVersions,
 }: {
   onDs: () => void;
   onAi: () => void;
   onCloud: () => void;
   onImport: () => void;
+  onVersions: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const setView = useStore((s) => s.setView);
@@ -174,6 +177,7 @@ function MoreMenu({
       {open && (
         <div className="menu right">
           {item("palette", "设计系统", onDs)}
+          {item("undo", "版本历史 / 分支", onVersions)}
           {item("cloud", "云端协作", onCloud)}
           {item("import", "导入 Figma / Sketch（组件 / 画板 / Token）", onImport)}
           {item("component", "组件 / 插件市场", () => setView("market"))}
@@ -208,6 +212,7 @@ export default function App() {
   const [showAi, setShowAi] = useState(false);
   const [showDs, setShowDs] = useState(false);
   const [showCloud, setShowCloud] = useState(false);
+  const [showVersions, setShowVersions] = useState(false);
   const importRef = useRef<HTMLInputElement>(null);
 
   useShortcuts(view === "design");
@@ -342,6 +347,7 @@ export default function App() {
           </button>
           <ExportMenu />
           <MoreMenu
+            onVersions={() => setShowVersions(true)}
             onDs={() => setShowDs(true)}
             onAi={() => setShowAi(true)}
             onCloud={() => setShowCloud(true)}
@@ -374,6 +380,7 @@ export default function App() {
       {showAi && <AiSettingsModal onClose={() => setShowAi(false)} />}
       {showDs && <DesignSystemModal onClose={() => setShowDs(false)} />}
       {showCloud && <CloudModal onClose={() => setShowCloud(false)} />}
+      {showVersions && <VersionHistoryModal onClose={() => setShowVersions(false)} />}
       {toast && <div className="toast">{toast}</div>}
     </div>
   );
