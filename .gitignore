@@ -18,3 +18,11 @@ server/**/__pycache__
 server/.pytest_cache
 server/*.egg-info
 *.pyc
+
+# Packaged installers are published on GitHub Releases, not kept in the tree
+installers/*.AppImage
+installers/*.deb
+installers/*.rpm
+installers/*.exe
+installers/*.dmg
+installers/*.app
