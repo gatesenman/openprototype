@@ -1,5 +1,7 @@
 # OpenPrototype
 
+**简体中文** · [English](README.en.md)
+
 AI 驱动的产品原型工具。**需求文档驱动**：先写/管理需求 Markdown，再由 AI 生成可继续手动编辑的结构化页面（不是图片），在自由画布上微调、连线跳转，并导出可演示的静态原型。
 
 > 文件后缀：`.gpo`（Generative Prototype Object）。
@@ -38,6 +40,18 @@ AI 驱动的产品原型工具。**需求文档驱动**：先写/管理需求 Ma
 
 ![演示模式](docs/screenshots/06-preview.png)
 
+### 组件 / 插件市场
+内置基础组件与 Element Plus 组件，可一键安装到设计系统；另有插件市场（插件规范见 [`docs/PLUGIN_SPEC.md`](docs/PLUGIN_SPEC.md)）。
+
+![组件市场](docs/screenshots/market.png)
+
+### AI 设置
+选择 Provider（本地启发式生成器 / OpenAI / Anthropic / DeepSeek）与模型，Key 仅保存在本地浏览器。
+
+![AI 设置](docs/screenshots/ai-settings.png)
+
+> 「组件市场」「AI 设置」两张截图为 `pnpm build` 后用 `vite preview` 在无头 Chromium 中实拍。界面目前只有中文。
+
 ## 已实现（MVP 主干闭环）
 
 ```
@@ -52,6 +66,14 @@ AI 驱动的产品原型工具。**需求文档驱动**：先写/管理需求 Ma
 - **演示模式**：内置可交互原型播放器。
 - **导出**：单文件可演示 HTML（含跳转运行时）。
 - **文件**：`.gpo` zip 容器（`document.json` 开放 Schema + `INTEROP.md` 互通规范），浏览器内打开/保存，桌面端走 Tauri 文件对话框。
+
+后续批次在主干之上又加入了（入口在编辑界面顶栏右上角的「⋯」菜单）：
+
+- **用户旅程地图**、**流程图总览**（见上方截图）。
+- **组件 / 插件市场**（`src/market/`，插件规范 [`docs/PLUGIN_SPEC.md`](docs/PLUGIN_SPEC.md)）。
+- **版本历史 / 分支**：本地保存版本、分支与差异对比（`src/version/`）。
+- **导入 Figma / Sketch**（组件 / 画板 / Token，`src/interop/importDesign.ts`）。
+- **云端协作**：账户、云端项目、版本历史与成员角色，对接 [`server/`](server/README.md) 中的 FastAPI 后端。
 
 ## 技术栈
 
@@ -68,12 +90,18 @@ pnpm test
 pnpm build       # 产出 dist/（静态站点）
 ```
 
+## 云端后端（可选）
+
+`server/` 是 FastAPI + PostgreSQL + JWT 后端，为「云端协作」提供账户、项目存储、版本历史和团队成员。启动与接口见 [`server/README.md`](server/README.md)；其测试使用内存 SQLite，无需数据库（`python -m pytest`）。前端默认请求 `http://localhost:8008/api`。
+
 ## 桌面端（Tauri）
 
 ```bash
 pnpm tauri dev      # 需本地安装 Rust 与系统 WebView 依赖
 pnpm tauri build    # 打包 Win/macOS/Linux 安装包
 ```
+
+仓库的 [`installers/`](installers/README.md) 目录提交了 v0.1.0 的 Linux（deb / rpm / AppImage）与 Windows（NSIS / 便携版）安装包及 `SHA256SUMS.txt`。macOS 包需推送 `v*` tag，由 `.github/workflows/desktop-release.yml` 在 CI 上构建。
 
 ## `.gpo` 文件格式
 
@@ -99,8 +127,13 @@ src/
   render/        token→颜色解析
   export/        静态 HTML 导出
   file/          .gpo 打开/保存（Tauri + 浏览器）
-  views/         需求 / 设计(画布) / 演示 三大视图
-  components/    AI 设置、设计系统弹窗
+  views/         需求 / 设计(画布) / 流程 / 旅程 / 演示 / 市场 / 首页 视图
+  components/    AI 设置、设计系统、云端、版本历史弹窗
+  market/ version/ interop/ journey/ prototype/ cloud/   各功能模块
+server/          可选的 FastAPI 云端后端（含 pytest）
+src-tauri/       Tauri 2 桌面壳
+installers/      v0.1.0 预构建安装包
+wiki/            静态化项目 Wiki
 ```
 
 ## 路线图（后续阶段）
@@ -110,3 +143,26 @@ src/
 - 插件市场 + 组件市场。
 
 详见规划文档（随会话附件 `prototype_ai_plan.md`）。
+
+## 配置
+
+前端无需配置文件，所有设置保存在浏览器 localStorage：
+
+| 键 | 内容 |
+|---|---|
+| `gpo.ai.settings` | AI Provider、API Key、模型（默认本地启发式生成器，无需 Key） |
+| `gpo.autosave.v1` / `gpo.recents.v1` / `gpo.library.v1` | 自动保存的文档、最近文件、文件库 |
+| `gpo.versions.<docId>` | 本地版本历史 |
+| `op_cloud_token` | 云端登录令牌 |
+
+构建时环境变量 `VITE_CLOUD_API` 可修改云端 API 地址（默认 `http://localhost:8008/api`）。后端配置见 `server/.env.example`（`DATABASE_URL`、`JWT_SECRET`、`CORS_ORIGINS` 等）。
+
+## 其他文档
+
+- [`wiki/`](wiki/README.md)：静态化项目 Wiki（40 页，打开 `wiki/index.html`）。
+- [`docs/PLUGIN_SPEC.md`](docs/PLUGIN_SPEC.md)：插件规范。
+- `PHASE2_TEST_REPORT.md`、`PHASE3_TEST_REPORT.md`、`BATCH2_STYLE_CONSTRAINTS_TEST_REPORT.md`：各阶段测试报告。
+
+## 参与贡献
+
+欢迎 Issue 和 PR。提交前请确认 `pnpm typecheck`、`pnpm lint`、`pnpm test` 通过；修改 `server/` 时请运行其 pytest。
