@@ -6,7 +6,7 @@ AI 驱动的产品原型工具。需求文档驱动：先管理需求 Markdown�
 
 ## 界面预览
 
-![主界面](../screenshots/openprototype-main.jpg)
+![主界面](../screenshots/02-design-canvas.png)
 
 ## 核心流程
 
