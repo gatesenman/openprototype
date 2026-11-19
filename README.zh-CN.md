@@ -13,3 +13,12 @@
 ```bash
 npx vitest run src/__tests__/export-site.test.ts
 ```
+
+## 界面预览
+
+把样例 `.gpo` 导出为静态站后在浏览器打开，并可跳转到结算页。
+
+![导出的静态站 — 首页](docs/screenshots/exported-site.png)
+
+![导出的静态站 — 结算页](docs/screenshots/exported-site-checkout.png)
+

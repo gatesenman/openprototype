@@ -123,3 +123,12 @@ src/
 - 插件市场 + 组件市场。
 
 详见规划文档（随会话附件 `prototype_ai_plan.md`）。
+
+## Screenshots
+
+A fixture `.gpo` exported as a static site and opened in a browser, including navigation to checkout.
+
+![Exported static site — home](docs/screenshots/exported-site.png)
+
+![Exported static site — checkout](docs/screenshots/exported-site-checkout.png)
+
