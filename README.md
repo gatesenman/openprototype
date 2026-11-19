@@ -1,8 +1,21 @@
 # OpenPrototype
 
+**English** | [简体中文](./README.zh-CN.md)
+
+
 AI 驱动的产品原型工具。**需求文档驱动**：先写/管理需求 Markdown，再由 AI 生成可继续手动编辑的结构化页面（不是图片），在自由画布上微调、连线跳转，并导出可演示的静态原型。
 
 > 文件后缀：`.gpo`（Generative Prototype Object）。
+
+## What's new in 0.2.0
+
+Export a fixture `.gpo` as a static site (`index.html` + `manifest.json`) that can be opened in a browser without the app. Navigation between frames is included when the document has click interactions.
+
+```ts
+import { exportSite } from "./src/export/exportSite";
+import { demoGpo } from "./src/export/demoGpo";
+exportSite(demoGpo(), "./dist-site");
+```
 
 ## 界面截图
 
@@ -110,3 +123,12 @@ src/
 - 插件市场 + 组件市场。
 
 详见规划文档（随会话附件 `prototype_ai_plan.md`）。
+
+## Screenshots
+
+A fixture `.gpo` exported as a static site and opened in a browser, including navigation to checkout.
+
+![Exported static site — home](docs/screenshots/exported-site.png)
+
+![Exported static site — checkout](docs/screenshots/exported-site-checkout.png)
+
