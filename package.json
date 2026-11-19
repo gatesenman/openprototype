@@ -1,7 +1,7 @@
 {
   "name": "gpo-studio",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "AI-driven product prototyping studio. Requirements-doc-first, AI generates structured .gpo metadata you can edit on an infinite canvas.",
   "scripts": {
