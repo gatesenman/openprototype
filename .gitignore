@@ -18,3 +18,17 @@ server/**/__pycache__
 server/.pytest_cache
 server/*.egg-info
 *.pyc
+
+# Additional hygiene
+Thumbs.db
+.env.local
+.env.*.local
+target/
+dist/
+logs/
+*.log
+.venv/
+__pycache__/
+coverage/
+!.env.example
+!.env.example.*
