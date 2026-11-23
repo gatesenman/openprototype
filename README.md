@@ -68,7 +68,23 @@ pnpm test
 pnpm build       # 产出 dist/（静态站点）
 ```
 
+## 下载
+
+预发布安装包在 [GitHub Releases v0.1.0](https://github.com/gatesenman/openprototype/releases/tag/v0.1.0)（该 tag 标注为预发布）。当前资产与 SHA256（摘自同目录 `SHA256SUMS.txt`）：
+
+| 文件 | 用途 | SHA256 |
+| --- | --- | --- |
+| [OpenPrototype_0.1.0_x64-setup.exe](https://github.com/gatesenman/openprototype/releases/download/v0.1.0/OpenPrototype_0.1.0_x64-setup.exe) | Windows 安装版 | `412d577edb12f493325a4e59ca37b4ac2a59cd0497e725a230122fca920bb215` |
+| [OpenPrototype-0.1.0-portable-x64.exe](https://github.com/gatesenman/openprototype/releases/download/v0.1.0/OpenPrototype-0.1.0-portable-x64.exe) | Windows 便携版 | `a75c8a4658b2ae43c7bc935df0cd0c952332f75bd711ccfc30a18216954b24f5` |
+| [OpenPrototype_0.1.0_amd64.AppImage](https://github.com/gatesenman/openprototype/releases/download/v0.1.0/OpenPrototype_0.1.0_amd64.AppImage) | Linux 通用 | `87152b83b3838d04fb521c597499c5b94d07c30cfee9aba695897d9a7a4cf0ea` |
+| [OpenPrototype_0.1.0_amd64.deb](https://github.com/gatesenman/openprototype/releases/download/v0.1.0/OpenPrototype_0.1.0_amd64.deb) | Debian/Ubuntu | `4151e681501703fdd74f2146091b33eb635e2f66635e143e97b1fc632d48187b` |
+| [OpenPrototype-0.1.0-1.x86_64.rpm](https://github.com/gatesenman/openprototype/releases/download/v0.1.0/OpenPrototype-0.1.0-1.x86_64.rpm) | Fedora/RHEL | `34c7cad78e17bfeb770eb2365cbc76d6f80869a2c4d339c9cae4ab53e35c31be` |
+
+当前没有 macOS 安装包。上面的界面截图不要默认理解成「已在 Windows 上安装该 Setup 后拍摄」。
+
 ## 桌面端（Tauri）
+
+从源码打包：
 
 ```bash
 pnpm tauri dev      # 需本地安装 Rust 与系统 WebView 依赖
